@@ -1,9 +1,11 @@
-# Method vSOBI
-vSOBI <- function(X,...) UseMethod("vSOBI")
+# Method FixNA (and FixNA2)
+FixNA <- function(X,...) UseMethod("FixNA")
 
-# main function for vSOBI
-vSOBI.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", ...){
+# main function for FixNA and FixNA2)
+FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA", ...){
+  method <- match.arg(method, c("FixNA", "FixNA2"))
   G <- match.arg(G, c("pow", "lcosh"))
+  if (method == "FixNA") met = 1 else met = 2 #FixNA = 1, FixNA2 = 2
   MEAN <- colMeans(X)
   COV <- cov(X)
   EVD <- eigen(COV, symmetric = TRUE)
@@ -19,9 +21,9 @@ vSOBI.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
   Tk <- array(NA, dim = c(p, p, nk))
   if (G == "pow") {TIKuse <- TIK} else {TIKuse <- TIKlc}
   while(crit > eps) {
-      for (i in 1:nk){
-        Tk[ , , i] <- TIKuse(Y, U, k = k[i], method = 3)
-      }
+    for (i in 1:nk) {
+      Tk[ , , i] <- TIKuse(Y, U, k = k[i], method = met)
+        }
     TU <- apply(Tk, c(1, 2), sum)
     EVDt <- eigen(tcrossprod(TU), symmetric = TRUE)
     COVt.sqrt.i <- EVDt$vectors %*% tcrossprod(diag(EVDt$values^(-0.5)), EVDt$vectors)
@@ -40,10 +42,10 @@ vSOBI.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
 }
 
 
-vSOBI.ts <- function(X, ...)
+FixNA.ts <- function(X, ...)
 {
   x <- as.matrix(X)
-  RES <- vSOBI.default(x,...)
+  RES <- FixNA.default(x,...)
   S <- RES$S
   attr(S, "tsp") <- attr(X, "tsp")
   RES$S <- S

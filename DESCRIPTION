@@ -1,8 +1,8 @@
 Package: tsBSS
 Type: Package
 Title: Tools for Blind Source Separation for Time Series
-Version: 0.1
-Date: 2015-12-04
+Version: 0.2
+Date: 2016-09-01
 Author: Markus Matilainen, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen
 Maintainer: Markus Matilainen <markus.matilainen@utu.fi>
 Depends: JADE
@@ -12,6 +12,6 @@ Suggests: stochvol
 Description: Different estimates are provided to solve the blind source separation problem for time series with stochastic volatility.
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2015-12-04 09:40:04 UTC; manmat
+Packaged: 2016-09-06 17:36:12 UTC; manmat
 Repository: CRAN
-Date/Publication: 2015-12-04 15:40:38
+Date/Publication: 2016-09-06 23:44:57

@@ -1,7 +1,9 @@
 importFrom(Rcpp, evalCpp)
 import(JADE, stats)
 
-export(gJADE, gFOBI, vSOBI)
+export(FixNA, gJADE, gFOBI, vSOBI)
+S3method(FixNA,default)
+S3method(FixNA,ts)
 S3method(gJADE,default)
 S3method(gJADE,ts)
 S3method(gFOBI,default)
