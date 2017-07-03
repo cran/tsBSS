@@ -1,8 +1,8 @@
 # Method gFOBI
-gFOBI <- function(X,...) UseMethod("gFOBI")
+gFOBI <- function(X, ...) UseMethod("gFOBI")
 
 # main function for gFOBI
-gFOBI.default <- function (X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", ...) 
+gFOBI.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", ...) 
 {
   nk <- length(k)
   method <- match.arg(method, c("rjd", "djd", "frjd"))

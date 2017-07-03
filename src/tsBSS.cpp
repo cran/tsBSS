@@ -15,7 +15,7 @@ SEXP CCK(SEXP Y, SEXP k)
     int n = X.n_rows;
     int nk = tau.n_elem;
 
-    mat Ip = eye(p,p);
+    mat Ip = eye(p, p);
     mat CK;
     mat C23;
 
@@ -25,30 +25,30 @@ SEXP CCK(SEXP Y, SEXP k)
 
     int ind = 0;
 
-    for( int kk = 0; kk < nk; kk = kk + 1 )
+    for(int kk = 0; kk < nk; kk = kk + 1)
       {
       int K = tau(kk);
-      int nK = n-K;
-      mat LAMBDA_K = trans(X.rows(0,nK-1))* X.rows(K,n-1) / nK;
+      int nK = n - K;
+      mat LAMBDA_K = trans(X.rows(0, nK - 1))* X.rows(K, n - 1) / nK;
 
       cube Hkt(p,p,nK);
 
-      for( int hh=0; hh<nK; hh=hh+1)
+      for( int hh = 0; hh < nK; hh = hh + 1)
         {
-          Hkt.slice(hh) = trans(X.row(hh+K))*X.row(hh);
+          Hkt.slice(hh) = trans(X.row(hh + K))*X.row(hh);
         }
 
-      for( int ii=0; ii<p; ii=ii+1)
+      for( int ii = 0; ii < p; ii = ii + 1)
         {
-          for( int jj=0; jj<p; jj=jj+1)
+          for( int jj = 0; jj < p; jj = jj + 1)
             {
             mat Eij = zeros(p, p);
-            Eij(ii,jj) = 1;
+            Eij(ii, jj) = 1;
             mat Eij2 = Eij + Eij.t();
 
-            mat BK = zeros(p,p);
+            mat BK = zeros(p, p);
 
-                for (int bb=0; bb < nK; bb=bb+1)
+                for (int bb = 0; bb < nK; bb = bb + 1)
                     {
                     BK = BK + trans(Hkt.slice(bb)) * Eij * Hkt.slice(bb);
                     }
@@ -56,7 +56,7 @@ SEXP CCK(SEXP Y, SEXP k)
 
                 BK = BK/nK;
 
-                if(ii==jj)
+                if(ii == jj)
                 {
                 C23 = trans(LAMBDA_K) * Eij2 * LAMBDA_K + Ip;
                 CK = BK - C23;
@@ -70,7 +70,7 @@ SEXP CCK(SEXP Y, SEXP k)
                 CCK.slice(ind) = CK;
                 CC1.slice(ind) = BK;
                 CC23.slice(ind) = C23;
-                ind = ind+1;
+                ind = ind + 1;
             }
         }
       }
@@ -80,7 +80,10 @@ SEXP CCK(SEXP Y, SEXP k)
                             Rcpp::Named("k") = tau,
                             Rcpp::Named("CCK") = CCK
                             );
-  }
+}
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
 
 SEXP TIK(SEXP Y, SEXP U, SEXP k, SEXP method)
   {
@@ -92,25 +95,25 @@ SEXP TIK(SEXP Y, SEXP U, SEXP k, SEXP method)
     int p = X.n_cols;
     int n = X.n_rows;
 
-    mat Xt = X.rows(0,n-1-tau);
-    mat Xttau = X.rows(tau,n-1);
+    mat Xt = X.rows(0, n - 1 - tau);
+    mat Xttau = X.rows(tau, n - 1);
 
-    mat Tik = zeros(p,p);
+    mat Tik = zeros(p, p);
 
     for( int ii = 0; ii < p; ii = ii + 1)
       {
         vec oy = Xt * O.col(ii);
         vec oytau = Xttau * O.col(ii);
-        double Tik1 = mean(pow(oy % oytau,2));
-        mat Tik2 = mean((Xt % repmat(2 * (oy % oytau) % oytau,1, p)), 0);
-        mat Tik3 = mean((Xttau % repmat(2 * (oy % oytau) % oy,1, p)), 0);
+        double Tik1 = mean(pow(oy % oytau, 2));
+        mat Tik2 = mean((Xt % repmat(2*(oy % oytau) % oytau, 1, p)), 0);
+        mat Tik3 = mean((Xttau % repmat(2*(oy % oytau) % oy, 1, p)), 0);
 		if(met == 1)
 		{
         Tik.col(ii) = trans(Tik2 + Tik3);
 		}
 		else if(met == 2)
 		{
-        Tik.col(ii) = trans((copysign(1.0,Tik1-1)) * (Tik2 + Tik3));
+        Tik.col(ii) = trans((copysign(1.0, Tik1 - 1)) * (Tik2 + Tik3));
 		}
 		else //if(met == 3)
 		{
@@ -122,9 +125,12 @@ SEXP TIK(SEXP Y, SEXP U, SEXP k, SEXP method)
                             Rcpp::Named("k") = tau,
                             Rcpp::Named("Tik") = Tik
                             );
-  }
+}
   
-  SEXP TIKlc(SEXP Y, SEXP U, SEXP k, SEXP method)
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
+SEXP TIKlc(SEXP Y, SEXP U, SEXP k, SEXP method)
   {
     mat X = as<arma::mat>(Y);
     mat O = as<arma::mat>(U);
@@ -134,10 +140,10 @@ SEXP TIK(SEXP Y, SEXP U, SEXP k, SEXP method)
     int p = X.n_cols;
     int n = X.n_rows;
 
-    mat Xt = X.rows(0,n-1-tau);
-    mat Xttau = X.rows(tau,n-1);
+    mat Xt = X.rows(0, n - 1 - tau);
+    mat Xttau = X.rows(tau, n - 1);
 
-    mat Tik = zeros(p,p);
+    mat Tik = zeros(p, p);
 
     for( int ii = 0; ii < p; ii = ii + 1)
       {
@@ -150,10 +156,10 @@ SEXP TIK(SEXP Y, SEXP U, SEXP k, SEXP method)
 		double Tik1a = mean(lcoy % lcoytau);
 		double Tik1b = mean(lcoy);
 		double Tik1c = mean(lcoytau);
-        mat Tik2 = mean((Xt % repmat(tanh(oy) % lcoytau,1, p)), 0);
-        mat Tik3 = mean((Xttau % repmat(tanh(oytau) % lcoy,1, p)), 0);
-        mat Tik4 = mean(lcoy)*mean((Xttau % repmat(tanh(oytau),1, p)), 0);
-        mat Tik5 = mean(lcoytau)*mean((Xt % repmat(tanh(oy),1, p)), 0);
+        mat Tik2 = mean((Xt % repmat(tanh(oy) % lcoytau, 1, p)), 0);
+        mat Tik3 = mean((Xttau % repmat(tanh(oytau) % lcoy, 1, p)), 0);
+        mat Tik4 = mean(lcoy)*mean((Xttau % repmat(tanh(oytau), 1, p)), 0);
+        mat Tik5 = mean(lcoytau)*mean((Xt % repmat(tanh(oy), 1, p)), 0);
 		if(met == 1)
 		{
         Tik.col(ii) = trans(Tik2 + Tik3);
@@ -173,3 +179,52 @@ SEXP TIK(SEXP Y, SEXP U, SEXP k, SEXP method)
                             Rcpp::Named("Tik") = Tik
                             );
   }
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
+SEXP TSIR(SEXP X, SEXP slices, SEXP k, SEXP h)
+{
+  mat XX = as<arma::mat>(X);
+  vec sli = as<vec>(slices);
+  int hh = as<int>(h);
+  int kk = as<int>(k);
+  int n = XX.n_rows;
+  int p = XX.n_cols;
+  mat sl = sli.subvec(kk, n - 1);
+  mat Xk = XX.rows(0, n - kk - 1);
+  mat Colm = zeros(hh, p);
+  for(int i = 0; i < hh; i = i + 1) {
+    uvec ind = find(sl == i + 1);
+    mat Xksl = Xk.rows(ind);
+    Colm.row(i) = mean(Xksl, 0);
+  }
+  mat RES = cov(Colm);
+  return Rcpp::List::create(Rcpp::Named("RES") = RES);
+}
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
+SEXP TSAVE(SEXP X, SEXP slices, SEXP k, SEXP h)
+{
+  mat XX = as<arma::mat>(X);
+  vec sli = as<vec>(slices);
+  int hh = as<int>(h);
+  int kk = as<int>(k);
+  int n = XX.n_rows;
+  int p = XX.n_cols;
+  mat sl = sli.subvec(kk, n - 1);
+  mat Xk = XX.rows(0, n - kk - 1);
+  mat Ip = eye(p, p);
+  cube COV(p, p, hh);
+  for(int i = 0; i < hh; i = i + 1) {
+    uvec ind = find(sl == i + 1);
+    mat Xksl = Xk.rows(ind);
+    mat CovSl = cov(Xksl);
+    mat subt = Ip - CovSl;
+    COV.slice(i) = subt * subt.t();
+  }
+  mat RES = mean(COV, 2);
+  return Rcpp::List::create(Rcpp::Named("RES") = RES);
+}

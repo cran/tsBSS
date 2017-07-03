@@ -5,3 +5,6 @@ Version 0.1:
 
 Version 0.2:
 * Added function FixNA and a new nonlinearity function choice to vSOBI method
+
+Version 0.3:
+* Added functions to supervised dimension reduction for multivariate time series

@@ -11,10 +11,10 @@ The gFOBI method for blind source separation problem. It is used in case of time
 The method is a generalization of FOBI, which is a method designed for iid data.
 }
 \usage{
-gFOBI(X, ...)
+gFOBI(X, \ldots)
 
-\method{gFOBI}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", ...)
-\method{gFOBI}{ts}(X, \dots)
+\method{gFOBI}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", \ldots)
+\method{gFOBI}{ts}(X, \ldots)
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -24,10 +24,11 @@ gFOBI(X, ...)
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{Maximum number of iterations.}
   \item{method}{Method to use for the joint diagonalization, options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
-  \item{\dots}{Other arguments passed on to chosen joint diagonalization method.}
+  \item{\ldots}{Other arguments passed on to chosen joint diagonalization method.}
 }
 \details{
-Assume that \eqn{{\bf Y}}{Y} has \eqn{p} columns and it is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X} - \frac{1}{T}\sum_{t=1}^T {\bf X}_{ti})}{Y = S^(-1/2)*(X - (1/T)*sum_t(X_(ti)))}, where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}. Algorithm first calculates
+Assume that \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
+where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}. Algorithm first calculates
 \deqn{{\bf \widehat{B}}^{ij}_k({\bf Y}) =  \frac{1}{T - k} \sum_{t = 1}^T [{\bf Y}_{t + k} {\bf Y}_t' {\bf E}^{ij} {\bf Y}_t {\bf Y}_{t + k}']}{B^ij_k(Y) = (1/(T - k))*sum[Y_(t + k) Y_t'  E^ij Y_t Y_(t + k)'],}
 \if{html}{where \eqn{t = 1, \ldots, T},} and then 
 \deqn{{\bf \widehat{B}}_k({\bf Y}) = \sum_{i = 1}^p {\bf \widehat{B}}^{ii}_k({\bf Y}).}{B_k(Y) = sum(B^ii_k(Y)),}
@@ -36,6 +37,7 @@ Assume that \eqn{{\bf Y}}{Y} has \eqn{p} columns and it is whitened, i.e. \eqn{{
 The algorithm finds an orthogonal matrix \eqn{{\bf U}}{U} by maximizing 
 \deqn{\sum_{k = 0}^K ||\textrm{diag}({\bf U \widehat{B}}_k({\bf Y}) {\bf U}')||^2.}{sum(||diag(U B_k(Y) U')||^2).}
 The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)}.
+
 }
 
 \value{
@@ -46,9 +48,9 @@ A list with class 'bss' containing the following components:
 }
 \references{
 
-Cardoso, J.-F., (1989), \emph{ Source separation using higher order moments}, in: Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing, 2109--2112.
+Cardoso, J.-F., (1989), \emph{Source Separation Using Higher Order Moments}, in: Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing, 2109--2112.
 
-Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New independent component analysis tools for time series}, Statistics & Probability Letters, 105, 80--87.
+Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New Independent Component Analysis Tools for Time Series}, Statistics & Probability Letters, 105, 80--87.
 
 }
 \author{

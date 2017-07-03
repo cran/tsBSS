@@ -11,10 +11,10 @@ The gJADE method for blind source separation problem. It is designed for time se
 The method is a generalization of JADE, which is a method for blind source separation problem using only marginal information.
 }
 \usage{
-gJADE(X, ...)
+gJADE(X, \ldots)
 
-\method{gJADE}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", ...)
-\method{gJADE}{ts}(X, \dots)
+\method{gJADE}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", \ldots)
+\method{gJADE}{ts}(X, \ldots)
 
 }
 \arguments{
@@ -23,10 +23,11 @@ gJADE(X, ...)
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{Maximum number of iterations.}
   \item{method}{Method to use for the joint diagonalization, options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
-  \item{\dots}{Other arguments passed on to chosen joint diagonalization method.}
+  \item{\ldots}{Other arguments passed on to chosen joint diagonalization method.}
 }
 \details{
-Assume that \eqn{{\bf Y}}{Y} has \eqn{p} columns and it is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X} - \frac{1}{T}\sum_{t=1}^T {\bf X}_{ti})}{Y = S^(-1/2)*(X - (1/T)*sum_t(X_(ti)))}, where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}. The matrix \eqn{{\bf \widehat{C}}^{ij}_k({\bf Y})}{C^ij_k(Y)} is of the form
+Assume that \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
+where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}. The matrix \eqn{{\bf \widehat{C}}^{ij}_k({\bf Y})}{C^ij_k(Y)} is of the form
 
 \deqn{{\bf \widehat{C}}^{ij}_k({\bf Y}) = {\bf \widehat{B}}^{ij}_k({\bf Y}) - {\bf S}_k({\bf Y}) ({\bf E}^{ij} + {\bf E}^{ji}) {\bf S}_k({\bf Y})' - \textrm{trace}({\bf E}^{ij}) {\bf I}_p,}{C^ij_k(Y) = B^ij_k(Y) - S_k(Y) (E^ij + E^ji) S_k(Y)' - trace(E^ij)*I,}
 
@@ -36,6 +37,7 @@ The algorithm finds an orthogonal matrix \eqn{{\bf U}}{U} by maximizing
 \deqn{\sum_{i = 1}^p \sum_{j = 1}^p \sum_{k = 0}^K ||diag({\bf U \widehat{C}}^{ij}_k({\bf Y}) {\bf U}')||^2.}{sum_i(sum_j (sum_k (||diag(U C^ij_k(Y) U')||^2))),}
 \if{html}{where \eqn{k = 1, \ldots, K}.}
 The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)}.
+
 }
 \value{
 A list with class 'bss' containing the following components:
@@ -44,13 +46,13 @@ A list with class 'bss' containing the following components:
   \item{S }{Estimated sources as time series object standardized to have mean 0 and unit variances.}
 }
 \references{
-Cardoso, J.-F., Souloumiac, A., (1993). \emph{Blind beamforming for non-Gaussian signals}, in: IEE-Proceedings-F, volume 140, pp. 362--370.
+Cardoso, J.-F., Souloumiac, A., (1993). \emph{Blind Beamforming for Non-Gaussian Signals}, in: IEE-Proceedings-F, volume 140, pp. 362--370.
 
-Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New independent component analysis tools for time series}, Statistics & Probability Letters, 105,
-80--87.
+Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New Independent Component Analysis Tools for Time Series}, Statistics & Probability Letters, 105, 80--87.
+
 }
 \author{
-Klaus Nordhausen
+Klaus Nordhausen, Markus Matilainen
 }
 \seealso{
 \code{\link[JADE]{frjd}}, \code{\link[JADE]{JADE}}, \code{\link{gFOBI}}

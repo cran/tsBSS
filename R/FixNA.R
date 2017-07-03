@@ -1,5 +1,5 @@
 # Method FixNA (and FixNA2)
-FixNA <- function(X,...) UseMethod("FixNA")
+FixNA <- function(X, ...) UseMethod("FixNA")
 
 # main function for FixNA and FixNA2)
 FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA", ...){
@@ -19,7 +19,7 @@ FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
   if(length(which(k < 1) != 0)) stop("only non-zero lags allowed")
   nk <- length(k)
   Tk <- array(NA, dim = c(p, p, nk))
-  if (G == "pow") {TIKuse <- TIK} else {TIKuse <- TIKlc}
+  if (G == "pow") {TIKuse <- TIKc} else {TIKuse <- TIKlcc}
   while(crit > eps) {
     for (i in 1:nk) {
       Tk[ , , i] <- TIKuse(Y, U, k = k[i], method = met)
@@ -45,7 +45,7 @@ FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
 FixNA.ts <- function(X, ...)
 {
   x <- as.matrix(X)
-  RES <- FixNA.default(x,...)
+  RES <- FixNA.default(x, ...)
   S <- RES$S
   attr(S, "tsp") <- attr(X, "tsp")
   RES$S <- S

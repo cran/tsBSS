@@ -1,17 +1,18 @@
 Package: tsBSS
 Type: Package
-Title: Tools for Blind Source Separation for Time Series
-Version: 0.2
-Date: 2016-09-01
-Author: Markus Matilainen, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen
+Title: Tools for Blind Source Separation and Supervised Dimension
+        Reduction for Time Series
+Version: 0.3
+Date: 2017-06-28
+Author: Markus Matilainen, Christophe Croux, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen
 Maintainer: Markus Matilainen <markus.matilainen@utu.fi>
-Depends: JADE
+Depends: ICtest, JADE
 Imports: Rcpp (>= 0.11.0)
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: stochvol
-Description: Different estimates are provided to solve the blind source separation problem for time series with stochastic volatility.
+Description: Different estimates are provided to solve the blind source separation problem for multivariate time series with stochastic volatility and supervised dimension reduction problem for multivariate time series.
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2016-09-06 17:36:12 UTC; manmat
+Packaged: 2017-07-03 08:55:00 UTC; manmat
 Repository: CRAN
-Date/Publication: 2016-09-06 23:44:57
+Date/Publication: 2017-07-03 09:56:16 UTC

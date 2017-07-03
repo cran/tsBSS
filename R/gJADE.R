@@ -1,5 +1,5 @@
 # Method gJADE
-gJADE <- function(X,...) UseMethod("gJADE")
+gJADE <- function(X, ...) UseMethod("gJADE")
 
 # main function for gJADE
 gJADE.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", ...)
@@ -14,7 +14,7 @@ gJADE.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frj
     X.C <- sweep(X, 2, MEAN, "-")
     Y <- tcrossprod(X.C, COV.sqrt.i)
     
-    ccks <- CCK(Y, k)
+    ccks <- CCKc(Y, k)
     U <- switch(method, frjd = {
       frjd(ccks, eps = eps, maxiter = maxiter, ...)$V
     }, rjd = {
