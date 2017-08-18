@@ -7,7 +7,7 @@
 Generalized FOBI
 }
 \description{
-The gFOBI method for blind source separation problem. It is used in case of time series with stochastic volatility.
+The gFOBI method for blind source separation problem. It is designed for time series with stochastic volatility.
 The method is a generalization of FOBI, which is a method designed for iid data.
 }
 \usage{
@@ -19,16 +19,16 @@ gFOBI(X, \ldots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{X}{Numeric matrix or multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{k}{Vector of lags. Lag can be any non-negative integer, or a vector consisting of them. Default is \code{0:12}. If \eqn{k = 0}, this method reduces to \code{\link[JADE]{FOBI}}.}
+  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
+  \item{k}{A vector of lags. It can be any non-negative integer, or a vector consisting of them. Default is \code{0:12}. If \eqn{k = 0}, this method reduces to \code{\link[JADE]{FOBI}}.}
   \item{eps}{Convergence tolerance.}
-  \item{maxiter}{Maximum number of iterations.}
-  \item{method}{Method to use for the joint diagonalization, options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
+  \item{maxiter}{The maximum number of iterations.}
+  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
   \item{\ldots}{Other arguments passed on to chosen joint diagonalization method.}
 }
 \details{
-Assume that \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
-where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}. Algorithm first calculates
+Assume that a \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
+where \eqn{{\bf S}}{S} is the sample covariance matrix of \eqn{{\bf X}}{X}. Algorithm first calculates
 \deqn{{\bf \widehat{B}}^{ij}_k({\bf Y}) =  \frac{1}{T - k} \sum_{t = 1}^T [{\bf Y}_{t + k} {\bf Y}_t' {\bf E}^{ij} {\bf Y}_t {\bf Y}_{t + k}']}{B^ij_k(Y) = (1/(T - k))*sum[Y_(t + k) Y_t'  E^ij Y_t Y_(t + k)'],}
 \if{html}{where \eqn{t = 1, \ldots, T},} and then 
 \deqn{{\bf \widehat{B}}_k({\bf Y}) = \sum_{i = 1}^p {\bf \widehat{B}}^{ii}_k({\bf Y}).}{B_k(Y) = sum(B^ii_k(Y)),}
@@ -44,7 +44,7 @@ The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)
 A list with class 'bss' containing the following components:
   \item{W }{The estimated unmixing matrix.}
   \item{k }{The vector of the used lags.}
-  \item{S }{Estimated sources as time series object standardized to have mean 0 and unit variances.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances.}
 }
 \references{
 

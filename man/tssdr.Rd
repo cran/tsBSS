@@ -12,23 +12,23 @@ tssdr(y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, method = "frjd",
       eps = 1e-06, maxiter = 1000, \ldots)
 }
 \arguments{
-  \item{y}{Numeric vector or time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{X}{Numeric matrix or multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{algorithm}{Algorithm to be used, options \code{TSIR}, \code{TSAVE} and \code{TSSH}. Default is \code{TSIR}.}
-  \item{k}{Vector of lags. Lag can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
-  \item{H}{Number of slices.}
-  \item{weight}{Weight \eqn{0 \le a \le 1} for hybrid method \code{TSSH} only. With \eqn{a = 1} it reduces to \code{TSAVE} and with \eqn{a = 0} to \code{TSIR}; default is \eqn{a = 0.5}.}
-  \item{method}{Method to use for the joint diagonalization, options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
+  \item{y}{A numeric vector or time series object of class \code{\link{ts}}. Missing values are not allowed.}
+  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
+  \item{algorithm}{Algorithm to be used. The options are \code{TSIR}, \code{TSAVE} and \code{TSSH}. Default is \code{TSIR}.}
+  \item{k}{A vector of lags. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
+  \item{H}{The number of slices. If \code{TSSH} is used, \eqn{H} is a 2-vector; the first element is used for TSIR part and the second for TSAVE part. Default is \eqn{H = 10}.}
+  \item{weight}{Weight \eqn{0 \le a \le 1} for the hybrid method \code{TSSH} only. With \eqn{a = 1} it reduces to \code{TSAVE} and with \eqn{a = 0} to \code{TSIR}. Default is \eqn{a = 0.5}.}
+  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
   \item{eps}{Convergence tolerance.}
-  \item{maxiter}{Maximum number of iterations.}
-  \item{...}{Other arguments passed on to chosen joint diagonalization method.}
+  \item{maxiter}{The maximum number of iterations.}
+  \item{...}{Other arguments passed on to the chosen joint diagonalization method.}
 }
 \details{
 Assume that the \eqn{p}-variate time series \eqn{{\bf Z}}{Z} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Z}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Z = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
 where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}.
 Divide \eqn{y} into \eqn{H} disjoint intervals (slices) by its empirical quantiles.
 
-For each lag \eqn{j}, denote \eqn{y_{j}}{y_j} for a vector of the last \eqn{n - j} values of sliced \eqn{y}. Also denote \eqn{{\bf Z}_j}{Z_j} for the first \eqn{n - j} observations of \eqn{{\bf Z}}{Z}. Then \eqn{{\bf Z}_{jh}}{Z_jh} are the disjoint slices of \eqn{{\bf Z}_j}{Z_j} according to values of \eqn{y_{j}}{y_j}.
+For each lag \eqn{j}, denote \eqn{y_{j}}{y_j} for a vector of the last \eqn{n - j} values of the sliced \eqn{y}. Also denote \eqn{{\bf Z}_j}{Z_j} for the first \eqn{n - j} observations of \eqn{{\bf Z}}{Z}. Then \eqn{{\bf Z}_{jh}}{Z_jh} are the disjoint slices of \eqn{{\bf Z}_j}{Z_j} according to the values of \eqn{y_{j}}{y_j}.
 
 Let \eqn{T_{jh}}{T_jh} be the number of observations in \eqn{{\bf Z}_{jh}}{Z_jh}.
 Write \eqn{\bf \widehat{A}_{jh} = \frac{1}{T_{jh}}\sum_{t = 1}^{T_{jh}}({\bf Z}_{jh})_{t}}{A_jh = 1/T_jh * sum_t((Z_jh)_t),} \if{html}{for \eqn{t = 1, \ldots, T_jh},}
@@ -38,7 +38,7 @@ Then for algorithm \code{TSIR} matrix \deqn{{\bf \widehat{M}}_{0j} = {\bf \wideh
 Denote \eqn{\bf \widehat{Cov}_{jh}}{Cov_jh} for a sample covariance matrix of \eqn{{\bf Z}_{jh}}{Z_jh}. Then for algorithm \code{TSAVE} matrix \deqn{{\bf \widehat{M}}_{0j} = \frac{1}{H}\sum_{h = 1}^H({\bf I}_p - {\bf \widehat{Cov}_{jh}})^2.}{M_1j = 1/T_jh * sum_h((I_p - Cov_jh)^2),}
 \if{html}{\eqn{h = 1, \ldots, H}.}
 
-For \code{TSSH} then matrix \deqn{{\bf \widehat{M}}_{2j} = a{\bf \widehat{M}_{1j}} + (1-a){\bf \widehat{M}_{0j}},}{M_2j = a*M_1j + (1-a)*M_0j,} for a chosen \eqn{0 \le a \le 1}.
+For \code{TSSH} then matrix \deqn{{\bf \widehat{M}}_{2j} = a{\bf \widehat{M}_{1j}} + (1-a){\bf \widehat{M}_{0j}},}{M_2j = a*M_1j + (1-a)*M_0j,} for a chosen \eqn{0 \le a \le 1}. Note that the value of \eqn{H} can be different for TSIR and TSAVE parts.
 
 The algorithms find an orthogonal matrix \eqn{{\bf U} = (\bf u_1, \ldots, \bf u_p)'}{U = (u_1, \ldots, u_p)'} by maximizing, for \eqn{b = 0, 1} or \eqn{2}, 
 \deqn{\sum_{i \in k} ||diag({\bf U} {\bf \widehat{M}}_{bj} {\bf U}')||^2 = \sum_{i \in 1}^p \sum_{j \in k} ({\bf u}_i' {\bf \widehat{M}}_{bj} {\bf u}_i)^2.}{sum_j (||diag(U M_bj U')||^2) = sum_i sum_j (u_i' M_bj u_i)^2,}
@@ -55,10 +55,11 @@ To make a choice on which lags and directions to keep, see \code{\link[tsBSS]{su
 A list with class 'tssdr' containing the following components:
   \item{W }{The estimated signal separation matrix.}
   \item{k }{The vector of the used lags.}
-  \item{S }{Estimated directions as time series object standardized to have mean 0 and unit variances.}
+  \item{S }{The estimated directions as time series object standardized to have mean 0 and unit variances.}
   \item{L }{The Lambda matrix for choosing lags and directions.}
-  \item{yname }{The Lambda matrix for choosing lags and directions.}
-  \item{Xname }{The Lambda matrix for choosing lags and directions.}
+  \item{H }{The used number of slices.}
+  \item{yname }{The name for the response time series \eqn{y}.}
+  \item{Xname }{The name for the predictor time series \eqn{\bf X}{X}.}
   \item{algorithm }{The used algorithm as a character string.}
   }
 \references{
@@ -96,8 +97,8 @@ plot(summ1)
 head(components(summ1))
 coef(summ1)
 
-tssdr(y, X, algorithm = "TSSH", weight = 0.6) #Hybrid of TSIR and TSAVE
-
+#Hybrid of TSIR and TSAVE. For TSIR part H = 10 and for TSAVE part H = 2.
+tssdr(y, X, algorithm = "TSSH", weight = 0.6, H = c(10, 2))
 }
 
 \keyword{ multivariate }

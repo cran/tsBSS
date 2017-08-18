@@ -5,6 +5,13 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
   if (length(y) != nrow(X)) stop("y and X have different lengths!")
   algorithm <- match.arg(algorithm, c("TSIR", "TSAVE", "TSSH"))
   method <- match.arg(method, c("rjd", "frjd"))
+  if((algorithm == "TSSH") & length(H) == 1) {
+    H <- rep(H, 2)
+    warning("H should be a 2-vector for TSSH. Using the given H for both parts.")
+  }
+  if((algorithm != "TSSH") & length(H) == 2) {
+    stop('H should be a scalar for TSIR and TSAVE!')
+  }
   MEAN <- colMeans(X)
   p <- ncol(X)
   COV <- cov(X)
@@ -13,8 +20,15 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
   X.C <- sweep(X, 2, MEAN, "-")
   XCS <- tcrossprod(X.C, COV.sqrt.i)
   nk <- length(k)
-  slices <- as.matrix(cut(y, breaks = c(quantile(y, probs = seq(0, 1, by = 1/H))),
+  if (length(H) == 1) { #For TSIR and TSAVE
+    slices <- as.matrix(cut(y, breaks = c(quantile(y, probs = seq(0, 1, by = 1/H))),
                           include.lowest = TRUE, labels = FALSE))
+  } else { #For TSSH
+    slices <- as.matrix(cut(y, breaks = c(quantile(y, probs = seq(0, 1, by = 1/H[1]))),
+                            include.lowest = TRUE, labels = FALSE))
+    slices2 <- as.matrix(cut(y, breaks = c(quantile(y, probs = seq(0, 1, by = 1/H[2]))),
+                            include.lowest = TRUE, labels = FALSE))
+  }
   R <- array(0, dim = c(p, p, nk))
   switch(algorithm,
          TSIR  = {
@@ -29,8 +43,8 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
          },
          TSSH  = {
            for (i in 1:length(k)) {
-             R[, , i] <- (1 - weight)*TSIRc(XCS, slices = slices, k = k[i], h = H) +
-               weight*TSAVEc(XCS, slices = slices, k = k[i], h = H)
+             R[, , i] <- (1 - weight)*TSIRc(XCS, slices = slices, k = k[i], h = H[1]) +
+               weight*TSAVEc(XCS, slices = slices2, k = k[i], h = H[2])
            }
          }
   )
@@ -57,7 +71,7 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
   S <- tcrossprod(X.C, W) #Values for the all possible directions
   S <- ts(cbind(y, S), names = c("y", paste("Series", 1:p))) # Response included
   if (is.ts(X)) attr(S, "tsp") <- attr(X, "tsp")
-  RES <- list(W = W, k = k, S = S, L = DTable/sum(DTable),
+  RES <- list(W = W, k = k, S = S, L = DTable/sum(DTable), H = H,
               yname = deparse(substitute(y)),
               Xname = deparse(substitute(X)),
               algorithm = algorithm)

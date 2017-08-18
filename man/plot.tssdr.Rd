@@ -10,8 +10,8 @@ Plots the response and the estimated directions (sources) resulting from a tssdr
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{Object of class tssdr.}
-  \item{main}{Title of the time series plot.}
+  \item{x}{An object of class tssdr.}
+  \item{main}{A title for the time series plot.}
   \item{\dots}{Further arguments to be passed to or from methods.}
 }
 \author{Markus Matilainen}

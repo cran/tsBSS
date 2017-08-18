@@ -1,10 +1,14 @@
 LOG of the CHANGES in the package tsBSS
 
-Version 0.1:
-* First version submitted to CRAN
+Version 0.3.1:
+* Changed tssdr function to allow different values of H for TSIR and TSAVE parts of TSSH
+* Fixed some minor errors
+
+Version 0.3:
+* Added functions to supervised dimension reduction for multivariate time series
 
 Version 0.2:
 * Added function FixNA and a new nonlinearity function choice to vSOBI method
 
-Version 0.3:
-* Added functions to supervised dimension reduction for multivariate time series
+Version 0.1:
+* First version submitted to CRAN

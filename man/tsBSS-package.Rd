@@ -5,21 +5,19 @@
 Tools for Blind Source Separation and Supervised Dimension Reduction for Time Series
 }
 \description{
-Different estimates are provided to solve
-the blind source separation problem for multivariate time series with stochastic volatility
-and supervised dimension reduction problem for multivariate time series.
+Different estimates are provided to solve the blind source separation problem for multivariate time series with stochastic volatility and supervised dimension reduction problem for multivariate time series.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.3\cr
-Date: \tab 2017-06-28\cr
+Version: \tab 0.3.1\cr
+Date: \tab 2017-08-14\cr
 License: \tab GPL (>= 2)
 }
-This package contains functions for blind source separation (BSS) problem for multivariate time series with stochastic volatility, like for example GARCH models.
-The main functions of the package for BSS problem are
+This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
+The main functions of the package for the BSS problem are
 \itemize{
 \item{\code{\link{FixNA}}}  {Function to solve the BSS problem. Algorithm is an alternative to \code{\link{vSOBI}} algorithm to acommodate stochastic volatility.}
 \item{\code{\link{gFOBI}}}  {Function to solve the BSS problem. Algorithm is a generalization of \code{\link[JADE]{FOBI}} designed for time series with stochastic volatility.}
@@ -27,12 +25,12 @@ The main functions of the package for BSS problem are
 \item{\code{\link{vSOBI}}}  {Function to solve the BSS problem. Algorithm is a variant of \code{\link[JADE]{SOBI}} algorithm and an alternative to \code{\link{FixNA}} to acommodate stochastic volatility.}
 }
 
-The main function of the package for supervised dimension reduction is
+The main function of the package for the supervised dimension reduction is
 \itemize{
 \item{\code{\link{tssdr}}}  {Function for supervised dimension reduction for multivariate time series. Includes methods TSIR, TSAVE and TSSH.}
 }
 
-Methods for ARMA models, like AMUSE and SOBI, and some non-stationary BSS methods for time series are implemented in the \code{\link[JADE]{JADE-package}}. See function \code{\link[dr]{dr}} for methods for supervised dimension reduction for iid observations.
+Methods for ARMA models, such as AMUSE and SOBI, and some non-stationary BSS methods for time series are implemented in the \code{\link[JADE]{JADE-package}}. See function \code{\link[dr]{dr}} for methods for supervised dimension reduction for iid observations.
 
 }
 

@@ -7,7 +7,7 @@
 A Variant of SOBI for Blind Source Separation
 }
 \description{
-The vSOBI method for blind source separation problem. It is used in a case of time series with stochastic volatility.
+The vSOBI method for the blind source separation problem. It is designed for time series with stochastic volatility.
 The method is a variant of SOBI, which is a method designed to separate ARMA sources, and an alternative to FixNA and FixNA2 methods.
 }
 \usage{
@@ -19,17 +19,17 @@ vSOBI(X, \ldots)
 
 }
 \arguments{
-  \item{X}{Numeric matrix or multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{k}{Vector of lags. Lag can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
+  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
+  \item{k}{A vector of lags. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
   \item{eps}{Convergence tolerance.}
-  \item{maxiter}{Maximum number of iterations.}
-  \item{G}{Function \eqn{G(x)}. Choices are \code{pow} (default) and \code{lcosh}.}
+  \item{maxiter}{The maximum number of iterations.}
+  \item{G}{Function \eqn{G(x)}. The choices are \code{pow} (default) and \code{lcosh}.}
   \item{\ldots}{Further arguments to be passed to or from methods.}
   }
 \details{
 
-Assume that \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
-where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}. The algorithm finds an orthogonal matrix \eqn{{\bf U}}{U} by maximizing
+Assume that a \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
+where \eqn{{\bf S}}{S} is the sample covariance matrix of \eqn{{\bf X}}{X}. The algorithm finds an orthogonal matrix \eqn{{\bf U}}{U} by maximizing
 \deqn{{\bf D}({\bf U}) = \sum_{k = 1}^K {\bf D}_k({\bf U})}{D(U) = sum_k(D_k(U))}
 \deqn{= \sum_{k = 1}^K \sum_{i = 1}^p  \left(\frac{1}{T - k}\sum_{t=1}^{T - k}[G({\bf u}_i' {\bf Y}_t) G({\bf u}_i' {\bf Y}_{t + k})] - \left(\frac{1}{T - k}\right)^2\sum_{t=1}^{T - k}[G({\bf u}_i' {\bf Y}_t)]\sum_{t=1}^{T - k}[G({\bf u}_i' {\bf Y}_{t + k})]\right)^2.}{ = sum_k(sum_i(((1/(T - k))*sum_t[G(u_i' Y_t)*G(u_i' Y_(t + k))] - (1/(T - k)^2*sum_t[G(u_i' Y_t)]*sum_t[G(u_i' Y_(t + k))])^2))),}
 \if{html}{where \eqn{i = 1, \ldots, p}, \eqn{k = 1, \ldots, K} and \eqn{t = 1, \ldots, T}.} For function \eqn{G(x)} the choices are \eqn{x^2} and log(cosh(\eqn{x})).
@@ -48,7 +48,7 @@ The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)
 A list with class 'bss' containing the following components:
   \item{W }{The estimated unmixing matrix.}
   \item{k }{The vector of the used lags.}
-  \item{S }{Estimated sources as time series object standardized to have mean 0 and unit variances.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances.}
 }
 \references{
 Belouchrani, A., Abed-Meriam, K., Cardoso, J.F. and Moulines, R. (1997), \emph{A blind Source Separation Technique Using Second-Order Statistics}, IEEE Transactions on Signal Processing, 434--444.

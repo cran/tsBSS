@@ -23,7 +23,7 @@
                   }
                 )
   }
-  W <- object$W[1:p, ] #The p'*p matrix: first p' rows of a matrix W
+  W <- object$W[1:p,  , drop = F] #The p'*p matrix: first p' rows of a matrix W
   S <- object$S[, 1:(p + 1)] #The response and the first p' directions
   RES <- list(W = W, L = L, S = S, type = type, algorithm = object$algorithm,
               y = object$y, X = object$X)

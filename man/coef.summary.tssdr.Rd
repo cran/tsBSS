@@ -2,7 +2,7 @@
 \alias{coef.summary.tssdr}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Coefficients of a summary.tssdr object
+The coefficients of a summary.tssdr object
 }
 \description{
 Extracts the estimated signal separation matrix from an object of class summary.tssdr.
@@ -12,7 +12,7 @@ Extracts the estimated signal separation matrix from an object of class summary.
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{Object of class summary.tssdr.}
+  \item{object}{An object of class summary.tssdr.}
   \item{\dots}{Further arguments to be passed to or from methods.}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
