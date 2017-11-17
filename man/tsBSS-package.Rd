@@ -2,18 +2,18 @@
 \alias{tsBSS-package}
 \docType{package}
 \title{
-Tools for Blind Source Separation and Supervised Dimension Reduction for Time Series
+Blind Source Separation and Supervised Dimension Reduction for Time Series
 }
 \description{
-Different estimates are provided to solve the blind source separation problem for multivariate time series with stochastic volatility and supervised dimension reduction problem for multivariate time series.
+Different estimates are provided to solve the blind source separation problem for multivariate time series with stochastic volatility (Matilainen, Nordhausen and Oja (2015) <doi:10.1016/j.spl.2015.04.033>); Matilainen, Miettinen, Nordhausen, Oja and Taskinen (2017) <doi:10.17713/ajs.v46i3-4.671>) and supervised dimension reduction problem for multivariate time series (Matilainen, Croux, Nordhausen and Oja (2017) <doi:10.1016/j.ecosta.2017.04.002>).
 }
 
 \details{
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.3.1\cr
-Date: \tab 2017-08-14\cr
+Version: \tab 0.4\cr
+Date: \tab 2017-11-17\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -25,6 +25,7 @@ The main functions of the package for the BSS problem are
 \item{\code{\link{vSOBI}}}  {Function to solve the BSS problem. Algorithm is a variant of \code{\link[JADE]{SOBI}} algorithm and an alternative to \code{\link{FixNA}} to acommodate stochastic volatility.}
 }
 
+
 The main function of the package for the supervised dimension reduction is
 \itemize{
 \item{\code{\link{tssdr}}}  {Function for supervised dimension reduction for multivariate time series. Includes methods TSIR, TSAVE and TSSH.}
@@ -32,6 +33,7 @@ The main function of the package for the supervised dimension reduction is
 
 Methods for ARMA models, such as AMUSE and SOBI, and some non-stationary BSS methods for time series are implemented in the \code{\link[JADE]{JADE-package}}. See function \code{\link[dr]{dr}} for methods for supervised dimension reduction for iid observations.
 
+The package also contains a dataset \code{\link{WeeklyReturnsData}}, that has logarithmic Returns of Exchange Rates of 7 Currencies Against US Dollar.
 }
 
 \author{
@@ -44,11 +46,14 @@ Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New independent compone
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 
-Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, x(x), xx--xx. \doi{10.1016/j.ecosta.2017.04.002}
+Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 
-Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Manuscript.
+Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted.
 
 Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{ Blind Source Separation with Nonlinear Autocorrelation and Non-Gaussianity}, Journal of Computational and Applied Mathematics, 223(1): 908--915.
+
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
+
 
 }
 

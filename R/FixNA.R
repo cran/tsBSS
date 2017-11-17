@@ -2,7 +2,8 @@
 FixNA <- function(X, ...) UseMethod("FixNA")
 
 # main function for FixNA and FixNA2)
-FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA", ...){
+FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA",
+                           ordered = FALSE, acfk = NULL, original = TRUE, ...){
   method <- match.arg(method, c("FixNA", "FixNA2"))
   G <- match.arg(G, c("pow", "lcosh"))
   if (method == "FixNA") met = 1 else met = 2 #FixNA = 1, FixNA2 = 2
@@ -35,9 +36,26 @@ FixNA.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
   } #While the criterion value is below tolerance value.
   W <- crossprod(U, COV.sqrt.i) #Unmixing matrix
   S <- tcrossprod(X.C, W)
+  if (ordered == TRUE) { #Ordering by volatility
+    if (is.null(acfk) == TRUE) { acfk <- k }
+    ord <- ordf(S, acfk, p, ...)
+    if (original == TRUE) {
+      S <- ord$S # Original independent components
+    } else {
+      S <- ord$RS # Residuals based on ARMA fit, if applicable; otherwise otiginal IC's
+    }
+  }
   S <- ts(S, names = paste("Series", 1:p))
   RES <- list(W = W, k = k, S = S)
-  class(RES) <- "bss"
+  if (ordered == TRUE) {
+    RES$fits <- ord$fits
+    RES$armaeff <- ord$armaeff
+    RES$linTS <- ord$linTS
+    RES$linP <- ord$linP
+    RES$volTS <- ord$volTS
+    RES$volP <- ord$volP
+  }
+  class(RES) <- c("bssvol", "bss")
   RES
 }
 

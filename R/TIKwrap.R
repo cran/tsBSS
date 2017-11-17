@@ -10,4 +10,9 @@ TIKlcc <- function(Y, U = U, k = 1, method = 3)
   RES$Tik
 }
 
+TIK1c <- function(Y, U = U, k = 1)
+{
+  RES <- .Call("TIK1", Y, U, k, PACKAGE = "tsBSS")
+  RES$Tik
+}
 

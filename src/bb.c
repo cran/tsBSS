@@ -9,17 +9,25 @@
 
 /* .Call calls */
 extern SEXP CCK(SEXP, SEXP);
+extern SEXP PVCk(SEXP, SEXP);
 extern SEXP TIK(SEXP, SEXP, SEXP, SEXP);
 extern SEXP TIKlc(SEXP, SEXP, SEXP, SEXP);
+extern SEXP TIK1(SEXP, SEXP, SEXP);
 extern SEXP TSAVE(SEXP, SEXP, SEXP, SEXP);
 extern SEXP TSIR(SEXP, SEXP, SEXP, SEXP);
+extern SEXP lblinM(SEXP, SEXP);
+extern SEXP lbsqM(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"CCK",    (DL_FUNC) &CCK,    2},
+    {"PVCk",   (DL_FUNC) &PVCk,   2},
     {"TIK",    (DL_FUNC) &TIK,    4},
     {"TIKlc",  (DL_FUNC) &TIKlc,  4},
+    {"TIK1",   (DL_FUNC) &TIK1,   3},
     {"TSAVE",  (DL_FUNC) &TSAVE,  4},
     {"TSIR",   (DL_FUNC) &TSIR,   4},
+    {"lblinM", (DL_FUNC) &lblinM, 2},
+    {"lbsqM",  (DL_FUNC) &lbsqM,  2},
     {NULL, NULL, 0}
 };
 

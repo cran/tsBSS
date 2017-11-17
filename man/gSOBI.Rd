@@ -1,47 +1,49 @@
-\name{vSOBI}
-\alias{vSOBI}
-\alias{vSOBI.default}
-\alias{vSOBI.ts}
+\name{gSOBI}
+\alias{gSOBI}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-A Variant of SOBI for Blind Source Separation
+Generalized SOBI
 }
 \description{
-The vSOBI method for the blind source separation problem. It is designed for time series with stochastic volatility.
-The method is a variant of SOBI, which is a method designed to separate ARMA sources, and an alternative to FixNA and FixNA2 methods.
+The gSOBI method for the blind source separation problem. It is designed for multivariate time series, where its components can be with or without stochastic volatility. The method is a combination of SOBI and vSOBI with \eqn{G(x) = x^2} as a nonlinearity function.
 }
 \usage{
-
-vSOBI(X, \ldots)
-
-\method{vSOBI}{default}(X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
-                        ordered = FALSE, acfk = NULL, original = TRUE, \ldots)
-\method{vSOBI}{ts}(X, \ldots)
-
+gSOBI(X, k1 = 1:12, k2 = 1:3, b = 0.9, eps = 1e-06, maxiter = 1000, ordered = FALSE,
+      acfk = NULL, original = TRUE, \ldots)
 }
+%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{k}{A vector of lags. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
+  \item{k1}{A vector of lags for SOBI part. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
+  \item{k2}{A vector of lags for vSOBI part. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:3}.}
+  \item{b}{The weight for the SOBI part, \eqn{1-b} for the vSOBI part. Default is 0.9.}
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{The maximum number of iterations.}
-  \item{G}{Function \eqn{G(x)}. The choices are \code{pow} (default) and \code{lcosh}.}
   \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
   \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
   \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
-  \item{\ldots}{Further arguments to be passed to or from methods.}
-  }
+  \item{\ldots}{Other arguments passed on to \code{auto.arima} function.}
+}
 \details{
-
 Assume that a \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
 where \eqn{{\bf S}}{S} is the sample covariance matrix of \eqn{{\bf X}}{X}. The algorithm finds an orthogonal matrix \eqn{{\bf U}}{U} by maximizing
-\deqn{{\bf D}({\bf U}) = \sum_{k = 1}^K {\bf D}_k({\bf U})}{D(U) = sum_k(D_k(U))}
-\deqn{= \sum_{k = 1}^K \sum_{i = 1}^p  \left(\frac{1}{T - k}\sum_{t=1}^{T - k}[G({\bf u}_i' {\bf Y}_t) G({\bf u}_i' {\bf Y}_{t + k})] - \left(\frac{1}{T - k}\right)^2\sum_{t=1}^{T - k}[G({\bf u}_i' {\bf Y}_t)]\sum_{t=1}^{T - k}[G({\bf u}_i' {\bf Y}_{t + k})]\right)^2.}{ = sum_k(sum_i(((1/(T - k))*sum_t[G(u_i' Y_t)*G(u_i' Y_(t + k))] - (1/(T - k)^2*sum_t[G(u_i' Y_t)]*sum_t[G(u_i' Y_(t + k))])^2))),}
-\if{html}{where \eqn{i = 1, \ldots, p}, \eqn{k = 1, \ldots, K} and \eqn{t = 1, \ldots, T}.} For function \eqn{G(x)} the choices are \eqn{x^2} and log(cosh(\eqn{x})).
+\deqn{{\bf D}({\bf U}) = b\sum_{k_1 = 1}^{K_1} {\bf D}_{k_1}({\bf U}) + (1 - b)\sum_{k_2 = 1}^{K_2} {\bf D}_{k_2}({\bf U}),}{D(U) = b*sum_k_1(D_k_1(U)) + (1 - b)*sum_k_2(D_k_2(U)) ,}
+
+where SOBI part
+
+\deqn{{\bf D}_{k_1} = \sum_{i = 1}^p  \left(\frac{1}{T - k_1}\sum_{t=1}^{T - k_1}[({\bf u}_i' {\bf Y}_t) ({\bf u}_i' {\bf Y}_{t + k_1})]\right)^2.}{D_k_1 = sum_i(((1/(T - k_1))*sum_t[(u_i' Y_t)*(u_i' Y_(t + k_1))])^2),}
+
+and vSOBI part
+
+\deqn{{\bf D}_{k_2} = \sum_{i = 1}^p  \left(\frac{1}{T - k_2}\sum_{t=1}^{T - k_2}[({\bf u}_i' {\bf Y}_t)^2 ({\bf u}_i' {\bf Y}_{t + k_2})^2] - \left(\frac{1}{T - k_2}\right)^2\sum_{t=1}^{T - k_2}[({\bf u}_i' {\bf Y}_t)^2]\sum_{t=1}^{T - k_2}[({\bf u}_i' {\bf Y}_{t + k_2})^2]\right)^2}{D_k_2 = sum_i(((1/(T - k_2))*sum_t[(u_i' Y_t)^2*(u_i' Y_(t + k_2))^2] - (1/(T - k_2)^2*sum_t[(u_i' Y_t)^2]*sum_t[(u_i' Y_(t + k_2))^2])^2))}
+where \eqn{b \in [0, 1].}{b}
+\if{html}{is a value between 0 and 1, and \eqn{i = 1, \ldots, p}, \eqn{k_1 = 1, \ldots, K_1}, \eqn{k_2 = 1, \ldots, K_2} and \eqn{t = 1, \ldots, T}}
 
 The algorithm works iteratively starting with \code{diag(p)} as an initial value for an orthogonal matrix \eqn{{\bf U} = ({\bf u}_1, {\bf u}_2, \ldots, {\bf u}_p)'}{U = (u_1, u_2, \ldots, u_p)'}.
 
-Matrix \eqn{{\bf T}_{ik}}{T_ik} is a partial derivative of \eqn{{\bf D}_k({\bf U})}{D_k(U)} with respect to \eqn{{\bf u}_i}{u_i}.
-Then \eqn{{\bf T}_k = ({\bf T}_{1k}, \ldots, {\bf T}_{pk})'}{T_k = (T_1k, \ldots, T_pk)'}, where \eqn{p} is the number of columns in \eqn{{\bf Y}}{Y}, and \eqn{{\bf T} = \sum_{k = 1}^K {\bf T}_k}{T = sum(T_k)}.
+Matrix \eqn{{\bf T}_{ikj}}{T_ikj} is a partial derivative of \eqn{{\bf D}_{kj}({\bf U})}{D_kj(U)}, where \eqn{j = 1, 2}, with respect to \eqn{{\bf u}_i}{u_i}.
+Then \eqn{{\bf T}_{kj} = ({\bf T}_{1kj}, \ldots, {\bf T}_{pkj})'}{T_kj = (T_1kj, \ldots, T_pkj)'}, where \eqn{p} is the number of columns in \eqn{\bf Y}{Y}, and \eqn{{\bf T}_j = \sum_{k_j = 1}^{K_j} {\bf T}_{kj}}{T_j = sum(T_kj)}, for \eqn{j = 1, 2}. Finally \eqn{{\bf T} = b{\bf T}_1 + (1-b){\bf T}_2}{T = b*T_1 + (1 - b)*T_2}.
+
 The update for the orthogonal matrix \eqn{{\bf U}_{new} = ({\bf TT}')^{-1/2}{\bf T}}{U.new = (TT')^(-1/2)*T} is calculated at each iteration step. The algorithm stops when
 \deqn{||{\bf U}_{new} - {\bf U}_{old}||}{||U.new - U.old||}
 is less than \code{eps}.
@@ -53,7 +55,8 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 \value{
  A list with class 'bssvol' (inherits from class 'bss') containing the following components:
   \item{W }{The estimated unmixing matrix.}
-  \item{k }{The vector of the used lags.}
+  \item{k1}{The vector of the used lags for the SOBI part.}
+  \item{k2}{The vector of the used lags for the vSOBI part.}
   \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility.}
   If \code{ordered = TRUE}, then also the following components included in the list:
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}
@@ -64,16 +67,17 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
   \item{volP }{P-value based on the volatility clustering test statistic.}
 }
 \references{
-Belouchrani, A., Abed-Meriam, K., Cardoso, J.F. and Moulines, R. (1997), \emph{A blind Source Separation Technique Using Second-Order Statistics}, IEEE Transactions on Signal Processing, 434--444.
+Belouchrani, A., Abed-Meriam, K., Cardoso, J.F. and Moulines, R. (1997), \emph{A blind source separation technique using second-order statistics}, IEEE Transactions on Signal Processing, 434--444.
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
+
+
 }
-\author{
-Markus Matilainen
-}
+\author{Markus Matilainen, Jari Miettinen}
 \seealso{
-\code{\link[tsBSS]{FixNA}}, \code{\link[JADE]{SOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
+\code{\link[JADE]{SOBI}}, \code{\link[tsBSS]{vSOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
 }
 \examples{
 library(stochvol)
@@ -88,15 +92,12 @@ s3 <- svsim(n, mu = -10, phi = 0.95, sigma = 0.4)$y
 # create a daily time series
 X <- ts(cbind(s1, s2, s3) \%*\% t(A), end = c(2015, 338), frequency = 365.25)
 
-
-res <- vSOBI(X)
-res
+res <- gSOBI(X, 1:4, 1:2, 0.99)
+res$W
 coef(res)
 plot(res)
 head(bss.components(res))
 
 MD(res$W, A) # Minimum Distance Index, should be close to zero
-}
 
-\keyword{ multivariate }
-\keyword{ ts }
+}

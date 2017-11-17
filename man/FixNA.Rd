@@ -15,7 +15,8 @@ These methods are alternatives to vSOBI method.
 
 FixNA(X, \ldots)
 
-\method{FixNA}{default}(X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA", \ldots)
+\method{FixNA}{default}(X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA",
+                        ordered = FALSE, acfk = NULL, original = TRUE, \ldots)
 \method{FixNA}{ts}(X, \ldots)
 
 }
@@ -26,6 +27,9 @@ FixNA(X, \ldots)
   \item{maxiter}{The maximum number of iterations.}
   \item{G}{Function \eqn{G(x)}. The choices are \code{pow} (default) and \code{lcosh}.}
   \item{method}{The method to be used. The choices are \code{FixNA} (default) and \code{FixNA2}.}
+  \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
+  \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
+  \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
   \item{\ldots}{Further arguments to be passed to or from methods.}
 }
 \details{
@@ -47,15 +51,24 @@ The update for the orthogonal matrix \eqn{{\bf U}_{new} = ({\bf T}_m{\bf T}_m')^
 is less than \code{eps}.
 The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)}.
 
+For \code{ordered = TRUE} the function orders the sources according to their volatility. First a possible linear autocorrelation is removed using \code{\link[forecast]{auto.arima}}. Then a squared autocorrelation test is performed for the sources (or for their residuals, when linear correlation is present). The sources are then put in a decreasing order according to the value of the test statistic of the squared autocorrelation test. For more information, see \code{\link[tsBSS]{lbtest}}.
+
 }
 \value{
-A list with class 'bss' containing the following components:
+ A list with class 'bssvol' (inherits from class 'bss') containing the following components:
   \item{W }{The estimated unmixing matrix.}
   \item{k }{The vector of the used lags.}
-  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility.}
+  If \code{ordered = TRUE}, then also the following components included in the list:
+  \item{fits }{The ARMA fits for the components with linear autocorrelation.}
+  \item{armaeff }{A logical vector. Has value 1 if ARMA fit was done to the corresponding component.}
+  \item{linTS }{The value of the modified Ljung-Box test statistic for each component.}
+  \item{linP }{P-value based on the modified Ljung-Box test statistic for each component.}
+  \item{volTS }{The value of the volatility clustering test statistic.}
+  \item{volP }{P-value based on the volatility clustering test statistic.}
 }
 \references{
-\enc{Hyvärinen}{Hyvarinen}, A. (2001), \emph{Blind Source Separation by Nonstationarity of Variance: A Cumulant-Based Approach}, IEEE Transactions on Neural Networks, 12(6): 1471--1474.
+\enc{Hyv?rinen}{Hyvarinen}, A. (2001), \emph{Blind Source Separation by Nonstationarity of Variance: A Cumulant-Based Approach}, IEEE Transactions on Neural Networks, 12(6): 1471--1474.
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 
@@ -66,7 +79,7 @@ Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{ Blind Source Separation with Nonl
 Markus Matilainen
 }
 \seealso{
-\code{\link[tsBSS]{vSOBI}}
+\code{\link[tsBSS]{vSOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
 }
 \examples{
 library(stochvol)

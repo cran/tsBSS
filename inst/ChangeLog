@@ -1,5 +1,11 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.4:
+* Added function gSOBI
+* Added volatility ordering option to BSS functions
+* Added dataset WeeklyReturnsData
+* Added a function for modified PVC
+
 Version 0.3.1:
 * Changed tssdr function to allow different values of H for TSIR and TSAVE parts of TSSH
 * Fixed some minor errors

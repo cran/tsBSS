@@ -4,6 +4,7 @@
 
 using namespace Rcpp;
 using namespace arma;
+
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 SEXP CCK(SEXP Y, SEXP k)
@@ -81,6 +82,55 @@ SEXP CCK(SEXP Y, SEXP k)
                             Rcpp::Named("CCK") = CCK
                             );
 }
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+SEXP PVCk(SEXP Y, SEXP k)
+{
+  mat X = as<arma::mat>(Y);
+  vec tau = as<vec>(k);
+  int nk = tau.n_elem;
+  
+  int p = X.n_cols;
+  int n = X.n_rows;
+  
+  mat R = zeros(p, p);
+  mat XXcc = zeros(p, p);
+  mat Gij = zeros(p, p);
+  for(int m = 0; m < nk; m = m + 1) {
+    int K = tau(m);
+    int nK = n - K;
+    mat Xt = X.rows(0, nK - 1);
+    mat Xttau = X.rows(K, n - 1);
+    
+    for(int i = 0; i < p; i = i + 1) {
+      for(int j = 0; j < p; j = j + 1) {
+        vec xij = Xttau.col(i) % Xttau.col(j);
+        vec xijc = xij - mean(xij);
+        
+        cube XX(p, p, nK);
+        for(int kk = 0; kk < nK; kk = kk + 1) {
+          XX.slice(kk) = trans(Xt.row(kk)) * Xt.row(kk);
+        }
+        XXcc = mean(XX, 2);
+        
+        cube XXy(p, p, nK);
+        for(int kk = 0; kk < nK; kk = kk + 1) {
+          XXy.slice(kk) = (XX.slice(kk) - XXcc) * xijc(kk);
+        }
+        Gij = mean(XXy, 2);
+        R = R + trans(Gij) * Gij;
+      }
+    }
+  }
+  
+  return Rcpp::List::create(Rcpp::Named("p") = p,
+                            Rcpp::Named("n") = n,
+                            Rcpp::Named("k") = tau,
+                            Rcpp::Named("R") = R
+  );
+}
+
 
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
@@ -183,6 +233,40 @@ SEXP TIKlc(SEXP Y, SEXP U, SEXP k, SEXP method)
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 
+SEXP TIK1(SEXP Y, SEXP U, SEXP k)
+{
+  mat X = as<arma::mat>(Y);
+  mat O = as<arma::mat>(U);
+  int tau = as<int>(k);
+  
+  int p = X.n_cols;
+  int n = X.n_rows;
+  
+  mat Xt = X.rows(0, n - 1 - tau);
+  mat Xttau = X.rows(tau, n - 1);
+  
+  mat Tik = zeros(p,p);
+  
+  for( int ii = 0; ii < p; ii = ii + 1)
+  {
+    vec oy = Xt * O.col(ii);
+    vec oytau = Xttau * O.col(ii);
+    double Tik1 = mean(oy % oytau);
+    mat Tik2 = mean((Xt % repmat(oytau, 1, p)), 0);
+    mat Tik3 = mean((Xttau % repmat(oy, 1, p)), 0);
+    
+    Tik.col(ii) = trans(Tik1*(Tik2 + Tik3));
+  }
+  return Rcpp::List::create(Rcpp::Named("p") = p,
+                            Rcpp::Named("n") = n,
+                            Rcpp::Named("k") = tau,
+                            Rcpp::Named("Tik") = Tik
+  );
+}
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
 SEXP TSIR(SEXP X, SEXP slices, SEXP k, SEXP h)
 {
   mat XX = as<arma::mat>(X);
@@ -227,4 +311,71 @@ SEXP TSAVE(SEXP X, SEXP slices, SEXP k, SEXP h)
   }
   mat RES = mean(COV, 2);
   return Rcpp::List::create(Rcpp::Named("RES") = RES);
+}
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
+arma::mat varExx_k(arma::mat X, arma::vec k) {
+  int n = X.n_rows;
+  int p = X.n_cols;
+  int K = k.n_elem;
+  mat vExx_tau = zeros(K, p);
+  for(int j = 0; j < p; j = j + 1) {
+    X.col(j) = X.col(j)/stddev(X.col(j)); //variances scaled to 1;
+    for(int i = 0; i < K; i = i + 1) {
+      vec vec1 = pow(X(span(0, n - 1 - k(i)), j), 2);
+      vec vec2 = pow(X(span(k(i), n - 1), j), 2);
+      vExx_tau(i, j) = mean(vec1 % vec2);
+      for(int m = 1; m < 21; m = m + 1) {
+        vExx_tau(i, j) = vExx_tau(i, j) + 2*((n - m)/n)*(mean(X(span(0, n - m - 1 - k(i)), j) % 
+                                                                X(span(k(i), n - m - 1), j) % X(span(m, n - 1 - k(i)), j) %
+                                                                X(span(m + k(i), n - 1), j)));
+      }
+    }
+  }
+  return vExx_tau;
+}
+
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
+SEXP lblinM(SEXP X, SEXP k) {
+  mat XX = as<arma::mat>(X);
+  vec kk = as<vec>(k);
+  int n = XX.n_rows;
+  int p = XX.n_cols;
+  int K = kk.n_elem;
+  mat vars = varExx_k(XX, kk);
+  vec TS = zeros<vec>(p);
+  for(int j = 0; j < p; j = j + 1) {
+    XX.col(j) = XX.col(j)/stddev(XX.col(j)); //variances scaled to 1;
+    for(int i = 0; i < K; i = i + 1) {
+      TS(j) = TS(j) + n*pow(mean(XX(span(0, n - 1 - kk(i)), j) % XX(span(kk(i), n - 1), j)), 2)/vars(i, j);
+    }
+  }
+  return Rcpp::List::create(Rcpp::Named("RES") = TS);
+}
+
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+
+SEXP lbsqM(SEXP X, SEXP k) {
+  mat XX = as<arma::mat>(X);
+  vec kk = as<vec>(k);
+  int n = XX.n_rows;
+  int p = XX.n_cols;
+  int K = kk.n_elem;
+  vec TS = zeros<vec>(p);
+  for(int j = 0; j < p; j = j + 1) {
+    XX.col(j) = XX.col(j)/stddev(XX.col(j)); //variances scaled to 1;
+    for(int i = 0; i < K; i = i + 1) {
+      vec vec1 = pow(XX(span(0, n - 1 - kk(i)), j), 2);
+      vec vec2 = pow(XX(span(kk(i), n - 1), j), 2);
+      TS(j) = TS(j) + n*pow(mean(vec1 % vec2 - 1), 2)/4;
+    }
+  }
+  return Rcpp::List::create(Rcpp::Named("RES") = TS);
 }

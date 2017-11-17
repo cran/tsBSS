@@ -63,13 +63,13 @@ A list with class 'tssdr' containing the following components:
   \item{algorithm }{The used algorithm as a character string.}
   }
 \references{
-Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, xx(x), xx--xx. \doi{10.1016/j.ecosta.2017.04.002}
+Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 
-Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Manuscript.
+Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted.
 
-Li, K.C. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Journal of the American Statistical Association 86, 316--327.
+Li, K.C. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Journal of the American Statistical Association, 86, 316--327.
 
-Cook, R., Weisberg, S. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Comment. Journal of the American Statistical Association 86, 328--332.
+Cook, R., Weisberg, S. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Comment. Journal of the American Statistical Association, 86, 328--332.
 
 }
 \author{

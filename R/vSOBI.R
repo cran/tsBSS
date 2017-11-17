@@ -2,7 +2,8 @@
 vSOBI <- function(X, ...) UseMethod("vSOBI")
 
 # main function for vSOBI
-vSOBI.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", ...){
+vSOBI.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
+                           ordered = FALSE, acfk = NULL, original = TRUE, ...){
   G <- match.arg(G, c("pow", "lcosh"))
   MEAN <- colMeans(X)
   COV <- cov(X)
@@ -33,15 +34,31 @@ vSOBI.default <- function (X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", 
   } #While the criterion value is below tolerance value.
   W <- crossprod(U, COV.sqrt.i) #Unmixing matrix
   S <- tcrossprod(X.C, W)
+  if (ordered == TRUE) { #Ordering by volatility
+    if (is.null(acfk) == TRUE) { acfk <- k }
+    ord <- ordf(S, acfk, p, ...)
+    if (original == TRUE) {
+      S <- ord$S # Original independent components
+    } else {
+      S <- ord$RS # Residuals based on ARMA fit, if applicable; otherwise otiginal IC's
+    }
+  }
   S <- ts(S, names = paste("Series", 1:p))
   RES <- list(W = W, k = k, S = S)
-  class(RES) <- "bss"
+  if (ordered == TRUE) {
+    RES$fits <- ord$fits
+    RES$armaeff <- ord$armaeff
+    RES$linTS <- ord$linTS
+    RES$linP <- ord$linP
+    RES$volTS <- ord$volTS
+    RES$volP <- ord$volP
+  }
+  class(RES) <- c("bssvol", "bss")
   RES
 }
 
 
-vSOBI.ts <- function(X, ...)
-{
+vSOBI.ts <- function(X, ...) {
   x <- as.matrix(X)
   RES <- vSOBI.default(x, ...)
   S <- RES$S

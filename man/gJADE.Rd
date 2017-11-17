@@ -13,7 +13,9 @@ The method is a generalization of JADE, which is a method for blind source separ
 \usage{
 gJADE(X, \ldots)
 
-\method{gJADE}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", \ldots)
+\method{gJADE}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd",
+                        na.action = na.fail, weight = NULL,
+                        ordered = FALSE, acfk = NULL, original = TRUE, \ldots)
 \method{gJADE}{ts}(X, \ldots)
 
 }
@@ -23,7 +25,12 @@ gJADE(X, \ldots)
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{The maximum number of iterations.}
   \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
-  \item{\ldots}{Other arguments passed on to chosen joint diagonalization method.}
+  \item{na.action}{A function which indicates what should happen when the data contain 'NA's. Default is to fail.}
+  \item{weight}{A vector of length k to give weight to the different matrices in joint diagonalization. If NULL, all matrices have equal weight.}
+  \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
+  \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
+  \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
+  \item{\ldots}{Other arguments passed on to \code{auto.arima} function.}
 }
 \details{
 Assume that a \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
@@ -38,12 +45,21 @@ The algorithm finds an orthogonal matrix \eqn{{\bf U}}{U} by maximizing
 \if{html}{where \eqn{k = 1, \ldots, K}.}
 The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)}.
 
+For \code{ordered = TRUE} the function orders the sources according to their volatility. First a possible linear autocorrelation is removed using \code{\link[forecast]{auto.arima}}. Then a squared autocorrelation test is performed for the sources (or for their residuals, when linear correlation is present). The sources are then put in a decreasing order according to the value of the test statistic of the squared autocorrelation test. For more information, see \code{\link[tsBSS]{lbtest}}.
+
 }
 \value{
-A list with class 'bss' containing the following components:
+ A list with class 'bssvol' (inherits from class 'bss') containing the following components:
   \item{W }{The estimated unmixing matrix.}
   \item{k }{The vector of the used lags.}
-  \item{S }{The etimated sources as time series object standardized to have mean 0 and unit variances.}
+  \item{S }{The etimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility.}
+  If \code{ordered = TRUE}, then also the following components included in the list:
+  \item{fits }{The ARMA fits for the components with linear autocorrelation.}
+  \item{armaeff }{A logical vector. Has value 1 if ARMA fit was done to the corresponding component.}
+  \item{linTS }{The value of the modified Ljung-Box test statistic for each component.}
+  \item{linP }{P-value based on the modified Ljung-Box test statistic for each component.}
+  \item{volTS }{The value of the volatility clustering test statistic.}
+  \item{volP }{P-value based on the volatility clustering test statistic.}
 }
 \references{
 Cardoso, J.-F., Souloumiac, A., (1993). \emph{Blind Beamforming for Non-Gaussian Signals}, in: IEE-Proceedings-F, volume 140, pp. 362--370.
@@ -55,7 +71,7 @@ Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New Independent Compone
 Klaus Nordhausen, Markus Matilainen
 }
 \seealso{
-\code{\link[JADE]{frjd}}, \code{\link[JADE]{JADE}}, \code{\link{gFOBI}}
+\code{\link[JADE]{frjd}}, \code{\link[JADE]{JADE}}, \code{\link{gFOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
 }
 \examples{
 library(stochvol)

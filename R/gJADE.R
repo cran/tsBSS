@@ -2,10 +2,12 @@
 gJADE <- function(X, ...) UseMethod("gJADE")
 
 # main function for gJADE
-gJADE.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", ...)
+gJADE.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd", 
+                          na.action = na.fail, weight = NULL,
+                          ordered = FALSE, acfk = NULL, original = TRUE, ...)
 {
     nk <- length(k)
-    method <- match.arg(method, c("rjd", "djd", "frjd"))
+    method <- match.arg(method, c("rjd", "frjd"))
     MEAN <- colMeans(X)
     COV <- cov(X)
     p <- ncol(X)
@@ -16,17 +18,32 @@ gJADE.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frj
     
     ccks <- CCKc(Y, k)
     U <- switch(method, frjd = {
-      frjd(ccks, eps = eps, maxiter = maxiter, ...)$V
+      frjd(ccks, eps = eps, maxiter = maxiter, na.action = na.action, weight = weight)$V
     }, rjd = {
-      rjd(ccks, eps = eps, maxiter = maxiter, ...)$V
-    }, djd = {
-      djd(ccks, eps = eps, maxiter = maxiter, ...)
+      rjd(ccks, eps = eps, maxiter = maxiter, na.action = na.action)$V
     })
     W <- crossprod(U, COV.sqrt.i)
     S <- tcrossprod(X.C, W)
+    if (ordered == TRUE) { #Ordering by volatility
+      if (is.null(acfk) == TRUE) { acfk <- k }
+      ord <- ordf(S, acfk, p, ...)
+      if (original == TRUE) {
+        S <- ord$S # Original independent components
+      } else {
+        S <- ord$RS # Residuals based on ARMA fit, if applicable; otherwise otiginal IC's
+      }
+    }
     S <- ts(S, names = paste("Series", 1:p))
     RES <- list(W = W, k = k, S = S)
-    class(RES) <- "bss"
+    if (ordered == TRUE) {
+      RES$fits <- ord$fits
+      RES$armaeff <- ord$armaeff
+      RES$linTS <- ord$linTS
+      RES$linP <- ord$linP
+      RES$volTS <- ord$volTS
+      RES$volP <- ord$volP
+    }
+    class(RES) <- c("bssvol", "bss")
     RES
 }
 

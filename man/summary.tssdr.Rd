@@ -39,12 +39,15 @@ A list with class 'summary.tssdr' containing the following components:
   \item{L }{The Lambda matrix for choosing lags and directions.}
   \item{S }{The estimated directions as time series object standardized to have mean 0 and unit variances.}
   \item{type}{The method for choosing the important lags and directions.}
+  \item{algorithm }{The used algorithm as a character string.}
+  \item{yname }{The name for the response time series \eqn{y}.}
+  \item{Xname }{The name for the predictor time series \eqn{\bf X}{X}.}
   \item{k }{The chosen number of lags (not for \code{type = "big"} ).}
   \item{p }{The chosen number of directions (not for \code{type = "big"}).}
   \item{pk}{The chosen lag-direction combinations (for \code{type = "big"} only).}
   }
   \references{
-Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, xx(x), xx--xx. \doi{10.1016/j.ecosta.2017.04.002}
+Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 }
 \author{Markus Matilainen}
 \seealso{
