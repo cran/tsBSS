@@ -56,8 +56,7 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 \references{
 Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
 
-Hu, Y.-P. & Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic
-Statistics, 32(2), 153--164.
+Hu, Y.-P. & Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 
 }
 \author{

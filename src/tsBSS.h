@@ -7,6 +7,5 @@ RcppExport SEXP TIKlc(SEXP Y, SEXP U, SEXP k, SEXP method);
 RcppExport SEXP TIK1(SEXP Y, SEXP U, SEXP k);
 RcppExport SEXP TSAVE(SEXP X, SEXP slices, SEXP h, SEXP k);
 RcppExport SEXP TSIR(SEXP X, SEXP slices, SEXP h, SEXP k);
-RcppExport arma::mat varExx_k(arma::mat X, arma::vec k);
 RcppExport SEXP lblinM(SEXP X, SEXP k);
 RcppExport SEXP lbsqM(SEXP X, SEXP k);

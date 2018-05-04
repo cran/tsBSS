@@ -5,14 +5,19 @@
 # - whether volatility is constant or not
 
 lbtest <- function(X, k, type = "squared") {
+  Xname <- deparse(substitute(X))
   type <- match.arg(type, c("linear", "squared"))
+  if(is.null(ncol(X))) {
+    X <- as.matrix(X) #if X is gives as a vector
+    colnames(X) <- "Series 1"
+  }
   lbc <- switch(type, 
                 linear = lblinMc,
                 squared = lbsqMc)
   TS <- as.vector(lbc(X, k))
   K <- length(k)
   p_val <- 1 - pchisq(TS, K)
-  RES <- list(TS = TS, p_val = p_val, Xname = deparse(substitute(X)),
+  RES <- list(TS = TS, p_val = p_val, Xname = Xname,
               varnames = colnames(X), k = k, K = K, type = type)
   class(RES) <- "lbtest"
   RES

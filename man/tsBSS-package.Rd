@@ -12,8 +12,8 @@ Different estimates are provided to solve the blind source separation problem fo
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.4\cr
-Date: \tab 2017-11-17\cr
+Version: \tab 0.4.1\cr
+Date: \tab 2018-05-04\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -23,6 +23,8 @@ The main functions of the package for the BSS problem are
 \item{\code{\link{gFOBI}}}  {Function to solve the BSS problem. Algorithm is a generalization of \code{\link[JADE]{FOBI}} designed for time series with stochastic volatility.}
 \item{\code{\link{gJADE}}}  {Function to solve the BSS problem. Algorithm is a generalization of \code{\link[JADE]{JADE}} designed for time series with stochastic volatility.}
 \item{\code{\link{vSOBI}}}  {Function to solve the BSS problem. Algorithm is a variant of \code{\link[JADE]{SOBI}} algorithm and an alternative to \code{\link{FixNA}} to acommodate stochastic volatility.}
+\item{\code{\link{gSOBI}}}  {Function to solve the BSS problem. Algorithm is a combination of \code{\link[JADE]{SOBI}} and \code{\link{vSOBI}} algorithms.}
+\item{\code{\link{PVC}}}  {Function to solve the BSS problem. Algorithm is a modified version of Principal Component Analysis by Hu and Tsay (2011).}
 }
 
 
@@ -33,7 +35,9 @@ The main function of the package for the supervised dimension reduction is
 
 Methods for ARMA models, such as AMUSE and SOBI, and some non-stationary BSS methods for time series are implemented in the \code{\link[JADE]{JADE-package}}. See function \code{\link[dr]{dr}} for methods for supervised dimension reduction for iid observations.
 
-The package also contains a dataset \code{\link{WeeklyReturnsData}}, that has logarithmic Returns of Exchange Rates of 7 Currencies Against US Dollar.
+Additionally, there is function \code{\link{lbtest}} for a modified Ljung-Box test and a volatility clustering test for univariate and multivariate time series.
+
+The package also contains a dataset \code{\link{WeeklyReturnsData}}, that has logarithmic returns of exchange rates of 7 currencies against US Dollar.
 }
 
 \author{
@@ -54,6 +58,7 @@ Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{ Blind Source Separation with Nonl
 
 Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
 
+Hu, Y.-P. & Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 
 }
 

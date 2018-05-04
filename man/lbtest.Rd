@@ -6,14 +6,14 @@ Modified Ljung-Box test and volatility clustering test for time series.
 
 }
 \description{
-Modified Ljung-Box test and volatility clustering test time series. The modified Ljung-Box test checks whether there is linear autocorrelation in the time series. The volatility clustering test checks whether the time series has squared autocorrelation, which would indicate a presence of volatility clustering.
+Modified Ljung-Box test and volatility clustering test for time series. Time series can be univariate or multivariate. The modified Ljung-Box test checks whether there is linear autocorrelation in the time series. The volatility clustering test checks whether the time series has squared autocorrelation, which would indicate a presence of volatility clustering.
 }
 \usage{
 lbtest(X, k, type = "squared")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
+  \item{X}{A numeric vector or matrix, or a univariate or multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
   \item{k}{A vector of lags.}
   \item{type}{The type of the autocorrelation test. Options are Modified Ljung-Box test (\code{linear}) or volatility clustering test (\code{squared}) autocorrelation. Default is \code{squared}.}
 }
@@ -47,7 +47,7 @@ Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\c
   \item{type}{The type of the autocorrelation test.}
   }
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{???}, ???.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
 
 }
 \author{Markus Matilainen, Jari Miettinen}

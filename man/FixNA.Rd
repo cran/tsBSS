@@ -68,7 +68,7 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
   \item{volP }{P-value based on the volatility clustering test statistic.}
 }
 \references{
-\enc{Hyv?rinen}{Hyvarinen}, A. (2001), \emph{Blind Source Separation by Nonstationarity of Variance: A Cumulant-Based Approach}, IEEE Transactions on Neural Networks, 12(6): 1471--1474.
+\enc{Hyvärinen}{Hyvarinen}, A. (2001), \emph{Blind Source Separation by Nonstationarity of Variance: A Cumulant-Based Approach}, IEEE Transactions on Neural Networks, 12(6): 1471--1474.
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 

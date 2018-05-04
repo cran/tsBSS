@@ -1,5 +1,9 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.4.1:
+* Fixed some minor errors
+* Function lbtest changed to work also with univariate data
+
 Version 0.4:
 * Added function gSOBI
 * Added volatility ordering option to BSS functions
