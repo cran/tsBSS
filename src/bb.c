@@ -7,6 +7,22 @@
    Check these declarations against the C/Fortran source code.
 */
 
+/* .C calls */
+
+extern void rjd2c(void *, void *, void *, void *, void *);
+
+
+
+static const R_CMethodDef CEntries[] = {
+
+    {"rjd2c", (DL_FUNC) &rjd2c, 5},
+
+    {NULL, NULL, 0}
+
+};
+
+
+
 /* .Call calls */
 extern SEXP CCK(SEXP, SEXP);
 extern SEXP PVCk(SEXP, SEXP);
@@ -31,8 +47,10 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
+
+
 void R_init_tsBSS(DllInfo *dll)
 {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

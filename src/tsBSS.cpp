@@ -1,9 +1,128 @@
 #include "tsBSS.h"
 #include <Rcpp.h>
+#include <cmath>
 //#include <RcppArmadillo.h>
+//#include <R.h>
+//#include <Rdefines.h>
+//#include <Rinternals.h>
 
 using namespace Rcpp;
 using namespace arma;
+
+extern "C" {
+  
+  using namespace std;
+  
+  double **prepmat2(double *X, int n, int k)
+  {
+    int i;
+    int j;
+    double **Y = new double* [n];
+    for (i=0; i<n; i++) Y[i]=new double [k];
+    for (i=0;i<n; i++) 
+      for (j=0;j<k;j++)
+        Y[i][j]=X[j*n+i];
+    return Y;
+  }
+
+  void rjd2c(double *X, int *kpmaxit, double *w, double *eps, double *result)
+  {
+    int K = kpmaxit[0]; 
+    int p = kpmaxit[1];
+    int maxiter = kpmaxit[2]; 
+    int i;
+    int j;
+    int k;
+    int l;
+    double iter = 0;
+    double alpha;
+    double beta; 
+    double a1;
+    double b1; 
+    double a2;
+    double b2; 
+    double u;
+    double c;
+    double si;
+    double co;
+    double theta;     
+    bool cc = 1;
+    double **A = prepmat2(X,K*p,p);  
+    double **B = new double* [p];
+    for (i=0; i<p; i++) B[i]=new double [p];
+    for (i=0; i<(p-1); i++){
+      B[i][i] = 1;
+      for (j=(i+1); j<p; j++){ 
+        B[i][j] = 0;
+        B[j][i] = 0;
+      }
+    }
+    B[p-1][p-1] = 1; 
+    
+    while(cc){ 
+      iter++;
+      if(iter>maxiter){
+        B[0][0] = 2;   
+        break;
+      } 
+      cc = 0;
+      for(i=0; i<(p-1); i++){
+        for(j=(i+1); j<p; j++){
+          alpha = 0;
+          beta = 0;
+          for(k=0; k<K; k++){
+            u = A[k*p+i][i]-A[k*p+j][j];
+            c = A[k*p+i][j];
+            alpha += w[k]*(u*u-4*c*c);
+            beta += w[k]*4*u*c; 
+          }
+          theta = atan(beta/(alpha+sqrt(alpha*alpha+beta*beta)))/2;
+          si = sin(theta);
+          co = cos(theta);
+          if(abs(si)>eps[0]) cc = 1;
+          for(l=0; l<p; l++){
+            b1 = B[i][l];
+            b2 = B[j][l];
+            B[i][l] = co*b1+si*b2;
+            B[j][l] = co*b2-si*b1;
+          }
+          for(k=0; k<K; k++){
+            for(l=0; l<p; l++){
+              a1 = A[k*p+i][l];
+              a2 = A[k*p+j][l];
+              A[k*p+i][l] = co*a1+si*a2;
+              A[k*p+j][l] = co*a2-si*a1;
+            }
+            for(l=0; l<p; l++){
+              a1 = A[k*p+l][i];
+              a2 = A[k*p+l][j];
+              A[k*p+l][i] = co*a1+si*a2;
+              A[k*p+l][j] = co*a2-si*a1;
+            }
+          }
+        }
+      }
+    }
+    
+    l=0;
+    for(i=0;i<p;i++){   
+      for(j=0;j<p;j++){
+        result[l] = B[i][j];
+        l++;
+      }
+    }
+    result[p*p] = iter;
+    
+    for(i=0;i<(K*p);i++)   
+      delete [] A[i]; 
+    delete [] A;
+    
+    for(i=0;i<p;i++)   
+      delete [] B[i]; 
+    delete [] B;
+  }
+} //Reused with permission from Jari Miettinen, writer of the C code in JADE package and
+//a co-author of JADE and tsBSS packages
 
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]

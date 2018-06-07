@@ -1,8 +1,10 @@
 importFrom(Rcpp, evalCpp)
 importFrom(forecast, auto.arima)
-import(JADE, ICtest, stats)
+importFrom(boot, tsboot)
+import(JADE, ICtest, stats, parallel)
 
-export(FixNA, gFOBI, gJADE, tssdr, vSOBI, gSOBI, PVC, lbtest)
+export(FixNA, gFOBI, gJADE, tssdr, vSOBI, gSOBI, PVC, lbtest,AMUSEboot)
+export(AMUSEasymp, AMUSEboot, AMUSEladle, SOBIasymp, SOBIboot, SOBIladle)
 S3method(FixNA,default)
 S3method(FixNA,ts)
 S3method(gFOBI,default)

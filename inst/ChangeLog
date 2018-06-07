@@ -1,5 +1,8 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.5.0:
+* Added several functions for white noise subspace dimension estimation in SOS models
+
 Version 0.4.1:
 * Fixed some minor errors
 * Function lbtest changed to work also with univariate data

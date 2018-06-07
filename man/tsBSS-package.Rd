@@ -5,15 +5,15 @@
 Blind Source Separation and Supervised Dimension Reduction for Time Series
 }
 \description{
-Different estimates are provided to solve the blind source separation problem for multivariate time series with stochastic volatility (Matilainen, Nordhausen and Oja (2015) <doi:10.1016/j.spl.2015.04.033>); Matilainen, Miettinen, Nordhausen, Oja and Taskinen (2017) <doi:10.17713/ajs.v46i3-4.671>) and supervised dimension reduction problem for multivariate time series (Matilainen, Croux, Nordhausen and Oja (2017) <doi:10.1016/j.ecosta.2017.04.002>).
+Different estimates are provided to solve the blind source separation problem for multivariate time series with stochastic volatility (Matilainen, Nordhausen and Oja (2015) <doi:10.1016/j.spl.2015.04.033>; Matilainen, Miettinen, Nordhausen, Oja and Taskinen (2017) <doi:10.17713/ajs.v46i3-4.671>) and supervised dimension reduction problem for multivariate time series (Matilainen, Croux, Nordhausen and Oja (2017) <doi:10.1016/j.ecosta.2017.04.002>). Different functions based on AMUSE and SOBI are also provided for estimating the dimension of the white noise subspace. 
 }
 
 \details{
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.4.1\cr
-Date: \tab 2018-05-04\cr
+Version: \tab 0.5.0\cr
+Date: \tab 2018-06-07\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -35,15 +35,20 @@ The main function of the package for the supervised dimension reduction is
 
 Methods for ARMA models, such as AMUSE and SOBI, and some non-stationary BSS methods for time series are implemented in the \code{\link[JADE]{JADE-package}}. See function \code{\link[dr]{dr}} for methods for supervised dimension reduction for iid observations.
 
+There are several functions for estimating the number of white noise latent series in Second-order Separation models. The functions are 
+\itemize{\item{\code{\link{AMUSEboot}}, \code{\link{AMUSEladle}} and  \code{\link{AMUSEasymp}} which are based on \code{\link[JADE]{AMUSE}}.}
+
+\item{\code{\link{SOBIboot}}, \code{\link{SOBIladle}} and  \code{\link{SOBIasymp}} which are based on  \code{\link[JADE]{SOBI}}.}
+}
 Additionally, there is function \code{\link{lbtest}} for a modified Ljung-Box test and a volatility clustering test for univariate and multivariate time series.
 
 The package also contains a dataset \code{\link{WeeklyReturnsData}}, that has logarithmic returns of exchange rates of 7 currencies against US Dollar.
 }
 
 \author{
-Markus Matilainen,  Christophe Croux, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen
+Markus Matilainen,  Christophe Croux, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen, Joni Virta
 
-Maintainer: Markus Matilainen <markus.matilainen@utu.fi> 
+Maintainer: Markus Matilainen <markus.matilainen@outlook.com> 
 }
 \references{
 Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New independent component analysis tools for time series}, Statistics & Probability Letters, 105, 80--87.
@@ -54,7 +59,13 @@ Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimensi
 
 Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted.
 
-Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{ Blind Source Separation with Nonlinear Autocorrelation and Non-Gaussianity}, Journal of Computational and Applied Mathematics, 223(1): 908--915.
+Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{Blind Source Separation with Nonlinear Autocorrelation and Non-Gaussianity}, Journal of Computational and Applied Mathematics, 223(1): 908--915.
+
+Matilainen, M., Nordhausen, K., Virta, J. (2018), \emph{On the number of signals in multivariate time series}, to appear in the proceedings of International Conference on Latent Variable Analysis and Signal Separation 2018 (LVA/ICA), <https://arxiv.org/abs/1801.04925>.
+
+Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal Dimension}, to appear in the proceedings of IEEE Statistical Signal Processing Workshop 2018 (SSP).
+
+Nordhausen, K., Virta, J. (2018), \emph{Asymptotic test for the signal dimension in blind source separation}, under prepration.
 
 Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
 
