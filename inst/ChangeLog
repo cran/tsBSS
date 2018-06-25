@@ -1,5 +1,8 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.5.1:
+* Fixing bugs in AMUSEboot and SOBIboot when k=0
+
 Version 0.5.0:
 * Added several functions for white noise subspace dimension estimation in SOS models
 

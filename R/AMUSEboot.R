@@ -162,7 +162,7 @@ AMUSE_boot_np2 <- function (X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL
   names(PARAMETER) <- c("replications")
   Z <- tcrossprod(X.C, W)
   Z1 <- Z[, 0:k, drop = FALSE]
-  Z2 <- Z[, -(0:k), drop = FALSE]
+  Z2 <- Z[, (k+1):p, drop = FALSE]
   Winv <- solve(W)
   
   
@@ -231,7 +231,7 @@ AMUSE_boot_np1 <- function (X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL
   names(PARAMETER) <- c("replications")
   Z <- tcrossprod(X.C, W)
   Z1 <- Z[, 0:k, drop = FALSE]
-  Z2 <- Z[, -(0:k), drop = FALSE]
+  Z2 <- Z[, (k+1):p, drop = FALSE]
   Winv <- solve(W)
   
   if(!is.null(ncores) && ncores > 1){
@@ -298,7 +298,7 @@ AMUSE_boot_np3 <- function (X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL
   names(PARAMETER) <- c("replications")
   Z <- tcrossprod(X.C, W)
   Z1 <- Z[, 0:k, drop = FALSE]
-  Z2 <- Z[, -(0:k), drop = FALSE]
+  Z2 <- Z[, (k+1):p, drop = FALSE]
   Winv <- solve(W)
   
   if(!is.null(ncores) && ncores > 1){

@@ -2,8 +2,8 @@ Package: tsBSS
 Type: Package
 Title: Blind Source Separation and Supervised Dimension Reduction for
         Time Series
-Version: 0.5.0
-Date: 2018-06-07
+Version: 0.5.1
+Date: 2018-06-21
 Author: Markus Matilainen, Christophe Croux, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen, Joni Virta
 Maintainer: Markus Matilainen <markus.matilainen@outlook.com>
 Depends: ICtest, JADE
@@ -14,6 +14,6 @@ Description: Different estimates are provided to solve the blind source separati
 License: GPL (>= 2)
 LazyData: true
 NeedsCompilation: yes
-Packaged: 2018-06-07 09:16:45 UTC; manmat
+Packaged: 2018-06-25 13:40:52 UTC; manmat
 Repository: CRAN
-Date/Publication: 2018-06-07 17:56:44 UTC
+Date/Publication: 2018-06-25 14:27:58 UTC

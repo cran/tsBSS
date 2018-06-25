@@ -1,7 +1,7 @@
-a1bbd80ffc3647624a431b363c9acece *DESCRIPTION
+57a0739709b8d629fb74d135baac371e *DESCRIPTION
 ee8e04fea35f041517dc22908b0f68cd *NAMESPACE
 7b5ec1769cc898ffae9abd8bfa260357 *R/AMUSEasymp.r
-03389480018ba40e51f8b64051a0cbf4 *R/AMUSEboot.R
+aea0ade50da43a3dc5bc05e6a7c6478e *R/AMUSEboot.R
 e3099cf9f8a7de599a00b74e407eb016 *R/AMUSEladle.R
 b05586547f56a67fa808ac8a1e218348 *R/CKKwrap.R
 1a1bb370ed29604d773c81c32455458d *R/FixNA.R
@@ -9,7 +9,7 @@ b05586547f56a67fa808ac8a1e218348 *R/CKKwrap.R
 f7fcba72a25edcafca63d2c97ec53f8e *R/PVC.R
 cdcf9f358523cbff257d41e4d2d89d95 *R/PVCwrap.R
 2ae9bb3c9720a009ce968f7bddece076 *R/SOBIasymp.R
-929f535664d21bbd7607269b5ecec910 *R/SOBIboot.R
+0cef8dc620b0f3e28fe798799be78ee8 *R/SOBIboot.R
 5c2a0db435b935fb2bfa5f85f40c4dd6 *R/SOBIladle.R
 894f36e80891a68aa9453850f9eef9ca *R/TIKwrap.R
 61a25b832e326f40ef6aad3ab4976e48 *R/TSwrap.R
@@ -24,7 +24,7 @@ ade361dd00bdd35b112ec9d939ed6990 *R/summary.tssdr.R
 1524f1586ff57bf2d45bff9cd0e5c893 *R/vSOBI.R
 713eb039fa3f3caa9ee626025e56c648 *data/WeeklyReturnsData.RData
 8ed5fcc48fbb2d3db5856d1d7e1319bc *data/datalist
-db9f6a1c23c0be6373ff4737b8955ac5 *inst/ChangeLog
+8d8fc7a288639c01673bc13bce2b0965 *inst/ChangeLog
 e0840f1a000238d91d06036c25ffaef9 *man/AMUSEasymp.Rd
 5d7f393c7388af9c4fe73f8a32a5e99c *man/AMUSEboot.Rd
 835c184d98f32ee950c9a040520487bb *man/AMUSEladle.Rd
@@ -48,7 +48,7 @@ fdddfa25dc808f252c49c562baa83743 *man/lbtest.Rd
 15754c4ad34dafc2378d7dc127ea246f *man/print.summary.tssdr.Rd
 02641082eb3bfa0458bebcad8597abca *man/print.tssdr.Rd
 f41e2fb41acf60433513fd001ea04098 *man/summary.tssdr.Rd
-a935d3800ac4f09bca8520532a06d26a *man/tsBSS-package.Rd
+52bd0a3b812b079eff0e9acf2ad66c74 *man/tsBSS-package.Rd
 97689c654b76e94f655c12577016a1b6 *man/tssdr.Rd
 1950733efb1919410f3d2df0dd44d92a *man/vSOBI.Rd
 95a5e0dc5dbdec9c251c142cb4cad286 *src/Makevars
