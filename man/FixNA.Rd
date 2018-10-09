@@ -16,7 +16,7 @@ These methods are alternatives to vSOBI method.
 FixNA(X, \ldots)
 
 \method{FixNA}{default}(X, k = 1:12, eps = 1e-06, maxiter = 1000, G = "pow", method = "FixNA",
-                        ordered = FALSE, acfk = NULL, original = TRUE, \ldots)
+                        ordered = FALSE, acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
 \method{FixNA}{ts}(X, \ldots)
 
 }
@@ -30,6 +30,7 @@ FixNA(X, \ldots)
   \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
   \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
   \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
+  \item{alpha}{Alpha level for linear correlation detection. Default is 0.05.}
   \item{\ldots}{Further arguments to be passed to or from methods.}
 }
 \details{
@@ -56,10 +57,12 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 \value{
  A list with class 'bssvol' (inherits from class 'bss') containing the following components:
-  \item{W }{The estimated unmixing matrix.}
+  \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k }{The vector of the used lags.}
-  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = F}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
+  \item{MU}{The means of the original series.}
   If \code{ordered = TRUE}, then also the following components included in the list:
+  \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}
   \item{armaeff }{A logical vector. Has value 1 if ARMA fit was done to the corresponding component.}
   \item{linTS }{The value of the modified Ljung-Box test statistic for each component.}

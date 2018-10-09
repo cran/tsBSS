@@ -13,14 +13,14 @@ SOBIasymp(X, k, tau = 1:12, eps = 1e-06, maxiter = 200)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{A numeric data matrix or a numeric multivariate time series.}
-  \item{k}{The number of latent series that are not white noise. Can be between 0 and p-1.}
+  \item{k}{The number of latent series that are not white noise. Can be between \eqn{0} and \eqn{p-1}.}
   \item{tau}{The lags for the SOBI autocovariance matrices.}
   \item{eps}{The convergence tolerance for the joint diagonalization.}
   \item{maxiter}{The maximum number of iterations for the joint diagonalization.}
 }
 
 \details{
-SOBI standardizes the data matrix \code{X} with \eqn{n} samples and jointly diagonalizes the autocovariance matrices of the standardized data for a chosen set of lags \code{tau}, yielding a transformation \eqn{W} giving the latent variables as \eqn{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the sums of squares of the corresponding "eigenvalues" produced by the joint diagonalization. Under the null the lower right corner \eqn{(p - k) \times (p - k)} blocks of the autocovariance matrices of the sources are zero matrices and the sum \eqn{m} of their squared norms over all lags can be used as a test statistic in inference on the true number of latent white noise series.
+SOBI standardizes \code{X} with \eqn{n} samples and jointly diagonalizes the autocovariance matrices of the standardized data for a chosen set of lags \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the sums of squares of the corresponding "eigenvalues" produced by the joint diagonalization. Under the null the lower right corner \eqn{(p - k) \times (p - k)}{(p - k)*(p - k)} blocks of the autocovariance matrices of the sources are zero matrices and the sum \eqn{m} of their squared norms over all lags can be used as a test statistic in inference on the true number of latent white noise series.
 
 This function conducts the hypothesis test using the asymptotic null distribution of \eqn{m}, a chi-squared distribution with \eqn{T(p - k)(p - k + 1)/2} degrees of freedom where \eqn{T} is the number of autocovariance matrices used by SOBI.
 }
@@ -42,7 +42,8 @@ A list of class ictest inheriting from class htest containing:
 }
 
 \references{
-Nordhausen, K., Virta, J. (2018), \emph{Asymptotic test for the signal dimension in blind source separation}, under prepration.
+Virta, J. and Nordhausen, K. (2018), \emph{Determining the Signal Dimension in Second Order Source
+Separation}. Submitted. Available at \url{https://arxiv.org/abs/1808.10669v1}.
 }
 \author{
 Klaus Nordhausen, Joni Virta

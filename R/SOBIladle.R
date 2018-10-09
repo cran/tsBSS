@@ -28,7 +28,7 @@ SOBIladle <- function(X, tau = 1:12, l = 20, sim = "geom", n.boot = 200,
   Dfrjddata <- diag(apply(frjddata$D^2, 1:2, sum))
   EVdata <- frjddata$V[, order(Dfrjddata, decreasing = TRUE)]
 
-  RES <- tsboot(X, SOBIbootLADLE, R = n.boot, sim = sim, l = l, EVdata = EVdata, tau = tau, rank = ncomp, ...)
+  RES <- tsboot(X, SOBIbootLADLE, R = n.boot, sim = sim, l = l, EVdata = EVdata, tau = tau, rank = ncomp, maxiter = maxiter, ...)
 
   fis <- RES$t
   fn0 <- c(0, colMeans(fis))

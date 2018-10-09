@@ -9,7 +9,7 @@ The gSOBI method for the blind source separation problem. It is designed for mul
 }
 \usage{
 gSOBI(X, k1 = 1:12, k2 = 1:3, b = 0.9, eps = 1e-06, maxiter = 1000, ordered = FALSE,
-      acfk = NULL, original = TRUE, \ldots)
+      acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +22,7 @@ gSOBI(X, k1 = 1:12, k2 = 1:3, b = 0.9, eps = 1e-06, maxiter = 1000, ordered = FA
   \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
   \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
   \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
+  \item{alpha}{Alpha level for linear correlation detection. Default is 0.05.}
   \item{\ldots}{Other arguments passed on to \code{auto.arima} function.}
 }
 \details{
@@ -54,11 +55,13 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 \value{
  A list with class 'bssvol' (inherits from class 'bss') containing the following components:
-  \item{W }{The estimated unmixing matrix.}
+  \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k1}{The vector of the used lags for the SOBI part.}
   \item{k2}{The vector of the used lags for the vSOBI part.}
-  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = F}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
+  \item{MU}{The means of the original series.}
   If \code{ordered = TRUE}, then also the following components included in the list:
+  \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}
   \item{armaeff }{A logical vector. Has value 1 if ARMA fit was done to the corresponding component.}
   \item{linTS }{The value of the modified Ljung-Box test statistic for each component.}
@@ -71,7 +74,7 @@ Belouchrani, A., Abed-Meriam, K., Cardoso, J.F. and Moulines, R. (1997), \emph{A
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}. Submitted.
 
 
 }

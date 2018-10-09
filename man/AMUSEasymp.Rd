@@ -13,12 +13,12 @@ AMUSEasymp(X, k, tau = 1)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{A numeric data matrix or a numeric multivariate time series.}
-  \item{k}{The number of latent series that are not white noise. Can be between 0 and p-1.}
+  \item{k}{The number of latent series that are not white noise. Can be between \eqn{0} and \eqn{p-1}.}
   \item{tau}{The lag for the AMUSE autocovariance matrix.}
 }
 
 \details{
-AMUSE standardizes the data matrix \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{W} giving the latent variables as \eqn{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the null the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = ... = \lambda_p = 0}, and their mean square \eqn{m} can be used as a test statistic in inference on the true number of latent white noise series. 
+AMUSE standardizes \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the null the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = \ldots = \lambda_p = 0}, and their mean square \eqn{m} can be used as a test statistic in inference on the true number of latent white noise series. 
 
 This function conducts the hypothesis test using the asymptotic null distribution of \eqn{m}, a chi-squared distribution with \eqn{(p - k)(p - k + 1)/2} degrees of freedom.
 }
@@ -40,7 +40,8 @@ A list of class ictest inheriting from class htest containing:
 }
 
 \references{
-Nordhausen, K., Virta, J. (2018), \emph{Asymptotic test for the signal dimension in blind source separation}, under prepration.
+Virta, J. and Nordhausen, K. (2018), \emph{Determining the Signal Dimension in Second Order Source
+Separation}. Submitted. Available at \url{https://arxiv.org/abs/1808.10669v1}.
 }
 \author{
 Klaus Nordhausen, Joni Virta

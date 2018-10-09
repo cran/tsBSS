@@ -14,8 +14,8 @@ The method is a generalization of JADE, which is a method for blind source separ
 gJADE(X, \ldots)
 
 \method{gJADE}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd",
-                        na.action = na.fail, weight = NULL,
-                        ordered = FALSE, acfk = NULL, original = TRUE, \ldots)
+                        na.action = na.fail, weight = NULL, ordered = FALSE,
+                        acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
 \method{gJADE}{ts}(X, \ldots)
 
 }
@@ -24,12 +24,13 @@ gJADE(X, \ldots)
   \item{k}{A vector of lags. It can be any non-negative integer, or a vector consisting of them. Default is \code{0:12}. If \eqn{k = 0}, this method reduces to \code{\link[JADE]{JADE}}.}
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{The maximum number of iterations.}
-  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
+  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE:rjd]{frjd}}. Default is \code{\link[JADE:rjd]{frjd}}.}
   \item{na.action}{A function which indicates what should happen when the data contain 'NA's. Default is to fail.}
   \item{weight}{A vector of length k to give weight to the different matrices in joint diagonalization. If NULL, all matrices have equal weight.}
   \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
   \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
   \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
+  \item{alpha}{Alpha level for linear correlation detection. Default is 0.05.}
   \item{\ldots}{Other arguments passed on to \code{auto.arima} function.}
 }
 \details{
@@ -50,10 +51,12 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 \value{
  A list with class 'bssvol' (inherits from class 'bss') containing the following components:
-  \item{W }{The estimated unmixing matrix.}
+  \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k }{The vector of the used lags.}
-  \item{S }{The etimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = F}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
+  \item{MU}{The means of the original series.}
   If \code{ordered = TRUE}, then also the following components included in the list:
+  \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}
   \item{armaeff }{A logical vector. Has value 1 if ARMA fit was done to the corresponding component.}
   \item{linTS }{The value of the modified Ljung-Box test statistic for each component.}
@@ -71,7 +74,7 @@ Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New Independent Compone
 Klaus Nordhausen, Markus Matilainen
 }
 \seealso{
-\code{\link[JADE]{frjd}}, \code{\link[JADE]{JADE}}, \code{\link{gFOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
+\code{\link[JADE:rjd]{frjd}}, \code{\link[JADE]{JADE}}, \code{\link{gFOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
 }
 \examples{
 library(stochvol)

@@ -23,9 +23,9 @@ ncomp = ifelse(ncol(X) > 10, floor(ncol(X)/log(ncol(X))), ncol(X) - 1), ...)
 }
 
 \details{
-AMUSE standardizes the data matrix \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{W} giving the latent variables as \eqn{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the assumption that we have \eqn{k} non-white-noise components, the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = ... = \lambda_p = 0}.
+AMUSE standardizes \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the assumption that we have \eqn{k} non-white-noise components, the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = \ldots = \lambda_p = 0}.
 
-The change point from non-zero eigenvalues to zero eigenvalues is visible in the eigenvectors of the autocovariance matrix as an increase in their boostrap variablity. Similarly, before the change point, the squared eigenvalues decrease in magnitude and afterwards they stay constant. The ladle estimate combines the scaled eigenvector bootstrap variability with the scaled eigenvalues to estimate the number of non-white-noise components. The estimate is the value of k = 0, ... , \code{ncomp} where the combined measure achieves its minimum value. 
+The change point from non-zero eigenvalues to zero eigenvalues is visible in the eigenvectors of the autocovariance matrix as an increase in their boostrap variablity. Similarly, before the change point, the squared eigenvalues decrease in magnitude and afterwards they stay constant. The ladle estimate combines the scaled eigenvector bootstrap variability with the scaled eigenvalues to estimate the number of non-white-noise components. The estimate is the value of \eqn{k = 0, \ldots ,} \code{ncomp} where the combined measure achieves its minimum value. 
 }
 
 \value{
@@ -79,7 +79,7 @@ Klaus Nordhausen, Joni Virta
   ggladleplot(ladle_AMUSE)
   
   # Time series plots of the estimated components
-  plot(ladle_AMUSE$S)
+  plot(ladle_AMUSE)
   
 }
 

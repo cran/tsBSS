@@ -18,7 +18,7 @@ tssdr(y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, method = "frjd",
   \item{k}{A vector of lags. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
   \item{H}{The number of slices. If \code{TSSH} is used, \eqn{H} is a 2-vector; the first element is used for TSIR part and the second for TSAVE part. Default is \eqn{H = 10}.}
   \item{weight}{Weight \eqn{0 \le a \le 1} for the hybrid method \code{TSSH} only. With \eqn{a = 1} it reduces to \code{TSAVE} and with \eqn{a = 0} to \code{TSIR}. Default is \eqn{a = 0.5}.}
-  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE]{frjd}}. Default is \code{\link[JADE]{frjd}}.}
+  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE:rjd]{frjd}}. Default is \code{\link[JADE:rjd]{frjd}}.}
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{The maximum number of iterations.}
   \item{...}{Other arguments passed on to the chosen joint diagonalization method.}
@@ -65,7 +65,7 @@ A list with class 'tssdr' containing the following components:
 \references{
 Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 
-Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted.
+Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted. Available at \url{https://arxiv.org/abs/1810.02782v1}
 
 Li, K.C. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Journal of the American Statistical Association, 86, 316--327.
 

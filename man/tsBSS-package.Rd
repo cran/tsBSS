@@ -12,8 +12,8 @@ Different estimates are provided to solve the blind source separation problem fo
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.5.1\cr
-Date: \tab 2018-06-21\cr
+Version: \tab 0.5.2\cr
+Date: \tab 2018-10-09\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -57,17 +57,18 @@ Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), 
 
 Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 
-Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted.
+Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted. Available at \url{https://arxiv.org/abs/1810.02782v1}
 
 Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{Blind Source Separation with Nonlinear Autocorrelation and Non-Gaussianity}, Journal of Computational and Applied Mathematics, 223(1): 908--915.
 
-Matilainen, M., Nordhausen, K., Virta, J. (2018), \emph{On the number of signals in multivariate time series}, to appear in the proceedings of International Conference on Latent Variable Analysis and Signal Separation 2018 (LVA/ICA), <https://arxiv.org/abs/1801.04925>.
+Matilainen, M., Nordhausen, K., Virta, J. (2018), \emph{On the number of signals in multivariate time series}. In Deville, Y., Gannot, S., Mason, R., Plumbley, M.D. and  Ward, D. (editors) "International Conference on Latent Variable Analysis and Signal Separation"", LNCS 10891, 248--258. Springer, Cham., <doi:10.1007/978-3-319-93764-9_24>.
 
-Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal Dimension}, to appear in the proceedings of IEEE Statistical Signal Processing Workshop 2018 (SSP).
+Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal Dimension}. In 2018 IEEE Statistical Signal Processing Workshop (SSP), pp. 428--432, <doi:10.1109/SSP.2018.8450695>.
 
-Nordhausen, K., Virta, J. (2018), \emph{Asymptotic test for the signal dimension in blind source separation}, under prepration.
+Virta, J. and Nordhausen, K. (2018), \emph{Determining the Signal Dimension in Second Order Source
+Separation}. Submitted. Available at \url{https://arxiv.org/abs/1808.10669v1}.
 
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}. Submitted.
 
 Hu, Y.-P. & Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 

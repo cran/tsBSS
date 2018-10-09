@@ -26,12 +26,12 @@ maxiter = 1000, eps = 1e-06, ...)
 }
 
 \details{
-SOBI standardizes the data matrix \code{X} with \eqn{n} samples and jointly diagonalizes the autocovariance matrices of the standardized data for a chosen set of lags \code{tau}, yielding a transformation \eqn{W} giving the latent variables as \eqn{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the sums of squares of the corresponding "eigenvalues" produced by the joint diagonalization.
-Under the assumption that we have \eqn{k} non-white-noise components, the final \eqn{p - k} "eigenvalues" of each of the autocovariance matrices equal zero, \eqn{\lambda^\tau_{p-k} = \cdots = \lambda^\tau_{p}}{\lambda^tau_(p-k) = ... = \lambda^tau_p = 0}.
+SOBI standardizes \code{X} with \eqn{n} samples and jointly diagonalizes the autocovariance matrices of the standardized data for a chosen set of lags \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the sums of squares of the corresponding "eigenvalues" produced by the joint diagonalization.
+Under the assumption that we have \eqn{k} non-white-noise components, the final \eqn{p - k} "eigenvalues" of each of the autocovariance matrices equal zero, \eqn{\lambda^\tau_{p-k} = \cdots = \lambda^\tau_{p}}{\lambda^tau_(p-k) = \ldots = \lambda^tau_p = 0}.
 
-The change point from non-zero eigenvalues to zero eigenvalues is visible in the joint diagonalization "eigenvectors" of the autocovariance matrices as an increase in their boostrap variablity. Similarly, before the change point, the squared eigenvalues decrease in magnitude and afterwards they stay constant. The ladle estimate combines the scaled eigenvector bootstrap variability with the scaled eigenvalues to estimate the number of non-white-noise components. The estimate is the value of k = 0, ... , \code{ncomp} where the combined measure achieves its minimum value. 
+The change point from non-zero eigenvalues to zero eigenvalues is visible in the joint diagonalization "eigenvectors" of the autocovariance matrices as an increase in their boostrap variablity. Similarly, before the change point, the squared eigenvalues decrease in magnitude and afterwards they stay constant. The ladle estimate combines the scaled eigenvector bootstrap variability with the scaled eigenvalues to estimate the number of non-white-noise components. The estimate is the value of \eqn{k = 0, \ldots ,} \code{ncomp} where the combined measure achieves its minimum value. 
 
-This function uses for the joint diagonalization a modified verision of the function \code{\link[JADE]{frjd}}, which does not fail in case of failed convergence but returns the estimate from the final step.
+This function uses for the joint diagonalization a modified verision of the function \code{\link[JADE:rjd]{frjd}}, which does not fail in case of failed convergence but returns the estimate from the final step.
 
 }
 
@@ -52,7 +52,7 @@ A list of class \code{ladle} containing:
 }
 
 \references{
-Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal Dimension}, to appear in the proceedings of IEEE Statistical Signal Processing Workshop 2018 (SSP).
+Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal Dimension}. In 2018 IEEE Statistical Signal Processing Workshop (SSP), pp. 428--432, <doi:10.1109/SSP.2018.8450695>.
   
 Luo, W. and Li, B. (2016), \emph{Combining Eigenvalues and Variation of Eigenvectors for Order Determination}, Biometrika, 103. 875--887. <doi:10.1093/biomet/asw051>
 }
@@ -61,7 +61,7 @@ Klaus Nordhausen, Joni Virta
 }
 
 \seealso{
-\code{\link[JADE]{AMUSE}}, \code{\link[JADE]{SOBI}}, \code{\link{AMUSEladle}}, \code{\link[JADE]{frjd}}
+\code{\link[JADE]{AMUSE}}, \code{\link[JADE]{SOBI}}, \code{\link{AMUSEladle}}, \code{\link[JADE:rjd]{frjd}}
 }
 \examples{
   n <- 1000
@@ -84,7 +84,7 @@ Klaus Nordhausen, Joni Virta
   ladleplot(ladle_SOBI)
   
   # Time series plots of the estimated components
-  plot(ladle_SOBI$S)
+  plot(ladle_SOBI)
   
   # Note that AMUSEladle with lag 1 does not work due to the lack of short range dependencies
   ladle_AMUSE <- AMUSEladle(X)

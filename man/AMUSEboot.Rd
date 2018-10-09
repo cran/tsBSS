@@ -13,25 +13,25 @@ AMUSEboot(X, k, tau = 1, n.boot = 200, s.boot = "p", ncores = NULL, iseed = NULL
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{A numeric data matrix or a numeric multivariate time series.}
-  \item{k}{The number of latent series that are not white noise. Can be between 0 and p-1.}
+  \item{k}{The number of latent series that are not white noise. Can be between \eqn{0} and \eqn{p-1}.}
   \item{tau}{The lag for the AMUSE autocovariance matrix.}
   \item{n.boot}{The number of bootstrapping samples.}
   \item{s.boot}{Bootstrapping strategy to be used. Possible values are \code{"p"}, \code{"np1"}, \code{"np2"}, \code{"np3"}. See details for further information.}
-  \item{ncores}{The number of cores to be used. If \code{NULL} or 1, no parallel computing is used. Otherwise \link[parallel]{makeCluster} with \code{type = "PSOCK"} is used.}
-  \item{iseed}{If parallel computation is used, the seed passed on to \code{\link[parallel]{clusterSetRNGStream}}. Default is \code{NULL} which means no fixed seed is used.}
+  \item{ncores}{The number of cores to be used. If \code{NULL} or 1, no parallel computing is used. Otherwise \code{\link[parallel]{makeCluster}} with \code{type = "PSOCK"} is used.}
+  \item{iseed}{If parallel computation is used, the seed passed on to \code{\link{clusterSetRNGStream}}. Default is \code{NULL} which means no fixed seed is used.}
 }
 
 \details{
-AMUSE standardizes the data matrix \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{W} giving the latent variables as \eqn{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the null the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = ... = \lambda_p = 0}, and their mean square \eqn{m} can be used as a test statistic in bootstrap-based inference on the true number of latent white noise series.
+AMUSE standardizes \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the null the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = \ldots = \lambda_p = 0}, and their mean square \eqn{m} can be used as a test statistic in bootstrap-based inference on the true number of latent white noise series.
 
 
 The function offers four different bootstrapping strategies for generating samples for which the null approximately holds, and they are all based on the following general formula:
 
 \enumerate{
-\item Decompose the AMUSE-estimated latent series \eqn{S} into the postulated signal \eqn{S_1} and white noise \eqn{S_2}.
-\item Take \eqn{n} bootstrap samples \eqn{S_2^*} of \eqn{S_2}, see the different strategies below.
-\item Recombine \eqn{S^*=(S_1, S_2^*)} and back-transform \eqn{X^*= S^* W^-1}.
-\item Compute the test statistic based on \eqn{X^*}. 
+\item Decompose the AMUSE-estimated latent series \eqn{\bf S}{S} into the postulated signal \eqn{{\bf S}_1}{S_1} and white noise \eqn{{\bf S}_2}{S_2}.
+\item Take \eqn{n} bootstrap samples \eqn{{\bf S}_2^*}{S_2^*} of \eqn{{\bf S}_2}{S_2}, see the different strategies below.
+\item Recombine \eqn{\bf S^* = ({\bf S}_1, {\bf S}_2^*)}{S^*=(S_1, S_2^*)} and back-transform \eqn{{\bf X}^*= {\bf S}^* {\bf W}^{-1}}{X^*= S^* W^(-1)}.
+\item Compute the test statistic based on \eqn{{\bf X}^*}{X^*}.
 \item Repeat the previous steps \code{n.boot} times.
 }
 
@@ -69,7 +69,7 @@ A list of class ictest inheriting from class htest containing:
 }
 
 \references{
-Matilainen, M., Nordhausen, K., Virta, J. (2018), \emph{On the number of signals in multivariate time series}, to appear in the proceedings of International Conference on Latent Variable Analysis and Signal Separation 2018 (LVA/ICA), <https://arxiv.org/abs/1801.04925>.
+Matilainen, M., Nordhausen, K., Virta, J. (2018), \emph{On the number of signals in multivariate time series}. In Deville, Y., Gannot, S., Mason, R., Plumbley, M.D. and  Ward, D. (editors) "International Conference on Latent Variable Analysis and Signal Separation"", LNCS 10891, 248--258. Springer, Cham., <doi:10.1007/978-3-319-93764-9_24>.
 }
 \author{
 Markus Matilainen, Klaus Nordhausen, Joni Virta

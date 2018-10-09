@@ -79,9 +79,9 @@ MSobi <- function (x, k_set) {
 }
 
 # Bootstrapping function for SOBI
-SOBIbootLADLE <- function (X, EVdata, tau, rank) {
+SOBIbootLADLE <- function (X, EVdata, tau, rank, maxiter) {
   Mboot <- MSobi(X, k_set = tau)
-  frjdboot <- frjd2(Mboot)
+  frjdboot <- frjd2(Mboot, maxiter = maxiter)
   Dfrjd <- diag(apply(frjdboot$D^2, 1:2, sum))
   EVboot <- frjdboot$V[, order(Dfrjd, decreasing = TRUE)]
   fi(EVboot, EVdata, rank)

@@ -47,7 +47,7 @@ Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\c
   \item{type}{The type of the autocorrelation test.}
   }
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}, Submitted.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}. Submitted.
 
 }
 \author{Markus Matilainen, Jari Miettinen}

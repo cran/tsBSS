@@ -1,5 +1,12 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.5.2:
+* The matrix W is now ordered according to volatility, where applicable.
+* BSS functions now return also the original sources (Sraw), when option original = F is chosen
+* BSS functions now return also MU, the means of the original series
+* Fixed a bug in SOBIladle which ignored maxiter for the bootstrap estimates.
+* Minor errors in manuals have been corrected
+
 Version 0.5.1:
 * Fixing bugs in AMUSEboot and SOBIboot when k=0
 
