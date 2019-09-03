@@ -1,6 +1,6 @@
 # Summary method for objects of class "tssdr"
-`summary.tssdr` <- function (object, type = "rectangle", thres = 0.8, ...) {
-  type <- match.arg(type, c("rectangle", "alllag", "alldir", "big"))
+`summary.tssdr` <- function(object, type = c("rectangle", "alllag", "alldir", "big"), thres = 0.8, ...) {
+  type <- match.arg(type)
   L <- object$L
   # Lag-direction combinations (type = "big" only)
   if (type == "big") {
@@ -23,7 +23,7 @@
                   }
                 )
   }
-  W <- object$W[1:p,  , drop = F] #The p'*p matrix: first p' rows of a matrix W
+  W <- object$W[1:p, , drop = F] #The p'*p matrix: first p' rows of a matrix W
   S <- object$S[, 1:(p + 1)] #The response and the first p' directions
   RES <- list(W = W, L = L, S = S, type = type, algorithm = object$algorithm,
               yname = object$yname, Xname = object$Xname)
@@ -60,37 +60,37 @@
     } else { #xp!=1 if
       cat("The first direction and ")
     } #xp=1 else
-    if(x$k == 1) {
+    if (x$k == 1) {
       cat("the first lag")
     } else { #xk=1 if
       cat(paste("the first", x$k), "lags")
     } #xk=1 else
     cat(" are relevant.\n")
   } else { #rectangle if
-    if(x$type == "alldir") {
+    if (x$type == "alldir") {
       cat(paste("Choosing first all the", x$p), "directions:\n")
       cat("\n")
-      if(x$k == 1) {
+      if (x$k == 1) {
         cat("The first lag is relevant. \n")
       } else {  #xk=1 if
         cat(paste("The first", x$k), "lags are relevant. \n")
       } #xk=1 else
     } else { #alldir if
-      if(x$type == "alllag") {
+      if (x$type == "alllag") {
         cat(paste("Choosing first all the", x$k), "lags:\n")
         cat("\n")
-        if(x$p == 1) {
+        if (x$p == 1) {
           cat("The first direction is relevant. \n")
         } else { #xp=1 if
           cat(paste("The first", x$p), "directions are relevant. \n")
         } #xp=1 else
-    } else { #alllag if
+      } else { #alllag if
     cat("Using the biggest values in L to choose the directions and lags:\n")
     cat("\n")
     cat("The relevant combinations of lags and directions are \n")
     cat("\n")
     print(x$pk, digits = digits)
-    } #alllag else
+      } #alllag else
     } #alldir else
   } #rectangle else
   cat("\n")

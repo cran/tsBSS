@@ -1,24 +1,31 @@
-# Method tssdr (time series supervised dimesion reduction)
-tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, method = "frjd",
+#Time series supervised dimension reduction (tssdr)
+# Method tssdr
+tssdr <- function(y, X, ...) UseMethod("tssdr")
+
+
+# main function for tssdr (time series supervised dimesion reduction)
+tssdr.default <- function(y, X, algorithm = c("TSIR", "TSAVE", "TSSH"), k = 1:12, H = 10, weight = 0.5, method = c("frjd", "rjd"),
                    eps = 1e-06, maxiter = 1000, ...) {
+  if (!is.numeric(X)) stop("non-numeric data")
+  if (any(is.na(X) | is.infinite(X))) stop("missing/infinite values are not allowed")
+  
   #weight only applies if algorithm = "TSSH"
   if (length(y) != nrow(X)) stop("y and X have different lengths!")
-  algorithm <- match.arg(algorithm, c("TSIR", "TSAVE", "TSSH"))
-  method <- match.arg(method, c("rjd", "frjd"))
-  if((algorithm == "TSSH") & length(H) == 1) {
+  algorithm <- match.arg(algorithm)
+  method <- match.arg(method)
+  if ((algorithm == "TSSH") & length(H) == 1) {
     H <- rep(H, 2)
     warning("H should be a 2-vector for TSSH. Using the given H for both parts.")
   }
-  if((algorithm != "TSSH") & length(H) == 2) {
+  if ((algorithm != "TSSH") & length(H) == 2) {
     stop('H should be a scalar for TSIR and TSAVE!')
   }
-  MEAN <- colMeans(X)
+  
+  n <- nrow(X)
   p <- ncol(X)
-  COV <- cov(X)
-  EVD <- eigen(COV, symmetric = TRUE)
-  COV.sqrt.i <- EVD$vectors %*% tcrossprod(diag(EVD$values^(-0.5)), EVD$vectors)
-  X.C <- sweep(X, 2, MEAN, "-")
-  XCS <- tcrossprod(X.C, COV.sqrt.i)
+  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  Y <- prep$Y 
+  
   nk <- length(k)
   if (length(H) == 1) { #For TSIR and TSAVE
     slices <- as.matrix(cut(y, breaks = c(quantile(y, probs = seq(0, 1, by = 1/H))),
@@ -31,28 +38,28 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
   }
   R <- array(0, dim = c(p, p, nk))
   switch(algorithm,
-         TSIR  = {
+         TSIR = {
            for (i in 1:length(k)) {
-             R[, , i] <- TSIRc(XCS, slices = slices, k = k[i], h = H)
+             R[, , i] <- .Call("TSIR", Y, slices, k[i], H, PACKAGE = "tsBSS")$RES
            }
          },
-         TSAVE  = {
+         TSAVE = {
            for (i in 1:length(k)) {
-             R[, , i] <- TSAVEc(XCS, slices = slices, k = k[i], h = H)
+             R[, , i] <- .Call("TSAVE", Y, slices, k[i], H, PACKAGE = "tsBSS")$RES
            }
          },
-         TSSH  = {
+         TSSH = {
            for (i in 1:length(k)) {
-             R[, , i] <- (1 - weight)*TSIRc(XCS, slices = slices, k = k[i], h = H[1]) +
-               weight*TSAVEc(XCS, slices = slices2, k = k[i], h = H[2])
+             R[, , i] <- (1 - weight)*.Call("TSIR", Y, slices, k[i], H[1], PACKAGE = "tsBSS")$RES +
+              weight*.Call("TSAVE", Y, slices2, k[i], H[2], PACKAGE = "tsBSS")$RES
            }
          }
   )
   # Joint diagonalization
   JD <- switch(method, frjd = {
-    frjd(R, eps = eps, maxiter = maxiter, ...)
+    JADE::frjd(R, eps = eps, maxiter = maxiter, ...)
   }, rjd = {
-    rjd(R, eps = eps, maxiter = maxiter, ...)
+    JADE::rjd(R, eps = eps, maxiter = maxiter, ...)
   })
   sumdg <- diag(apply(JD$D, 1:2, sum))
   ord <- order(sumdg, decreasing = TRUE)
@@ -67,15 +74,46 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
   colnames(DTable) <- paste("Dir.", (1:p), sep = "")
   rownames(DTable) <- paste("Lag ", k, sep = "")
   V <- JD$V %*% t(P)
-  W <- crossprod(V, COV.sqrt.i) #p*p matrix
-  S <- tcrossprod(X.C, W) #Values for the all possible directions
-  S <- ts(cbind(y, S), names = c("y", paste("Series", 1:p))) # Response included
-  if (is.ts(X)) attr(S, "tsp") <- attr(X, "tsp")
+  W <- crossprod(V, prep$COV.sqrt.i) #p*p matrix
+  S <- tcrossprod(prep$X.C, W) #Values for the all possible directions
+  S <- ts(cbind(y, S)) # Response included
+  colnames(S) <- c("y", paste("Series", 1:p))
   RES <- list(W = W, k = k, S = S, L = DTable/sum(DTable), H = H,
               yname = deparse(substitute(y)),
               Xname = deparse(substitute(X)),
               algorithm = algorithm)
   class(RES) <- "tssdr"
+  RES
+}
+
+tssdr.ts <- function(y, X, ...) {
+  yy <- as.vector(y)
+  x <- as.matrix(X)
+  RES <- tssdr.default(yy, x, ...)
+  S <- RES$S
+  attr(S, "tsp") <- attr(X, "tsp")
+  RES$S <- S
+  RES
+}
+
+tssdr.xts <- function(y, X, ...) {
+  yy <- as.vector(y)
+  x <- as.matrix(X)
+  RES <- tssdr.default(yy, x, ...)
+  S <- xts::as.xts(RES$S)
+  attr(S, "index") <- attr(X, "index")
+  xts::xtsAttributes(S) <- xts::xtsAttributes(X) #attributes additional to zoo
+  RES$S <- S
+  RES
+}
+
+tssdr.zoo <- function(y, X, ...) {
+  yy <- as.vector(y)
+  x <- as.matrix(X)
+  RES <- tssdr.default(yy, x, ...)
+  S <- zoo::as.zoo(RES$S)
+  attr(S, "index") <- attr(X, "index")
+  RES$S <- S
   RES
 }
 
@@ -90,5 +128,14 @@ tssdr <- function (y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, met
 
 # Plotting method for objects of class "tssdr" (R's basic time series plot)
 `plot.tssdr` <- function(x, main = "The response and the directions", ...) {
-  plot.ts(x$S, main = main, ...)
+  S <- x$S
+  if(ncol(S) <= 2) {
+    plot(S, main = main, ...)
+  } else {
+    if (any(class(S) %in% c("mts", "xts", "zoo"))) {
+      plot(S, main = main, ...)
+    } else {
+      pairs(S, main = main, ...)
+    }
+  }
 }

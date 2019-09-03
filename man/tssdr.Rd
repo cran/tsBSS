@@ -1,28 +1,53 @@
 \name{tssdr}
 \alias{tssdr}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{tssdr.default}
+\alias{tssdr.ts}
+\alias{tssdr.xts}
+\alias{tssdr.zoo}
+\alias{print.tssdr}
+\alias{components.tssdr}
+\alias{plot.tssdr}
 \title{
 Supervised dimension reduction for multivariate time series
 }
+
 \description{
-Supervised dimension reduction for multivariate time series data. There are three different algorithms to choose from. TSIR is a time series version of Sliced Inverse Regression (SIR), TSAVE is a time series version of Sliced Average Variance Estimate (TSAVE) and TSSH is a hybrid of TSIR and TSAVE.
+Supervised dimension reduction for multivariate time series data. There are three different algorithms to choose from. TSIR is a time series version of Sliced Inverse Regression (SIR), TSAVE is a time series version of Sliced Average Variance Estimate (TSAVE) and a hybrid of TSIR and TSAVE is TSSH (Time series SIR SAVE Hybrid). For summary of an object of class tssdr, see \code{\link[tsBSS]{summary.tssdr}}.
 }
+
 \usage{
-tssdr(y, X, algorithm = "TSIR", k = 1:12, H = 10, weight = 0.5, method = "frjd", 
-      eps = 1e-06, maxiter = 1000, \ldots)
+tssdr(y, X, \ldots)
+
+\method{tssdr}{default}(y, X, algorithm = c("TSIR", "TSAVE", "TSSH"), k = 1:12, H = 10, weight = 0.5,
+      method = c("frjd", "rjd"), eps = 1e-06, maxiter = 1000, \ldots)
+\method{tssdr}{ts}(y, X, \ldots)
+\method{tssdr}{xts}(y, X, \ldots)
+\method{tssdr}{zoo}(y, X, \ldots)
+
+\method{print}{tssdr}(x, digits = 3, ...)
+\method{components}{tssdr}(x, ...)
+\method{plot}{tssdr}(x, main = "The response and the directions", ...)
 }
+
 \arguments{
-  \item{y}{A numeric vector or time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{algorithm}{Algorithm to be used. The options are \code{TSIR}, \code{TSAVE} and \code{TSSH}. Default is \code{TSIR}.}
+  \item{y}{A numeric vector or a time series object of class \code{\link{ts}}, \code{\link[xts]{xts}} or \code{\link[zoo]{zoo}} (same type as X). Missing values are not allowed.}
+  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}, \code{\link[xts]{xts}} or \code{\link[zoo]{zoo}} (same type as y). Missing values are not allowed.}
+  \item{algorithm}{Algorithm to be used. The options are \code{"TSIR"}, \code{"TSAVE"} and \code{"TSSH"}. Default is \code{"TSIR"}.}
   \item{k}{A vector of lags. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
-  \item{H}{The number of slices. If \code{TSSH} is used, \eqn{H} is a 2-vector; the first element is used for TSIR part and the second for TSAVE part. Default is \eqn{H = 10}.}
-  \item{weight}{Weight \eqn{0 \le a \le 1} for the hybrid method \code{TSSH} only. With \eqn{a = 1} it reduces to \code{TSAVE} and with \eqn{a = 0} to \code{TSIR}. Default is \eqn{a = 0.5}.}
-  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE]{rjd}} and \code{\link[JADE:rjd]{frjd}}. Default is \code{\link[JADE:rjd]{frjd}}.}
+  \item{H}{The number of slices. If \code{"TSSH"} is used, \eqn{H} is a 2-vector; the first element is used for TSIR part and the second for TSAVE part. Default is \eqn{H = 10}.}
+  \item{weight}{Weight \eqn{0 \le a \le 1} for the hybrid method \code{TSSH} only. With \eqn{a = 1} it reduces to TSAVE and with \eqn{a = 0} to TSIR. Default is \eqn{a = 0.5}.}
+  \item{method}{The method to use for the joint diagonalization. The options are \code{\link[JADE:rjd]{"rjd"}} and \code{\link[JADE:rjd]{"frjd"}}. Default is \code{\link[JADE:rjd]{"frjd"}}.}
   \item{eps}{Convergence tolerance.}
   \item{maxiter}{The maximum number of iterations.}
-  \item{...}{Other arguments passed on to the chosen joint diagonalization method.}
+  \item{...}{Further arguments to be passed to or from methods.}
+  
+\strong{In methods for class 'tssdr' only:}
+
+  \item{x}{An object of class tssdr}
+  \item{digits}{The number of digits when printing an object of class tssdr. Default is 3}
+  \item{main}{A title for a plot when printing an object of class tssdr.}
 }
+
 \details{
 Assume that the \eqn{p}-variate time series \eqn{{\bf Z}}{Z} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Z}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Z = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
 where \eqn{{\bf S}}{S} is a sample covariance matrix of \eqn{{\bf X}}{X}.
@@ -61,23 +86,26 @@ A list with class 'tssdr' containing the following components:
   \item{yname }{The name for the response time series \eqn{y}.}
   \item{Xname }{The name for the predictor time series \eqn{\bf X}{X}.}
   \item{algorithm }{The used algorithm as a character string.}
-  }
-\references{
-Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
+}
 
-Matilainen M., Croux C., Nordhausen K. & Oja H. \emph{Sliced Average Variance Estimation for multivariate Time Series}. Submitted. Available at \url{https://arxiv.org/abs/1810.02782v1}
+\references{
+Matilainen M., Croux C., Nordhausen K. and Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
+
+Matilainen M., Croux C., Nordhausen K. and Oja H. (2019), \emph{Sliced Average Variance Estimation for Multivariate Time Series}. Statistics: A Journal of Theoretical and Applied Statistics, 53, 630--655, <doi:10.1080/02331888.2019.1605515>.
 
 Li, K.C. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Journal of the American Statistical Association, 86, 316--327.
 
-Cook, R., Weisberg, S. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Comment. Journal of the American Statistical Association, 86, 328--332.
-
+Cook, R. and Weisberg, S. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Comment. Journal of the American Statistical Association, 86, 328--332.
 }
+
 \author{
 Markus Matilainen
 }
+
 \seealso{
 \code{\link[tsBSS]{summary.tssdr}}, \code{\link[dr]{dr}}
 }
+
 \examples{
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
@@ -97,7 +125,7 @@ plot(summ1)
 head(components(summ1))
 coef(summ1)
 
-#Hybrid of TSIR and TSAVE. For TSIR part H = 10 and for TSAVE part H = 2.
+# Hybrid of TSIR and TSAVE. For TSIR part H = 10 and for TSAVE part H = 2.
 tssdr(y, X, algorithm = "TSSH", weight = 0.6, H = c(10, 2))
 }
 

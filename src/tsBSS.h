@@ -9,3 +9,5 @@ RcppExport SEXP TSAVE(SEXP X, SEXP slices, SEXP h, SEXP k);
 RcppExport SEXP TSIR(SEXP X, SEXP slices, SEXP h, SEXP k);
 RcppExport SEXP lblinM(SEXP X, SEXP k);
 RcppExport SEXP lbsqM(SEXP X, SEXP k);
+RcppExport SEXP EIGEN(SEXP X);
+RcppExport SEXP PREPBSS(SEXP X, SEXP n);

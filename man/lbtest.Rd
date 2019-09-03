@@ -1,24 +1,31 @@
 \name{lbtest}
 \alias{lbtest}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{print.lbtest}
 \title{
 Modified Ljung-Box test and volatility clustering test for time series.
-
 }
+
 \description{
 Modified Ljung-Box test and volatility clustering test for time series. Time series can be univariate or multivariate. The modified Ljung-Box test checks whether there is linear autocorrelation in the time series. The volatility clustering test checks whether the time series has squared autocorrelation, which would indicate a presence of volatility clustering.
 }
-\usage{
-lbtest(X, k, type = "squared")
-}
-%- maybe also 'usage' for other objects documented here.
-\arguments{
-  \item{X}{A numeric vector or matrix, or a univariate or multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
-  \item{k}{A vector of lags.}
-  \item{type}{The type of the autocorrelation test. Options are Modified Ljung-Box test (\code{linear}) or volatility clustering test (\code{squared}) autocorrelation. Default is \code{squared}.}
-}
-\details{
 
+\usage{
+lbtest(X, k, type = c("squared", "linear"))
+
+\method{print}{lbtest}(x, digits = 3, ...)
+}
+
+\arguments{
+  \item{X}{A numeric vector/matrix or a univariate/multivariate time series object of class \code{\link{ts}}, \code{\link[xts]{xts}} or \code{\link[zoo]{zoo}}. Missing values are not allowed.}
+  \item{k}{A vector of lags.}
+  \item{type}{The type of the autocorrelation test. Options are Modified Ljung-Box test (\code{"linear"}) or volatility clustering test (\code{"squared"}) autocorrelation. Default is \code{"squared"}.}
+In methods for class 'lbtest' only:
+  \item{x}{An object of class lbtest}
+  \item{digits}{The number of digits when printing an object of class lbtest. Default is 3}
+  \item{\dots}{Further arguments to be passed to or from methods.}
+}
+
+\details{
 Assume all the individual time series \eqn{X_i} in \eqn{\bf X}{X} with \eqn{T} observations are scaled to have variance 1.
 
 Then the modified Ljung-Box test statistic for testing the existence of linear autocorrelation in \eqn{X_i} (\code{option = "linear"}) is
@@ -31,11 +38,9 @@ Here
 The volatility clustering test statistic (\code{option = "squared"}) is
 \deqn{T \sum_{j \in k} \left(\sum_{t=1}^T (X_{it}^2 X_{i, t + j}^2)/(T - j) - 1\right)^2}{T*sum_j(sum_t (X_it^2 X_(i, t + j)^2)/(T - j) - 1)^2/4.}
 
-
-
 Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\chi^2}-distribution with \code{length(k)} degrees of freedom, and the corresponding p-values are produced. Small p-value indicates the existence of autocorrelation.
-
 }
+
 \value{
  A list with class 'lbtest' containing the following components:
   \item{TS}{The values of the test statistic for each component of X as a vector.}
@@ -45,15 +50,20 @@ Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\c
   \item{k}{The lags used for testing the serial autocorrelation as a vector.}
   \item{K}{The total number of lags used for testing the serial autocorrelation.}
   \item{type}{The type of the autocorrelation test.}
-  }
-\references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}. Submitted.
+}
 
+\references{
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
 }
-\author{Markus Matilainen, Jari Miettinen}
+
+\author{
+Markus Matilainen, Jari Miettinen
+}
+
 \seealso{
-\code{\link[tsBSS]{print.lbtest}}, \code{\link[tsBSS]{FixNA}}, \code{\link[tsBSS]{gFOBI}}, \code{\link[tsBSS]{gJADE}}, \code{\link[tsBSS]{vSOBI}}, \code{\link[tsBSS]{gSOBI}}
+\code{\link[tsBSS]{FixNA}}, \code{\link[tsBSS]{gFOBI}}, \code{\link[tsBSS]{gJADE}}, \code{\link[tsBSS]{vSOBI}}, \code{\link[tsBSS]{gSOBI}}
 }
+
 \examples{
 library(stochvol)
 n <- 10000
@@ -63,5 +73,8 @@ S <- cbind(s1, s2)
 
 lbtest(S, 1:3, type = "squared")
 # First p-value should be very close to zero, as there exists stochastic volatility
-
 }
+
+\keyword{ htest }
+\keyword{ multivariate }
+\keyword{ ts }

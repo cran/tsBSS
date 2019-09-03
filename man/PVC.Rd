@@ -1,29 +1,37 @@
 \name{PVC}
 \alias{PVC}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{PVC.default}
+\alias{PVC.ts}
+\alias{PVC.xts}
+\alias{PVC.zoo}
 \title{
 A modified algorithm for Principal Volatility Component estimator
 }
+
 \description{
-PVC (Principal Volatility Component) estimator for the blind source separation problem.
-This method is a modified version of PVC by Hu and Tsay (2014).
+PVC (Principal Volatility Component) estimator for the blind source separation (BSS) problem. This method is a modified version of PVC by Hu and Tsay (2014).
 }
+
 \usage{
+PVC(X, \ldots)
 
-PVC(X, k = 1:12, ordered = FALSE, acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
-
+\method{PVC}{default}(X, k = 1:12, ordered = FALSE, acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
+\method{PVC}{ts}(X, \ldots)
+\method{PVC}{xts}(X, \ldots)
+\method{PVC}{zoo}(X, \ldots)
 }
+
 \arguments{
-  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}. Missing values are not allowed.}
+  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}, \code{\link[xts]{xts}} or \code{\link[zoo]{zoo}}. Missing values are not allowed.}
   \item{k}{A vector of lags. It can be any non-zero positive integer, or a vector consisting of them. Default is \code{1:12}.}
   \item{ordered}{Whether to order components according to their volatility. Default is \code{FALSE}.}
   \item{acfk}{A vector of lags to be used in testing the presence of serial autocorrelation. Applicable only if \code{ordered = TRUE}.}
   \item{original}{Whether to return the original components or their residuals based on ARMA fit. Default is \code{TRUE}, i.e. the original components are returned. Applicable only if \code{ordered = TRUE}.}
   \item{alpha}{Alpha level for linear correlation detection. Default is 0.05.}
-  \item{\ldots}{Other arguments passed on to \code{auto.arima} function.}
-  }
-\details{
+  \item{\ldots}{Further arguments to be passed to or from methods.}
+}
 
+\details{
 Assume that a \eqn{p}-variate \eqn{{\bf Y}}{Y} with \eqn{T} observations is whitened, i.e. \eqn{{\bf Y}={\bf S}^{-1/2}({\bf X}_t - \frac{1}{T}\sum_{t=1}^T {\bf X}_{t})}{Y = S^(-1/2)*(X_t - (1/T)*sum_t(X_t))}, \if{html}{for \eqn{t = 1, \ldots, T},}
 where \eqn{\bf S}{S} is the sample covariance matrix of \eqn{\bf X}{X}.
 Then for each lag \eqn{k} we calculate
@@ -39,35 +47,38 @@ Then \eqn{\bf U}{U} is the matrix with eigenvectors of \eqn{{\bf G}_K({\bf Y})}{
 The final unmixing matrix is then \eqn{{\bf W} = {\bf US}^{-1/2}}{W = U S^(-1/2)}, where the average value of each row is set to be positive.
 
 For \code{ordered = TRUE} the function orders the sources according to their volatility. First a possible linear autocorrelation is removed using \code{\link[forecast]{auto.arima}}. Then a squared autocorrelation test is performed for the sources (or for their residuals, when linear correlation is present). The sources are then put in a decreasing order according to the value of the test statistic of the squared autocorrelation test. For more information, see \code{\link[tsBSS]{lbtest}}.
-
 }
+
 \value{
- A list with class 'bssvol' (inherits from class 'bss') containing the following components:
+ A list with class 'bssvol' containing the following components:
   \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k }{The vector of the used lags.}
-  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = F}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
+  \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = FALSE}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
   \item{MU}{The means of the original series.}
   If \code{ordered = TRUE}, then also the following components included in the list:
   \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}
-  \item{armaeff }{A logical vector. Has value 1 if ARMA fit was done to the corresponding component.}
+  \item{armaeff }{A logical vector. Is TRUE if ARMA fit was done to the corresponding component.}
   \item{linTS }{The value of the modified Ljung-Box test statistic for each component.}
-  \item{linP }{P-value based on the modified Ljung-Box test statistic for each component.}
+  \item{linP }{p-value based on the modified Ljung-Box test statistic for each component.}
   \item{volTS }{The value of the volatility clustering test statistic.}
-  \item{volP }{P-value based on the volatility clustering test statistic.}
+  \item{volP }{p-value based on the volatility clustering test statistic.}
 }
+
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2017), \emph{Extracting Conditionally Heteroscedastic Components Using ICA}. Submitted.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
 
-Hu, Y.-P. & Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
-
+Hu, Y.-P. and Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 }
+
 \author{
 Jari Miettinen, Markus Matilainen
 }
+
 \seealso{
 \code{\link[MTS]{comVol}}, \code{\link[tsBSS]{gSOBI}}, \code{\link[tsBSS]{lbtest}}, \code{\link[forecast]{auto.arima}}
 }
+
 \examples{
 library(stochvol)
 n <- 10000
@@ -80,7 +91,6 @@ s3 <- svsim(n, mu = -10, phi = 0.95, sigma = 0.4)$y
 
 # create a daily time series
 X <- ts(cbind(s1, s2, s3) \%*\% t(A), end = c(2015, 338), frequency = 365.25)
-
 
 res <- PVC(X)
 res

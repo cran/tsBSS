@@ -1,24 +1,36 @@
 \name{AMUSEasymp}
 \alias{AMUSEasymp}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{AMUSEasymp.default}
+\alias{AMUSEasymp.ts}
+\alias{AMUSEasymp.xts}
+\alias{AMUSEasymp.zoo}
 \title{
 Second-order Separation Sub-White-Noise Asymptotic Testing with AMUSE
 }
+
 \description{
-The function uses AMUSE to test, assuming a p-variate second-order stationary BSS model, whether the last \code{p-k} latent series are pure white noise. The test is asymptotic.
+The function uses AMUSE (Algorithm for Multiple Unknown Signals Extraction) to test whether the last \code{p-k} latent series are pure white noise, assuming a p-variate second-order stationary blind source separation (BSS) model. The test is asymptotic.
 }
+
 \usage{
-AMUSEasymp(X, k, tau = 1)
+AMUSEasymp(X, \ldots)
+
+\method{AMUSEasymp}{default}(X, k, tau = 1, \ldots)
+\method{AMUSEasymp}{ts}(X, \ldots)
+\method{AMUSEasymp}{xts}(X, \ldots)
+\method{AMUSEasymp}{zoo}(X, \ldots)
+
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{X}{A numeric data matrix or a numeric multivariate time series.}
+  \item{X}{A numeric matrix or a multivariate time series object of class \code{\link{ts}}, \code{\link[xts]{xts}} or \code{\link[zoo]{zoo}}. Missing values are not allowed.}
   \item{k}{The number of latent series that are not white noise. Can be between \eqn{0} and \eqn{p-1}.}
   \item{tau}{The lag for the AMUSE autocovariance matrix.}
+  \item{\ldots}{Further arguments to be passed to or from methods.}
 }
 
 \details{
-AMUSE standardizes \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the null the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p}}{\lambda_(p-k) = \ldots = \lambda_p = 0}, and their mean square \eqn{m} can be used as a test statistic in inference on the true number of latent white noise series. 
+AMUSE standardizes \code{X} with \eqn{n} samples and computes the eigenedcomposition of the autocovariance matrix of the standardized data for a chosen lag \code{tau}, yielding a transformation \eqn{\bf W}{W} giving the latent variables as \eqn{{\bf S} = {\bf X} {\bf W}}{S = XW}. Assume, without loss of generality, that the latent components are ordered in decreasing order with respect to the squares of the corresponding eigenvalues of the autocovariance matrix. Under the null hypothesis the final \eqn{p - k} eigenvalues equal zero, \eqn{\lambda_{p-k} = \cdots = \lambda_{p} = 0}{\lambda_(p-k) = \ldots = \lambda_p = 0}, and their mean square \eqn{m} can be used as a test statistic in inference on the true number of latent white noise series. 
 
 This function conducts the hypothesis test using the asymptotic null distribution of \eqn{m}, a chi-squared distribution with \eqn{(p - k)(p - k + 1)/2} degrees of freedom.
 }
@@ -35,14 +47,15 @@ A list of class ictest inheriting from class htest containing:
   \item{W}{The transformation matrix to the latent series.}
   \item{S}{Multivariate time series with the centered source components.}
   \item{D}{The underlying eigenvalues of the autocovariance matrix.}
-  \item{MU}{The location of the data which was substracted before calculating AMUSE.}
+  \item{MU}{The location of the data which was subtracted before calculating AMUSE.}
   \item{tau}{The used lag.}
+  \item{\ldots}{Further arguments to be passed to or from methods.}
 }
 
 \references{
-Virta, J. and Nordhausen, K. (2018), \emph{Determining the Signal Dimension in Second Order Source
-Separation}. Submitted. Available at \url{https://arxiv.org/abs/1808.10669v1}.
+Virta, J. and Nordhausen, K. (2019), \emph{Determining the Signal Dimension in Second Order Source Separation}. To appear in Statistica Sinica, <doi:10.5705/ss.202018.0347>.
 }
+
 \author{
 Klaus Nordhausen, Joni Virta
 }
@@ -50,6 +63,7 @@ Klaus Nordhausen, Joni Virta
 \seealso{
 \code{\link[JADE]{AMUSE}}, \code{\link[JADE]{SOBI}}, \code{\link{SOBIasymp}}
 }
+
 \examples{
   n <- 1000
 
@@ -69,8 +83,7 @@ Klaus Nordhausen, Joni Virta
   asymp_res_2
 
   # Plots of the estimated sources, the last two are white noise
-  plot(asymp_res_2$S)
-
+  plot(asymp_res_2)
 }
 
 \keyword{ htest }

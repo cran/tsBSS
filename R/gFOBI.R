@@ -2,21 +2,20 @@
 gFOBI <- function(X, ...) UseMethod("gFOBI")
 
 # main function for gFOBI
-gFOBI.default <- function (X, k = 0:12, eps = 1e-06, maxiter = 100, method = "frjd",
+gFOBI.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = c("frjd", "rjd"),
                            na.action = na.fail, weight = NULL,
-                           ordered = FALSE, acfk = NULL, original = TRUE, alpha = 0.05, ...) 
-{
+                           ordered = FALSE, acfk = NULL, original = TRUE, alpha = 0.05, ...) {
+  if (!is.numeric(X)) stop("non-numeric data")
+  if (any(is.na(X) | is.infinite(X))) stop("missing/infinite values are not allowed")
   nk <- length(k)
-  method <- match.arg(method, c("rjd", "frjd"))
-  MEAN <- colMeans(X)
-  COV <- cov(X)
-  EVD <- eigen(COV, symmetric = TRUE)
-  COV.sqrt.i <- EVD$vectors %*% tcrossprod(diag(EVD$values^(-0.5)), EVD$vectors)
-  X.C <- sweep(X, 2, MEAN, "-") #Centered
-  Y <- tcrossprod(X.C, COV.sqrt.i) #Scaled
-  p <- ncol(X)
-  R <- array(0, dim = c(p, p, nk))
+  method <- match.arg(method)
+
   n <- nrow(X)
+  p <- ncol(X)
+  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  Y <- prep$Y 
+  
+  R <- array(0, dim = c(p, p, nk))
   for (i in 1:nk) {
     Yt <- Y[1:(n - k[i]), ]
     Yti <- Y[(1 + k[i]):n, ]
@@ -26,13 +25,13 @@ gFOBI.default <- function (X, k = 0:12, eps = 1e-06, maxiter = 100, method = "fr
     R[, , i] <- Ri
   }
   JD <- switch(method, frjd = {
-    frjd(R, eps = eps, maxiter = maxiter, na.action = na.action, weight = weight)$V
+    JADE::frjd(R, eps = eps, maxiter = maxiter, na.action = na.action, weight = weight)$V
   }, rjd = {
-    rjd(R, eps = eps, maxiter = maxiter, na.action = na.action)$V
+    JADE::rjd(R, eps = eps, maxiter = maxiter, na.action = na.action)$V
   })
-  W <- crossprod(JD, COV.sqrt.i)
+  W <- crossprod(JD, prep$COV.sqrt.i)
   W <- diag(sign(rowMeans(W))) %*% W
-  S <- tcrossprod(X.C, W)
+  S <- tcrossprod(prep$X.C, W)
   if (ordered == TRUE) { #Ordering by volatility
     if (is.null(acfk) == TRUE) { acfk <- k }
     ord <- ordf(S, acfk, p, W, alpha, ...)
@@ -43,11 +42,10 @@ gFOBI.default <- function (X, k = 0:12, eps = 1e-06, maxiter = 100, method = "fr
       S <- ord$RS # Residuals based on ARMA fit, if applicable; otherwise original IC's
       Sraw <- ord$S
       Sraw <- ts(Sraw, names = paste("Series", 1:p))
-      if (is.ts(X)) attr(Sraw, "tsp") <- attr(X, "tsp")
     }
   }
   S <- ts(S, names = paste("Series", 1:p))
-  RES <- list(W = W, k = k, S = S, MU = MEAN)
+  RES <- list(W = W, k = k, S = S, MU = prep$MEAN)
   if (ordered == TRUE) {
     if (original == FALSE) {
       RES$Sraw <- Sraw
@@ -63,13 +61,46 @@ gFOBI.default <- function (X, k = 0:12, eps = 1e-06, maxiter = 100, method = "fr
   RES
 }
 
-gFOBI.ts <- function(X, ...)
-{
+gFOBI.ts <- function(X, ...) {
   x <- as.matrix(X)
-  RES <- gFOBI.default(x,...)
+  RES <- gFOBI.default(x, ...)
   S <- RES$S
   attr(S, "tsp") <- attr(X, "tsp")
   RES$S <- S
+  if (!is.null(RES$Sraw)) {
+    Sraw <- RES$Sraw
+    attr(Sraw, "tsp") <- attr(X, "tsp")
+    RES$Sraw <- Sraw
+  }
   RES
 }
 
+gFOBI.xts <- function(X, ...) {
+  x <- as.matrix(X)
+  RES <- gFOBI.default(x, ...)
+  S <- xts::as.xts(RES$S)
+  attr(S, "index") <- attr(X, "index")
+  xts::xtsAttributes(S) <- xts::xtsAttributes(X) #attributes additional to zoo
+  RES$S <- S
+  if (!is.null(RES$Sraw)) {
+    Sraw <- xts::as.xts(RES$Sraw)
+    attr(Sraw, "index") <- attr(X, "index")
+    xts::xtsAttributes(Sraw) <- xts::xtsAttributes(X)
+    RES$Sraw <- Sraw
+  }
+  RES
+}
+
+gFOBI.zoo <- function(X, ...) {
+  x <- as.matrix(X)
+  RES <- gFOBI.default(x, ...)
+  S <- zoo::as.zoo(RES$S)
+  attr(S, "index") <- attr(X, "index")
+  RES$S <- S
+  if (!is.null(RES$Sraw)) {
+    Sraw <- zoo::as.zoo(RES$Sraw)
+    attr(Sraw, "index") <- attr(X, "index")
+    RES$Sraw <- Sraw
+  }
+  RES
+}

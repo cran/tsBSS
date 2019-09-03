@@ -1,24 +1,38 @@
 \name{summary.tssdr}
 \alias{summary.tssdr}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{print.summary.tssdr}
+\alias{components.summary.tssdr}
+\alias{coef.summary.tssdr}
+\alias{plot.summary.tssdr}
 \title{
 Summary of an object of class tssdr
 }
+
 \description{
 Gives a summary of an object of class tssdr. It includes different types of methods to select the number of directions (sources) and lags.
 }
+
 \usage{
+\method{summary}{tssdr}(object, type = c("rectangle", "alllag", "alldir", "big"), thres = 0.8, ...)
 
-\method{summary}{tssdr}(object, type = "rectangle", thres = 0.8, ...)
-
+\method{print}{summary.tssdr}(x, digits = 3, ...)
+\method{components}{summary.tssdr}(x, ...)
+\method{coef}{summary.tssdr}(object, ...)
+\method{plot}{summary.tssdr}(x, main = "The response and the chosen directions", ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{object}{An object of class tssdr.}
-  \item{type}{Method for choosing the important lags and directions. The choices are \code{rectangle}, \code{alllag}, \code{alldir} and \code{big}. Default is \code{rectangle}.}
+  \item{type}{Method for choosing the important lags and directions. The choices are \code{"rectangle"}, \code{"alllag"}, \code{"alldir"} and \code{"big"}. Default is \code{"rectangle"}.}
   \item{thres}{The threshold value for choosing the lags and directions. Default is \code{0.8}.}
   \item{\dots}{Further arguments to be passed to or from methods.}
+  
+\strong{In methods for class 'summary.tssdr' only:}
+  \item{x}{An object of class summary.tssdr}
+  \item{digits}{The number of digits when printing an object of class summary.tssdr. Default is 3}
+  \item{main}{A title for a plot when printing an object of class summary.tssdr.}
 }
+
 \details{
 The sum of values of \eqn{k_0 \times p_0}{k0*p0} matrix \eqn{\bf L}{L} of \code{object} is 1. The values of the matrix are summed together in ways detailed below, until the value is at least \eqn{\pi} (\code{thres}). Let \eqn{\lambda_{ij}}{\lambda_ij} be the element \eqn{(i, j)} of the matrix \eqn{\bf L}{L}.
 
@@ -33,6 +47,7 @@ For \code{big}: \eqn{r} is the smallest value of elements \eqn{(i_1, j_1), \ldot
 
 Note that when printing a summary.tssdr object, all elements except the component S, which is the matrix of the chosen directions or a vector if there is only one direction, are printed.
 }
+
 \value{
 A list with class 'summary.tssdr' containing the following components:
   \item{W }{The estimated signal separation matrix}
@@ -45,14 +60,18 @@ A list with class 'summary.tssdr' containing the following components:
   \item{k }{The chosen number of lags (not for \code{type = "big"} ).}
   \item{p }{The chosen number of directions (not for \code{type = "big"}).}
   \item{pk}{The chosen lag-direction combinations (for \code{type = "big"} only).}
-  }
-  \references{
-Matilainen M., Croux C., Nordhausen K. & Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 }
+
+\references{
+Matilainen M., Croux C., Nordhausen K. and Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
+}
+
 \author{Markus Matilainen}
+
 \seealso{
 \code{\link[tsBSS]{tssdr}}
 }
+
 \examples{
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
@@ -72,7 +91,6 @@ summary(res2) #Chooses more lags with larger threshold
 summary(res2, type = "alllag") #Chooses all lags
 summary(res2, type = "alldir", thres = 0.5) #Chooses all directions
 summary(res2, type = "big", thres = 0.5) #Same choices than in summ2
-
 }
 
 \keyword{methods}
