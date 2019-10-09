@@ -1,5 +1,8 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.5.4:
+* Function ordf for ordering the stochastic volatility components is restructured.
+
 Version 0.5.3:
 * xts, zoo and ts as time series inputs are now available in all the appropriate functions. Output S (and Sraw) is returned with the same attributes as X.
 * Sraw now returned with the same attributes as the original X, if X is xts, zoo or ts object in stochastic volatility functions.

@@ -114,34 +114,25 @@ gSOBI.zoo <- function(X, ...) {
 ordf <- function(S, acfk, p, W, alpha, ...) {
   lblin1 <- lbtest(S, acfk, "linear") #Linear autocorrelations exist?
   lineff <- lblin1$p_val
-  armaeff <- rep(0, p)
-  fits <- vector("list", p)
+  armaeff <- (lineff < alpha) #Logical vector: TRUE if series is replaced with residuals; FALSE if not
+
   S2 <- S
-  coef <- numeric(p)
-  for (i in 1:p) {
-    if (lineff[i] < alpha) {
-      fits[[i]] <- forecast::auto.arima(S[, i], stationary = T, seasonal = F, ...)
-      S2[, i] <- fits[[i]]$residuals #Replaces series with residuals (if autocorrelation exists)
-      armaeff[i] <- 1 #Logical vector: 1 if series is replaced with residuals; 0 if not
-    }
-  }
+  fits <- vector("list", p)
+  # Replaces series with residuals (if autocorrelation exists)
+  fits[armaeff == 1] <- lapply(S[, armaeff == 1], forecast::auto.arima, stationary = TRUE, seasonal = FALSE, ...)
+  S2[, armaeff == 1] <- sapply(fits[armaeff == 1], residuals)
+  
   vol <- lbtest(S2, acfk, "squared")
   ord <- vol$TS
-  fits2 <- vector("list", p)
-  j <- 1
-  ordered <- order(ord, decreasing = T)
-  for (i in ordered) {
-    fits2[[j]] <- fits[[i]]
-    j <- j + 1
-  }
+  ordered <- order(ord, decreasing = TRUE)
+  
   list(S = S[, ordered],
        RS = S2[, ordered], #Residuals if ARMA effects; otherwise original independent component
        W = W[ordered, ],
-       fits = fits2,
+       fits = fits[ordered],
        volTS = vol$TS[ordered], volP = vol$p_val[ordered],
-       armaeff = armaeff[ordered] == 1, linTS = lblin1$TS[ordered], linP = lineff[ordered])
+       armaeff = armaeff[ordered], linTS = lblin1$TS[ordered], linP = lineff[ordered])
 }
-
 
 `print.bssvol` <- function(x, ...) {
   print.listof(x[(names(x) != "S") & (names(x) != "Sraw") & (names(x) != "MU") & (names(x) != "fits") & (names(x) != "armaeff") & (names(x) != "linTS")

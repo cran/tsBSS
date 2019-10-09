@@ -13,8 +13,8 @@ Different estimators are provided to solve the blind source separation problem f
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.5.3\cr
-Date: \tab 2019-09-03\cr
+Version: \tab 0.5.4\cr
+Date: \tab 2019-10-04\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -41,11 +41,11 @@ Several functions in this package utilize \code{\link[JADE:rjd]{"rjd"}} (real jo
 There are several functions for estimating the number of white noise latent series in second-order source separation (SOS) models. The functions are 
 \itemize{\item{\code{\link{AMUSEboot}}, \code{\link{AMUSEladle}} and  \code{\link{AMUSEasymp}} which are based on \code{\link[JADE]{AMUSE}}.}
 
-\item{\code{\link{SOBIboot}}, \code{\link{SOBIladle}} and  \code{\link{SOBIasymp}} which are based on  \code{\link[JADE]{SOBI}}.}
+\item{\code{\link{SOBIboot}}, \code{\link{SOBIladle}} and  \code{\link{SOBIasymp}} which are based on \code{\link[JADE]{SOBI}}.}
 }
 Additionally, there is function \code{\link{lbtest}} for a modified Ljung-Box test and a volatility clustering test for univariate and multivariate time series.
 
-The package also contains a dataset \code{\link{WeeklyReturnsData}}, that has logarithmic returns of exchange rates of 7 currencies against US Dollar.
+The package also contains a dataset \code{\link{WeeklyReturnsData}}, which has logarithmic returns of exchange rates of 7 currencies against US Dollar.
 }
 
 \author{
