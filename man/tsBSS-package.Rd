@@ -13,8 +13,8 @@ Different estimators are provided to solve the blind source separation problem f
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.5.4\cr
-Date: \tab 2019-10-04\cr
+Version: \tab 0.5.5\cr
+Date: \tab 2019-10-14\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.

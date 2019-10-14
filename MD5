@@ -1,4 +1,4 @@
-a9606e94ca2dc969a66a3da476b1e3c6 *DESCRIPTION
+c2d4c871ac17fd1590c507929897de6d *DESCRIPTION
 d4309faf3db5fa498ca1553248d6300e *NAMESPACE
 cd895a2a4ac022605ce39519fc22ead2 *R/AMUSEasymp.R
 65194bf5fbe301090412b1ac2e79cded *R/AMUSEboot.R
@@ -11,7 +11,7 @@ f6bc3f598338dbdf833d0ab0ace1982a *R/FixNA.R
 a697e99d8a63f144cd216555aa52e1b2 *R/SOBIladle.R
 0e2f3c2cf9cb701b09b77a33ce5e210f *R/gFOBI.R
 42891a71c97869dcc026b6b22ff5d112 *R/gJADE.R
-fcf5f83c828557f991334726fc540cf3 *R/gSOBI.R
+6886579de1c19ade2257db55747ae269 *R/gSOBI.R
 aaa111284a79441309c6ce3cd8350971 *R/lagdir.R
 cb85447fc33e2bbe1a3d5bdd9611ad88 *R/lbtest.R
 678a760bb0c97c526e94f30590ebcb50 *R/summary.tssdr.R
@@ -19,7 +19,7 @@ f329539eebfcbf4d1a110bf03d8604e3 *R/tssdr.R
 7c30c9cff8712d8c7d75cac8e3fb26ed *R/vSOBI.R
 713eb039fa3f3caa9ee626025e56c648 *data/WeeklyReturnsData.RData
 8ed5fcc48fbb2d3db5856d1d7e1319bc *data/datalist
-0766b7626ee52709b2485dcb4e77e787 *inst/ChangeLog
+65d165a2a90a17bf92e03f0564d99157 *inst/ChangeLog
 25fd4b236bf04da3045dbfd27cb83305 *man/AMUSEasymp.Rd
 5f6ac5dcd00e3bdd6553540ffc0219f8 *man/AMUSEboot.Rd
 4a6de700875e841bff978dfe9a8965cc *man/AMUSEladle.Rd
@@ -35,7 +35,7 @@ f6aa39ebd6dd951df1b1217b7c986bc0 *man/bssvol-class.Rd
 214c5b4b37e1a0dec93a8f7a04808b07 *man/gSOBI.Rd
 3130ee6e8f2a287f0c6be4c3ed37ccca *man/lbtest.Rd
 c6b317b4c4c8096431c6d5813b3796e5 *man/summary.tssdr.Rd
-8c63d3d2143a6dd80ebf5829ed177287 *man/tsBSS-package.Rd
+5d08d5b33524c4269919953d0f70e51c *man/tsBSS-package.Rd
 e79e8d20daa4d060846a13841fb0cf02 *man/tssdr.Rd
 7b6756c6c9be3ffb5b083bbaf2759113 *man/vSOBI.Rd
 95a5e0dc5dbdec9c251c142cb4cad286 *src/Makevars

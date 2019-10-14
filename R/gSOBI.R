@@ -119,7 +119,7 @@ ordf <- function(S, acfk, p, W, alpha, ...) {
   S2 <- S
   fits <- vector("list", p)
   # Replaces series with residuals (if autocorrelation exists)
-  fits[armaeff == 1] <- lapply(S[, armaeff == 1], forecast::auto.arima, stationary = TRUE, seasonal = FALSE, ...)
+  fits[armaeff == 1] <- lapply(as.data.frame(S[, armaeff == 1]), forecast::auto.arima, stationary = TRUE, seasonal = FALSE, ...)
   S2[, armaeff == 1] <- sapply(fits[armaeff == 1], residuals)
   
   vol <- lbtest(S2, acfk, "squared")
