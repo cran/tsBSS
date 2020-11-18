@@ -86,7 +86,7 @@ Klaus Nordhausen, Markus Matilainen
 }
 
 \examples{
-library(stochvol)
+if(require(stochvol)) {
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
 
@@ -104,6 +104,7 @@ plot(res)
 head(bss.components(res))
 
 MD(res$W, A) # Minimum Distance Index, should be close to zero
+}
 }
 
 \keyword{ multivariate }

@@ -66,7 +66,7 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
 
 Hu, Y.-P. and Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 }
@@ -80,7 +80,7 @@ Jari Miettinen, Markus Matilainen
 }
 
 \examples{
-library(stochvol)
+if(require(stochvol)) {
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
 
@@ -99,6 +99,7 @@ plot(res)
 head(bss.components(res))
 
 MD(res$W, A) # Minimum Distance Index, should be close to zero
+}
 }
 
 \keyword{ multivariate }

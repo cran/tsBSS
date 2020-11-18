@@ -13,8 +13,8 @@ Different estimators are provided to solve the blind source separation problem f
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.5.5\cr
-Date: \tab 2019-10-14\cr
+Version: \tab 0.5.6\cr
+Date: \tab 2020-11-17\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -71,7 +71,7 @@ Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal
 
 Virta, J. and Nordhausen, K. (2019), \emph{Determining the Signal Dimension in Second Order Source Separation}. To appear in Statistica Sinica, <doi:10.5705/ss.202018.0347>.
 
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
 
 Hu, Y.-P. and Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 }

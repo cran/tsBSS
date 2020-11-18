@@ -53,7 +53,7 @@ Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\c
 }
 
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
 }
 
 \author{
@@ -65,7 +65,7 @@ Markus Matilainen, Jari Miettinen
 }
 
 \examples{
-library(stochvol)
+if(require(stochvol)) {
 n <- 10000
 s1 <- svsim(n, mu = -10, phi = 0.95, sigma = 0.1)$y
 s2 <- rnorm(n)
@@ -73,6 +73,7 @@ S <- cbind(s1, s2)
 
 lbtest(S, 1:3, type = "squared")
 # First p-value should be very close to zero, as there exists stochastic volatility
+}
 }
 
 \keyword{ htest }

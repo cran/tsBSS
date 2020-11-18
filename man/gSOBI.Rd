@@ -86,7 +86,7 @@ Belouchrani, A., Abed-Meriam, K., Cardoso, J.F. and Moulines, R. (1997), \emph{A
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
 }
 
 \author{
@@ -98,7 +98,7 @@ Markus Matilainen, Jari Miettinen
 }
 
 \examples{
-library(stochvol)
+if(require(stochvol)) {
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
 
@@ -129,7 +129,7 @@ plot(res2, multi.panel = TRUE)
 X3 <- as.zoo(X)
 res3 <- gSOBI(X3, 1:4, 1:2, 0.99)
 plot(res3)
-
+}
 }
 
 \keyword{ multivariate }

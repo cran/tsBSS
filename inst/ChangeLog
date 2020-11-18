@@ -1,5 +1,9 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.5.6:
+* Suggested packages are now used conditionally in examples
+* Minor updates to references and links
+
 Version 0.5.5:
 * Fixed a bug in function ordf: errors in output value fits caused faulty values of fits, S, volTS and volP in all stochastic volatility functions if original = FALSE.
 

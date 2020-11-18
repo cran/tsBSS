@@ -28,7 +28,7 @@ data("WeeklyReturnsData")
 
 \details{
 The daily exhange rates of the currencies against US Dollar from March 22, 2000 to October
-26, 2011 are extracted from the International Monetary Fund's (IMF) Exchange Rates database from \url{http://www.imf.org/external/np/fin/ert/GUI/Pages/CountryDataBase.aspx}. These rates are representative rates (currency units per US Dollar), which are reported daily to the IMF by the issuing central bank.
+26, 2011 are extracted from the International Monetary Fund's (IMF) Exchange Rates database from \url{https://www.imf.org/external/np/fin/ert/GUI/Pages/CountryDataBase.aspx}. These rates are representative rates (currency units per US Dollar), which are reported daily to the IMF by the issuing central bank.
 
 The weekly averages of these exchange rates are then calculated. The logarithmic returns of the average weekly exchange rates are calculated for the currency \eqn{j} as follows.
 
@@ -44,13 +44,13 @@ An example analysis of the data is given in Miettinen et al. (2018). Same data h
 }
 
 \source{
-International Monetary Fund (2017), \emph{IMF Exchange Rates}, \url{http://www.imf.org/external/np/fin/ert/GUI/Pages/CountryDataBase.aspx}
+International Monetary Fund (2017), \emph{IMF Exchange Rates}, \url{https://www.imf.org/external/np/fin/ert/GUI/Pages/CountryDataBase.aspx}
 
-For IMF Copyrights and Usage, and special terms and conditions pertaining to the use of IMF data, see \url{http://www.imf.org/external/terms.htm}
+For IMF Copyrights and Usage, and special terms and conditions pertaining to the use of IMF data, see \url{https://www.imf.org/external/terms.htm}
 }
 
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2019), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}. Accepted for publication in Journal of Time Series Analysis. Available at \url{http://arxiv.org/abs/1811.10963v1}.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
 
 Hu and Tsay (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 }
