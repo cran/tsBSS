@@ -104,7 +104,7 @@ Klaus Nordhausen, Joni Virta
   ladleplot(ladle_AMUSE)
   
   # xts series as input
-  library(xts)
+  library("xts")
   data(sample_matrix)
   X2 <- as.xts(sample_matrix)
   ladle_SOBI_xts <- SOBIladle(X2, l = 20, sim = "geom")

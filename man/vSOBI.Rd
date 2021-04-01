@@ -86,7 +86,7 @@ Markus Matilainen
 }
 
 \examples{
-if(require(stochvol)) {
+if(require("stochvol")) {
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
 

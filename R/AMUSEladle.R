@@ -11,7 +11,7 @@ AMUSEladle.default <- function(X, tau = 1, l = 20, sim = c("geom", "fixed"), n.b
 
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   Mdata <- crossprod(Y[1:(n - tau), ], Y[(tau + 1):n, ])/(n - tau)

@@ -1,5 +1,9 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 0.5.7:
+* Data whitening part moved to package BSSprep, and this package depends on it now
+* Updated references and minor polishing
+
 Version 0.5.6:
 * Suggested packages are now used conditionally in examples
 * Minor updates to references and links

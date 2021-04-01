@@ -10,7 +10,7 @@ SOBIasymp.default <- function (X, k, tau = 1:12, eps = 1e-06, maxiter = 200, ...
 
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   R <- array(0, dim = c(p, p, ntau))

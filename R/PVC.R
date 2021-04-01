@@ -10,7 +10,7 @@ PVC.default <- function(X, k = 1:12, ordered = FALSE, acfk = NULL, original = TR
 
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y
 
   R <- .Call( "PVCk", Y, k, PACKAGE = "tsBSS")$R

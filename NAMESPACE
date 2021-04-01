@@ -4,7 +4,7 @@ importFrom(forecast, auto.arima)
 importFrom(boot, tsboot)
 importFrom(xts, xts, xtsAttributes, is.xts)
 importFrom(zoo, zoo, is.zoo)
-import(JADE, ICtest, stats, parallel)
+import(JADE, ICtest, BSSprep, stats, parallel)
 
 export(FixNA, gFOBI, gJADE, tssdr, vSOBI, gSOBI, PVC, lbtest)
 export(AMUSEasymp, AMUSEboot, AMUSEladle, SOBIasymp, SOBIboot, SOBIladle)

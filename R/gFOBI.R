@@ -12,7 +12,7 @@ gFOBI.default <- function(X, k = 0:12, eps = 1e-06, maxiter = 100, method = c("f
 
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   R <- array(0, dim = c(p, p, nk))

@@ -10,7 +10,7 @@ AMUSEasymp.default <- function (X, k, tau = 1, ...) {
 
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   Yt <- Y[1:(n - tau), ]

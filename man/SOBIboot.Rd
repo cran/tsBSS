@@ -118,7 +118,7 @@ Markus Matilainen, Klaus Nordhausen, Joni Virta
   AMUSEboot(X, k = 1)
   
   # xts series as input
-  library(xts)
+  library("xts")
   data(sample_matrix)
   X2 <- as.xts(sample_matrix)
   boot_res_xts <- SOBIboot(X2, k = 2)

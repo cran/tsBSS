@@ -23,7 +23,7 @@ tssdr.default <- function(y, X, algorithm = c("TSIR", "TSAVE", "TSSH"), k = 1:12
   
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   nk <- length(k)

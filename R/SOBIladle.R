@@ -13,7 +13,7 @@ SOBIladle.default <- function(X, tau = 1:12, l = 20, sim = c("geom", "fixed"), n
   
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y
   
   M_array <- array(0, dim = c(p, p, length(tau)))

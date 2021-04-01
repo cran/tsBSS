@@ -8,7 +8,7 @@ gSOBI.default <- function(X, k1 = 1:12, k2 = 1:3, b = 0.9, eps = 1e-06, maxiter 
   if (any(is.na(X) | is.infinite(X))) stop("missing/infinite values are not allowed")
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   U <- diag(p) #Initial value for the orthogonal matrix U

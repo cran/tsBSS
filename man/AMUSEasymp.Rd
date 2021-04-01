@@ -53,7 +53,7 @@ A list of class ictest inheriting from class htest containing:
 }
 
 \references{
-Virta, J. and Nordhausen, K. (2019), \emph{Determining the Signal Dimension in Second Order Source Separation}. To appear in Statistica Sinica, <doi:10.5705/ss.202018.0347>.
+Virta, J. and Nordhausen, K. (2021), \emph{Determining the Signal Dimension in Second Order Source Separation}. Statistica Sinica, 31, 135--156.
 }
 
 \author{

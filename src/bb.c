@@ -19,7 +19,6 @@ extern SEXP TSIR(SEXP, SEXP, SEXP, SEXP);
 extern SEXP lblinM(SEXP, SEXP);
 extern SEXP lbsqM(SEXP, SEXP);
 extern SEXP EIGEN(SEXP);
-extern SEXP PREPBSS(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"CCK",    (DL_FUNC) &CCK,    2},
@@ -32,7 +31,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"lblinM", (DL_FUNC) &lblinM, 2},
     {"lbsqM",  (DL_FUNC) &lbsqM,  2},
     {"EIGEN",  (DL_FUNC) &EIGEN,  1},
-    {"PREPBSS",  (DL_FUNC) &PREPBSS,  2},
     {NULL, NULL, 0}
 };
 

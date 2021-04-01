@@ -13,8 +13,8 @@ Different estimators are provided to solve the blind source separation problem f
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.5.6\cr
-Date: \tab 2020-11-17\cr
+Version: \tab 0.5.7\cr
+Date: \tab 2020-03-31\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -36,13 +36,14 @@ The main function of the package for the supervised dimension reduction is
 
 Methods for ARMA models, such as AMUSE and SOBI, and some non-stationary BSS methods for time series are implemented in the \code{\link[JADE:JADE-package]{JADE}} package. See function \code{\link[dr]{dr}} for methods for supervised dimension reduction for iid observations.
 
-Several functions in this package utilize \code{\link[JADE:rjd]{"rjd"}} (real joint diagonalization) and \code{\link[JADE:rjd]{"frjd"}} (fast rjd) from the \code{\link[JADE:JADE-package]{JADE}} package for joint diagonalization of k real-valued square matrices.
+Several functions in this package utilize \code{\link[JADE:rjd]{"rjd"}} (real joint diagonalization) and \code{\link[JADE:rjd]{"frjd"}} (fast rjd) from the \code{\link[JADE:JADE-package]{JADE}} package for joint diagonalization of k real-valued square matrices. For whitening the time series this package uses function \code{\link[BSSprep:BSSprep]{"BSSprep"}} from package \code{\link[BSSprep:BSSprep-package]{BSSprep}}.
 
 There are several functions for estimating the number of white noise latent series in second-order source separation (SOS) models. The functions are 
 \itemize{\item{\code{\link{AMUSEboot}}, \code{\link{AMUSEladle}} and  \code{\link{AMUSEasymp}} which are based on \code{\link[JADE]{AMUSE}}.}
 
 \item{\code{\link{SOBIboot}}, \code{\link{SOBIladle}} and  \code{\link{SOBIasymp}} which are based on \code{\link[JADE]{SOBI}}.}
 }
+
 Additionally, there is function \code{\link{lbtest}} for a modified Ljung-Box test and a volatility clustering test for univariate and multivariate time series.
 
 The package also contains a dataset \code{\link{WeeklyReturnsData}}, which has logarithmic returns of exchange rates of 7 currencies against US Dollar.
@@ -69,9 +70,9 @@ Matilainen, M., Nordhausen, K. and Virta, J. (2018), \emph{On the Number of Sign
 
 Nordhausen, K. and Virta, J.(2018), \emph{Ladle Estimator for Time Series Signal Dimension}. In 2018 IEEE Statistical Signal Processing Workshop (SSP), pp. 428--432, <doi:10.1109/SSP.2018.8450695>.
 
-Virta, J. and Nordhausen, K. (2019), \emph{Determining the Signal Dimension in Second Order Source Separation}. To appear in Statistica Sinica, <doi:10.5705/ss.202018.0347>.
+Virta, J. and Nordhausen, K. (2021), \emph{Determining the Signal Dimension in Second Order Source Separation}. Statistica Sinica, 31, 135--156.
 
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis, 41, 293--311.
 
 Hu, Y.-P. and Tsay, R. S. (2014), \emph{Principal Volatility Component Analysis}, Journal of Business & Economic Statistics, 32(2), 153--164.
 }

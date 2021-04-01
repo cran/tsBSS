@@ -12,7 +12,7 @@ fi <- function(EVboot, EVdata, rank) {
 # Mfunction for AMUSE
 MAmuse <- function(X, k) {
   n <- nrow(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   M <- crossprod(Y[1:(n - k), ], Y[(k + 1):n, ])/(n - k)
@@ -31,7 +31,7 @@ AMUSEbootLADLE <- function(X, EVdata, tau, rank) {
 MSobi <- function(X, k_set) {
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
 
   M_array <- array(0, dim = c(p, p, length(k_set)))

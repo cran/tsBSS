@@ -1,7 +1,7 @@
 AMUSE_boot_teststatistic <- function(X, k, tau) {
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   Yt <- Y[1:(n - tau), ]
@@ -66,7 +66,7 @@ AMUSE_boot_nonpar3 <- function(Z1, Z2, Winv, MEAN, k, tau) {
 AMUSE_boot_p <- function(X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL) {
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   MEAN <- prep$MEAN
 
@@ -125,7 +125,7 @@ AMUSE_boot_p <- function(X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL) {
 AMUSE_boot_np2 <- function(X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL) {
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   MEAN <- prep$MEAN
   
@@ -184,7 +184,7 @@ AMUSE_boot_np2 <- function(X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL)
 AMUSE_boot_np1 <- function(X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL) {
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   MEAN <- prep$MEAN
   
@@ -243,7 +243,7 @@ AMUSE_boot_np1 <- function(X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL)
 AMUSE_boot_np3 <- function (X, k, tau, n.boot = 200, ncores = NULL, iseed = NULL) {
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   MEAN <- prep$MEAN
   

@@ -10,7 +10,7 @@ vSOBI.default <- function(X, k = 1:12, eps = 1e-06, maxiter = 1000, G = c("pow",
 
   n <- nrow(X)
   p <- ncol(X)
-  prep <- .Call("PREPBSS", X, n, PACKAGE = "tsBSS") #calling the function PREPBSS
+  prep <- BSSprep(X)
   Y <- prep$Y 
   
   U <- diag(p) #Initial value for the orthogonal matrix U

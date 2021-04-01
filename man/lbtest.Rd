@@ -53,7 +53,7 @@ Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\c
 }
 
 \references{
-Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis,41, 293--311.
+Miettinen, M., Matilainen, M., Nordhausen, K. and Taskinen, S. (2020), \emph{Extracting Conditionally Heteroskedastic Components Using Independent Component Analysis}, Journal of Time Series Analysis, 41, 293--311.
 }
 
 \author{
@@ -65,7 +65,7 @@ Markus Matilainen, Jari Miettinen
 }
 
 \examples{
-if(require(stochvol)) {
+if(require("stochvol")) {
 n <- 10000
 s1 <- svsim(n, mu = -10, phi = 0.95, sigma = 0.1)$y
 s2 <- rnorm(n)

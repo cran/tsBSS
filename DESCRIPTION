@@ -2,11 +2,19 @@ Package: tsBSS
 Type: Package
 Title: Blind Source Separation and Supervised Dimension Reduction for
         Time Series
-Version: 0.5.6
-Date: 2020-11-17
-Author: Markus Matilainen, Christophe Croux, Jari Miettinen, Klaus Nordhausen, Hannu Oja, Sara Taskinen, Joni Virta
+Version: 0.5.7
+Date: 2021-03-31
+Authors@R: 
+    c(person(given = "Markus", family = "Matilainen", role = c("cre","aut"),
+             email = "markus.matilainen@outlook.com", comment = c(ORCID = "0000-0002-5597-2670")),
+      person(given = "Christophe", family = "Croux", role = "aut"),
+      person(given = "Jari", family = "Miettinen", role = "aut", comment = c(ORCID = "0000-0002-3270-7014")),
+      person(given = "Klaus", family = "Nordhausen", role = c("aut"), comment = c(ORCID = "0000-0002-3758-8501")),
+      person(given = "Hannu", family = "Oja", role = "aut"),
+      person(given = "Sara", family = "Taskinen", role = "aut", comment = c(ORCID = "0000-0001-9470-7258")),
+	  person(given = "Joni", family = "Virta", role = "aut", comment = c(ORCID = "0000-0002-2150-2769")))		 
 Maintainer: Markus Matilainen <markus.matilainen@outlook.com>
-Depends: ICtest (>= 0.3-2), JADE (>= 2.0-2)
+Depends: ICtest (>= 0.3-2), JADE (>= 2.0-2), BSSprep
 Imports: Rcpp (>= 0.11.0), forecast, boot, parallel, xts, zoo
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: stochvol, MTS, tsbox, dr
@@ -14,6 +22,13 @@ Description: Different estimators are provided to solve the blind source separat
 License: GPL (>= 2)
 LazyData: true
 NeedsCompilation: yes
-Packaged: 2020-11-17 16:07:35 UTC; manmat
+Packaged: 2021-04-01 14:42:44 UTC; manmat
+Author: Markus Matilainen [cre, aut] (<https://orcid.org/0000-0002-5597-2670>),
+  Christophe Croux [aut],
+  Jari Miettinen [aut] (<https://orcid.org/0000-0002-3270-7014>),
+  Klaus Nordhausen [aut] (<https://orcid.org/0000-0002-3758-8501>),
+  Hannu Oja [aut],
+  Sara Taskinen [aut] (<https://orcid.org/0000-0001-9470-7258>),
+  Joni Virta [aut] (<https://orcid.org/0000-0002-2150-2769>)
 Repository: CRAN
-Date/Publication: 2020-11-18 13:40:03 UTC
+Date/Publication: 2021-04-01 21:40:03 UTC
