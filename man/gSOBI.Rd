@@ -65,12 +65,12 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 
 \value{
- A list with class 'bssvol' containing the following components:
+ A list of class 'bssvol', inheriting from class 'bss', containing the following components:
   \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k1}{The vector of the used lags for the SOBI part.}
   \item{k2}{The vector of the used lags for the vSOBI part.}
   \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = FALSE}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
-  \item{MU}{The means of the original series.}
+  \item{MU }{The mean vector of \code{X}.}
   If \code{ordered = TRUE}, then also the following components included in the list:
   \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}

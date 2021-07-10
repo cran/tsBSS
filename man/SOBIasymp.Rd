@@ -38,7 +38,7 @@ This function conducts the hypothesis test using the asymptotic null distributio
 }
 
 \value{
-A list of class ictest inheriting from class htest containing:
+A list of class ictest, inheriting from class htest, containing:
   \item{statistic}{The value of the test statistic.}
   \item{p.value}{The p-value of the test.}
   \item{parameter}{The degrees of freedom of the asymptotic null distribution.}

@@ -5,7 +5,7 @@
 \alias{PVC.xts}
 \alias{PVC.zoo}
 \title{
-A modified algorithm for Principal Volatility Component estimator
+A Modified Algorithm for Principal Volatility Component Estimator
 }
 
 \description{
@@ -50,11 +50,11 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 
 \value{
- A list with class 'bssvol' containing the following components:
+ A list of class 'bssvol', inheriting from class 'bss', containing the following components:
   \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k }{The vector of the used lags.}
   \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = FALSE}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
-  \item{MU}{The means of the original series.}
+  \item{MU }{The mean vector of \code{X}.}
   If \code{ordered = TRUE}, then also the following components included in the list:
   \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}
@@ -84,12 +84,12 @@ if(require("stochvol")) {
 n <- 10000
 A <- matrix(rnorm(9), 3, 3)
 
-# simulate SV models
+# Simulate SV models
 s1 <- svsim(n, mu = -10, phi = 0.8, sigma = 0.1)$y
 s2 <- svsim(n, mu = -10, phi = 0.9, sigma = 0.2)$y
 s3 <- svsim(n, mu = -10, phi = 0.95, sigma = 0.4)$y
 
-# create a daily time series
+# Create a daily time series
 X <- ts(cbind(s1, s2, s3) \%*\% t(A), end = c(2015, 338), frequency = 365.25)
 
 res <- PVC(X)

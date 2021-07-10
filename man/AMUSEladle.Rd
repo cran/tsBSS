@@ -15,8 +15,8 @@ The ladle estimator uses the eigenvalues and eigenvectors of an autocovariance m
 \usage{
 AMUSEladle(X, \ldots)
 
-\method{AMUSEladle}{default}(X, tau = 1, l = 20, sim = c("geom", "fixed"), n.boot = 200,
-ncomp = ifelse(ncol(X) > 10, floor(ncol(X)/log(ncol(X))), ncol(X) - 1), \ldots)
+\method{AMUSEladle}{default}(X, tau = 1, l = 20, sim = c("geom", "fixed"), n.boot = 200, ncomp = 
+           ifelse(ncol(X) > 10, floor(ncol(X)/log(ncol(X))), ncol(X) - 1), \ldots)
 \method{AMUSEladle}{ts}(X, \ldots)
 \method{AMUSEladle}{xts}(X, \ldots)
 \method{AMUSEladle}{zoo}(X, \ldots)

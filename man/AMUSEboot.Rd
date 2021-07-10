@@ -62,7 +62,7 @@ The function can be run in parallel by setting \code{ncores} to the desired numb
 }
 
 \value{
-A list of class ictest inheriting from class htest containing:
+A list of class ictest, inheriting from class htest, containing:
   \item{statistic}{The value of the test statistic.}
   \item{p.value}{The p-value of the test.}
   \item{parameter}{The number of bootstrap samples.}

@@ -5,7 +5,7 @@
 \alias{coef.summary.tssdr}
 \alias{plot.summary.tssdr}
 \title{
-Summary of an object of class tssdr
+Summary of an Object of Class tssdr
 }
 
 \description{
@@ -49,7 +49,7 @@ Note that when printing a summary.tssdr object, all elements except the componen
 }
 
 \value{
-A list with class 'summary.tssdr' containing the following components:
+A list of class 'summary.tssdr' containing the following components:
   \item{W }{The estimated signal separation matrix}
   \item{L }{The Lambda matrix for choosing lags and directions.}
   \item{S }{The estimated directions as time series object standardized to have mean 0 and unit variances.}
@@ -63,7 +63,7 @@ A list with class 'summary.tssdr' containing the following components:
 }
 
 \references{
-Matilainen M., Croux C., Nordhausen K. and Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
+Matilainen, M., Croux, C., Nordhausen, K. and Oja, H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 }
 
 \author{Markus Matilainen}
@@ -87,10 +87,10 @@ res2 <- tssdr(y, X, algorithm = "TSIR")
 res2
 summ2 <- summary(res2, thres = 0.5)
 summ2
-summary(res2) #Chooses more lags with larger threshold
-summary(res2, type = "alllag") #Chooses all lags
-summary(res2, type = "alldir", thres = 0.5) #Chooses all directions
-summary(res2, type = "big", thres = 0.5) #Same choices than in summ2
+summary(res2) # Chooses more lags with larger threshold
+summary(res2, type = "alllag") # Chooses all lags
+summary(res2, type = "alldir", thres = 0.5) # Chooses all directions
+summary(res2, type = "big", thres = 0.5) # Same choices than in summ2
 }
 
 \keyword{methods}

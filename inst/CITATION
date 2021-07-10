@@ -1,0 +1,16 @@
+bibentry(bibtype = "Article",
+  title        = "Dimension Reduction for Time Series in a Blind Source Separation Context Using {R}",
+  author       = c(person(given = "Klaus", family = "Nordhausen"),
+                   person(given = "Markus", family = "Matilainen"),
+                   person(given = "Jari", family = "Miettinen"),
+                   person(given = "Joni", family = "Virta"),
+                   person(given = "Sara", family = "Taskinen")),
+  journal      = "Journal of Statistical Software",
+  year         = "2021",
+  volume       = "98",
+  number       = "15",
+  pages        = "1--30",
+  doi          = "10.18637/jss.v098.i15",
+  header       = "To cite tsBSS in publications use:"
+)
+

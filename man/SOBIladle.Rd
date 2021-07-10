@@ -15,9 +15,9 @@ The ladle estimator uses the joint diagonalization "eigenvalues" and "eigenvecto
 \usage{
 SOBIladle(X, \ldots)
 
-\method{SOBIladle}{default}(X, tau = 1:12, l = 20, sim = c("geom", "fixed"), n.boot = 200,
-ncomp = ifelse(ncol(X) > 10, floor(ncol(X)/log(ncol(X))), ncol(X) - 1),
-maxiter = 1000, eps = 1e-06, \ldots)
+\method{SOBIladle}{default}(X, tau = 1:12, l = 20, sim = c("geom", "fixed"), n.boot = 200, ncomp =
+          ifelse(ncol(X) > 10, floor(ncol(X)/log(ncol(X))), ncol(X) - 1),
+          maxiter = 1000, eps = 1e-06, \ldots)
 \method{SOBIladle}{ts}(X, \ldots)
 \method{SOBIladle}{xts}(X, \ldots)
 \method{SOBIladle}{zoo}(X, \ldots)

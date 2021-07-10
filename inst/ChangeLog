@@ -1,5 +1,11 @@
 LOG of the CHANGES in the package tsBSS
 
+Version 1.0.0:
+* Added citation info and references to a journal publication based on the package
+* Modified description to only include the journal publication reference
+* Minor polishing of the manuals
+* Function tssdr now also returns object MU
+
 Version 0.5.7:
 * Data whitening part moved to package BSSprep, and this package depends on it now
 * Updated references and minor polishing
@@ -23,7 +29,7 @@ Version 0.5.3:
 * Fixed an error where AMUSEladle returned no lag value.
 * Functions now check in the beginning that the input data is numeric and does not contain any missing or infinite values.
 * All choices for the function arguments have been added to function definition.
-* Function print.tssdr now allows plotting also zoo and xts objects.
+* Function plot.tssdr now allows plotting also zoo and xts objects.
 * Class bssvol has now its own manual.
 * The armaeff component in bssvol objects are now TRUE/FALSE instead of 1/0.
 * Plot method has been added to class bssvol to correctly plot xts and zoo object in addition to ts objects.

@@ -2,7 +2,7 @@
 \alias{lbtest}
 \alias{print.lbtest}
 \title{
-Modified Ljung-Box test and volatility clustering test for time series.
+Modified Ljung-Box Test and Volatility Clustering Test for Time Series.
 }
 
 \description{
@@ -42,7 +42,7 @@ Test statistic related to each time series \eqn{X_i} is then compared to \eqn{\c
 }
 
 \value{
- A list with class 'lbtest' containing the following components:
+ A list of class 'lbtest' containing the following components:
   \item{TS}{The values of the test statistic for each component of X as a vector.}
   \item{p_val}{The p-values based on the test statistic for each component of X as a vector.}
   \item{Xname}{The name of the data used as a character string.}

@@ -6,15 +6,15 @@ Blind Source Separation and Supervised Dimension Reduction for Time Series
 }
 
 \description{
-Different estimators are provided to solve the blind source separation problem for multivariate time series with stochastic volatility (Matilainen, Nordhausen and Oja (2015) <doi:10.1016/j.spl.2015.04.033>; Matilainen, Miettinen, Nordhausen, Oja and Taskinen (2017) <doi:10.17713/ajs.v46i3-4.671>) and supervised dimension reduction problem for multivariate time series (Matilainen, Croux, Nordhausen and Oja (2017) <doi:10.1016/j.ecosta.2017.04.002>). Different functions based on AMUSE and SOBI are also provided for estimating the dimension of the white noise subspace. 
+Different estimators are provided to solve the blind source separation problem for multivariate time series with stochastic volatility and supervised dimension reduction problem for multivariate time series. Different functions based on AMUSE and SOBI are also provided for estimating the dimension of the white noise subspace. The package is fully described in Nordhausen, Matilainen, Miettinen, Virta and Taskinen (2021) <doi:10.18637/jss.v098.i15>.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab tsBSS\cr
 Type: \tab Package\cr
-Version: \tab 0.5.7\cr
-Date: \tab 2020-03-31\cr
+Version: \tab 1.0.0\cr
+Date: \tab 2021-07-09\cr
 License: \tab GPL (>= 2)
 }
 This package contains functions for the blind source separation (BSS) problem for multivariate time series. The methods are designed for time series with stochastic volatility, such as GARCH and SV models.
@@ -56,13 +56,16 @@ Maintainer: Markus Matilainen <markus.matilainen@outlook.com>
 }
 
 \references{
+
+Nordhausen, K., Matilainen, M., Miettinen, J., Virta, J. and Taskinen, S. (2021)  \emph{Dimension Reduction for Time Series in a Blind Source Separation Context Using R}, Journal of Statistical Software, 98(15), 1--30. <doi:10.18637/jss.v098.i15>
+
 Matilainen, M., Nordhausen, K. and Oja, H. (2015), \emph{New Independent Component Analysis Tools for Time Series}, Statistics & Probability Letters, 105, 80--87.
 
 Matilainen, M., Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2017), \emph{On Independent Component Analysis with Stochastic Volatility Models}, Austrian Journal of Statistics, 46(3--4), 57--66.
 
-Matilainen M., Croux C., Nordhausen K. and Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
+Matilainen, M., Croux, C., Nordhausen, K. and Oja, H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 
-Matilainen M., Croux C., Nordhausen K. and Oja H. (2019), \emph{Sliced Average Variance Estimation for Multivariate Time Series}. Statistics: A Journal of Theoretical and Applied Statistics, 53, 630--655.
+Matilainen, M., Croux, C., Nordhausen, K. and Oja, H. (2019), \emph{Sliced Average Variance Estimation for Multivariate Time Series}. Statistics: A Journal of Theoretical and Applied Statistics, 53, 630--655.
 
 Shi, Z., Jiang, Z. and Zhou, F. (2009), \emph{Blind Source Separation with Nonlinear Autocorrelation and Non-Gaussianity}, Journal of Computational and Applied Mathematics, 223(1): 908--915.
 

@@ -17,8 +17,8 @@ The method is a generalization of JADE, which is a method for blind source separ
 gJADE(X, \ldots)
 
 \method{gJADE}{default}(X, k = 0:12, eps = 1e-06, maxiter = 100, method = c("frjd", "rjd"),
-                        na.action = na.fail, weight = NULL, ordered = FALSE,
-                        acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
+      na.action = na.fail, weight = NULL, ordered = FALSE,
+      acfk = NULL, original = TRUE, alpha = 0.05, \ldots)
 \method{gJADE}{ts}(X, \ldots)
 \method{gJADE}{xts}(X, \ldots)
 \method{gJADE}{zoo}(X, \ldots)
@@ -56,11 +56,11 @@ For \code{ordered = TRUE} the function orders the sources according to their vol
 }
 
 \value{
- A list with class 'bssvol' containing the following components:
+ A list of class 'bssvol', inheriting from class 'bss', containing the following components:
   \item{W }{The estimated unmixing matrix. If \code{ordered = TRUE}, the rows are ordered according to the order of the components.}
   \item{k }{The vector of the used lags.}
   \item{S }{The estimated sources as time series object standardized to have mean 0 and unit variances. If \code{ordered = TRUE}, then components are ordered according to their volatility. If \code{original = FALSE}, the sources with linear autocorrelation are replaced by their ARMA residuals.}
-  \item{MU}{The means of the original series.}
+  \item{MU }{The mean vector of \code{X}.}
   If \code{ordered = TRUE}, then also the following components included in the list:
   \item{Sraw }{The ordered original estimated sources as time series object standardized to have mean 0 and unit variances. Returned only if \code{original = FALSE}.}
   \item{fits }{The ARMA fits for the components with linear autocorrelation.}

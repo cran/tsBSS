@@ -78,7 +78,7 @@ tssdr.default <- function(y, X, algorithm = c("TSIR", "TSAVE", "TSSH"), k = 1:12
   S <- tcrossprod(prep$X.C, W) #Values for the all possible directions
   S <- ts(cbind(y, S)) # Response included
   colnames(S) <- c("y", paste("Series", 1:p))
-  RES <- list(W = W, k = k, S = S, L = DTable/sum(DTable), H = H,
+  RES <- list(W = W, k = k, S = S, MU = prep$MEAN, L = DTable/sum(DTable), H = H,
               yname = deparse(substitute(y)),
               Xname = deparse(substitute(X)),
               algorithm = algorithm)

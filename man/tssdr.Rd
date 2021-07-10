@@ -8,7 +8,7 @@
 \alias{components.tssdr}
 \alias{plot.tssdr}
 \title{
-Supervised dimension reduction for multivariate time series
+Supervised Dimension Reduction for Multivariate Time Series
 }
 
 \description{
@@ -77,10 +77,11 @@ To make a choice on which lags and directions to keep, see \code{\link[tsBSS]{su
 }
 
 \value{
-A list with class 'tssdr' containing the following components:
+A list of class 'tssdr' containing the following components:
   \item{W }{The estimated signal separation matrix.}
   \item{k }{The vector of the used lags.}
   \item{S }{The estimated directions as time series object standardized to have mean 0 and unit variances.}
+  \item{MU }{The mean vector of \code{X}.}
   \item{L }{The Lambda matrix for choosing lags and directions.}
   \item{H }{The used number of slices.}
   \item{yname }{The name for the response time series \eqn{y}.}
@@ -89,9 +90,9 @@ A list with class 'tssdr' containing the following components:
 }
 
 \references{
-Matilainen M., Croux C., Nordhausen K. and Oja H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
+Matilainen, M., Croux, C., Nordhausen, K. and Oja, H. (2017), \emph{Supervised Dimension Reduction for Multivariate Time Series}, Econometrics and Statistics, 4, 57--69.
 
-Matilainen M., Croux C., Nordhausen K. and Oja H. (2019), \emph{Sliced Average Variance Estimation for Multivariate Time Series}. Statistics: A Journal of Theoretical and Applied Statistics, 53, 630--655, <doi:10.1080/02331888.2019.1605515>.
+Matilainen, M., Croux, C., Nordhausen, K. and Oja, H. (2019), \emph{Sliced Average Variance Estimation for Multivariate Time Series}. Statistics: A Journal of Theoretical and Applied Statistics, 53, 630--655.
 
 Li, K.C. (1991), \emph{Sliced Inverse Regression for Dimension Reduction}, Journal of the American Statistical Association, 86, 316--327.
 

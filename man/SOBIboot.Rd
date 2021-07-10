@@ -16,7 +16,7 @@ The function uses SOBI (Second Order Blind Identification) to test whether the l
 SOBIboot(X, \ldots)
 
 \method{SOBIboot}{default}(X, k, tau = 1:12, n.boot = 200, s.boot = c("p", "np1", "np2", "np3"),
-  ncores = NULL, iseed = NULL, eps = 1e-06, maxiter = 200, \ldots)
+         ncores = NULL, iseed = NULL, eps = 1e-06, maxiter = 200, \ldots)
 \method{SOBIboot}{ts}(X, \ldots)
 \method{SOBIboot}{xts}(X, \ldots)
 \method{SOBIboot}{zoo}(X, \ldots)
@@ -65,7 +65,7 @@ This function uses for the joint diagonalization the function \code{\link[JADE:r
 }
 
 \value{
-  A list of class ictest inheriting from class htest containing:
+  A list of class ictest, inheriting from class htest, containing:
     \item{statistic}{The value of the test statistic.}
   \item{p.value}{The p-value of the test.}
   \item{parameter}{The number of bootstrap samples.}
